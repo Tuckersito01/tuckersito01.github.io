@@ -179,6 +179,14 @@ figure.shot figcaption { color: var(--muted); font-size: 14px; }
 .notice { font-size: 14px; color: var(--muted); }
 .notice.on { color: var(--accent); }
 @media (max-width: 860px) { .price-grid { grid-template-columns: 1fr; } }
+.price-head { display: grid; grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr); gap: 32px; align-items: end; }
+.plans { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 18px; align-items: stretch; }
+.plans .card { border-color: var(--line); align-content: start; grid-template-rows: auto auto auto 1fr auto; }
+.plans .card ul { align-content: start; }
+.plans .card.featured { border-color: color-mix(in srgb, var(--accent) 60%, var(--line)); }
+.plans .card .now { font-size: clamp(36px, 5vw, 48px); }
+.plans .per { font-family: var(--font-data); color: var(--muted); font-size: 14px; margin: 0; }
+@media (max-width: 960px) { .plans, .price-head { grid-template-columns: 1fr; } }
 
 /* ---------- requirements + faq ---------- */
 .req { width: 100%; border-collapse: collapse; font-size: 15px; }
@@ -228,7 +236,7 @@ footer.bottom .wordmark { color: var(--text); font-size: 14px; }
           <a class="btn primary buy" href="#pricing"><span data-i18n="cta.buy">Get VELTARA</span> · <span class="price-now">$42.50</span> <span class="was">$50</span></a>
           <a class="btn" href="#engine" data-i18n="cta.how">See the engine</a>
         </div>
-        <p class="fine" data-i18n="hero.fine">One-time purchase. No subscription. Launch price for a limited time.</p>
+        <p class="fine" data-i18n="hero.fine">Buy once, or get every new pack with VELTARA Plus. Launch price for a limited time.</p>
       </div>
 
       <div class="player" aria-label="Before and after player">
@@ -256,9 +264,9 @@ footer.bottom .wordmark { color: var(--text); font-size: 14px; }
 
   <div class="specs" aria-label="Key numbers">
     <div class="wrap">
-      <div class="spec"><b>120</b><span data-i18n="spec.presets">factory presets in 13 banks</span></div>
+      <div class="spec"><b>156</b><span data-i18n="spec.presets">factory presets in 15 banks</span></div>
       <div class="spec"><b>1/2 → 1/32</b><span data-i18n="spec.slices">tempo-synced glitch slices</span></div>
-      <div class="spec"><b>7</b><span data-i18n="spec.slots">reorderable effect slots</span></div>
+      <div class="spec"><b>9</b><span data-i18n="spec.slots">reorderable effect slots</span></div>
       <div class="spec"><b>0 ms</b><span data-i18n="spec.latency">added latency</span></div>
       <div class="spec"><b>50–200%</b><span data-i18n="spec.ui">resizable interface</span></div>
     </div>
@@ -272,7 +280,7 @@ footer.bottom .wordmark { color: var(--text); font-size: 14px; }
       </header>
       <div class="steps">
         <div class="step"><h3 data-i18n="how.s1t">Load it on a melody</h3><p data-i18n="how.s1">Insert VELTARA on any instrument or audio track: keys, synths, guitars, arps, vocal chops.</p></div>
-        <div class="step"><h3 data-i18n="how.s2t">Pick a sound</h3><p data-i18n="how.s2">Browse 120 presets by genre or press One Click Magic. It listens to your part and chooses a direction that fits it.</p></div>
+        <div class="step"><h3 data-i18n="how.s2t">Pick a sound</h3><p data-i18n="how.s2">Browse 156 presets by genre or press One Click Magic. It listens to your part and chooses a direction that fits it.</p></div>
         <div class="step"><h3 data-i18n="how.s3t">Shape it by hand</h3><p data-i18n="how.s3">Drag the XY pad from warm to airy and from pure to textured, then dial in six macros: Texture, Movement, Space, Character, Depth and Density.</p></div>
       </div>
     </div>
@@ -353,7 +361,7 @@ footer.bottom .wordmark { color: var(--text); font-size: 14px; }
     <div class="wrap">
       <header>
         <span class="label" data-i18n="banks.eyebrow">Factory library</span>
-        <h2 data-i18n="banks.title">120 presets, level-matched and genre-ready.</h2>
+        <h2 data-i18n="banks.title">156 presets, level-matched and genre-ready.</h2>
         <p class="lede" data-i18n="banks.lede">Every preset is measured against the dry signal, so switching never jumps in volume. Each bank has its own glitch style and its own effects.</p>
       </header>
       <div class="banks" id="banks"></div>
@@ -361,28 +369,59 @@ footer.bottom .wordmark { color: var(--text); font-size: 14px; }
   </section>
 
   <section class="block" id="pricing" style="padding-top:0">
-    <div class="wrap price-grid">
-      <div style="display:grid; gap:18px">
-        <span class="label" data-i18n="price.eyebrow">Pricing</span>
-        <h2 data-i18n="price.title">Pay once. Keep it.</h2>
-        <p class="lede" data-i18n="price.lede">VELTARA is a one-time purchase at $50. At launch it is 15% off for a limited time.</p>
+    <div class="wrap" style="display:grid; gap:28px">
+      <div class="price-head">
+        <div style="display:grid; gap:14px">
+          <span class="label" data-i18n="price.eyebrow">Pricing</span>
+          <h2 data-i18n="price.title">Buy it once, or get every pack.</h2>
+          <p class="lede" data-i18n="price.lede">Own VELTARA for a one-time $50, or join VELTARA Plus for new expansion packs every month. Twelve months of Plus and VELTARA is yours for good.</p>
+        </div>
         <div id="countdown-wrap" style="display:grid; gap:10px">
           <span class="label" id="countdown-label" data-i18n="price.until">Launch price ends in</span>
           <div class="countdown" id="countdown" aria-live="polite"></div>
         </div>
       </div>
-      <div class="card">
-        <div class="row"><span class="now price-now">$42.50</span><span class="old">$50.00</span><span class="badge">−15%</span></div>
-        <ul>
-          <li data-i18n="price.i1">VST3, AU and Standalone for macOS (Apple Silicon and Intel) and Windows</li>
-          <li data-i18n="price.i2">120 factory presets in 13 banks, plus your own libraries</li>
-          <li data-i18n="price.i3">Glitch, granular, drive, mod FX, delay, lo-fi and reverb engines</li>
-          <li data-i18n="price.i4">Free updates for every 1.x version</li>
-          <li data-i18n="price.i5">Activate on up to 3 of your computers</li>
-        </ul>
-        <a class="btn primary buy" href="#pricing" id="buy-main"><span data-i18n="cta.buy">Get VELTARA</span> · <span class="price-now">$42.50</span></a>
-        <p class="notice" id="buy-notice" aria-live="polite" data-i18n="price.secure">Secure checkout. Taxes calculated at checkout.</p>
+      <div class="plans">
+        <div class="card">
+          <span class="label" data-i18n="plan.perp">Perpetual</span>
+          <div class="row"><span class="now price-now">$42.50</span><span class="old">$50.00</span><span class="badge">−15%</span></div>
+          <p class="per" data-i18n="plan.perpPer">one-time payment</p>
+          <ul>
+            <li data-i18n="price.i1">VST3, AU and Standalone for macOS (Apple Silicon and Intel) and Windows</li>
+            <li data-i18n="price.i2">156 factory presets in 15 banks, plus your own libraries</li>
+            <li data-i18n="plan.perp1">Free and included expansion packs</li>
+            <li data-i18n="price.i4">Free updates for every 1.x version</li>
+            <li data-i18n="plan.perp2">3 computers · works 60 days offline</li>
+          </ul>
+          <a class="btn buy" href="#pricing" data-plan="perpetual"><span data-i18n="cta.buy">Get VELTARA</span> · <span class="price-now">$42.50</span></a>
+        </div>
+        <div class="card featured">
+          <span class="label" data-i18n="plan.plusM">VELTARA Plus · monthly</span>
+          <div class="row"><span class="now">$7.99</span><span class="per" data-i18n="plan.month">/ month</span></div>
+          <p class="per" data-i18n="plan.rto">12 months and it's yours for good</p>
+          <ul>
+            <li data-i18n="plan.plus1">Everything in Perpetual</li>
+            <li data-i18n="plan.plus2">Every monthly expansion pack: presets, textures and MOTION grooves</li>
+            <li data-i18n="plan.plus3">Genre libraries and engine updates as they ship</li>
+            <li data-i18n="plan.plus4">3 computers · works 14 days offline</li>
+            <li data-i18n="plan.plus5">Cancel anytime</li>
+          </ul>
+          <a class="btn primary buy" href="#pricing" data-plan="monthly"><span data-i18n="plan.start">Start VELTARA Plus</span></a>
+        </div>
+        <div class="card">
+          <span class="label" data-i18n="plan.plusY">VELTARA Plus · yearly</span>
+          <div class="row"><span class="now">$69</span><span class="per" data-i18n="plan.year">/ year</span><span class="badge" data-i18n="plan.save">SAVE 28%</span></div>
+          <p class="per" data-i18n="plan.rtoY">one year paid = yours for good</p>
+          <ul>
+            <li data-i18n="plan.plus1">Everything in Perpetual</li>
+            <li data-i18n="plan.plus2">Every monthly expansion pack: presets, textures and MOTION grooves</li>
+            <li data-i18n="plan.plus3">Genre libraries and engine updates as they ship</li>
+            <li data-i18n="plan.plus4">3 computers · works 14 days offline</li>
+          </ul>
+          <a class="btn buy" href="#pricing" data-plan="yearly"><span data-i18n="plan.startY">Get a year of Plus</span></a>
+        </div>
       </div>
+      <p class="notice" id="buy-notice" aria-live="polite" data-i18n="price.secure">Secure checkout. Taxes calculated at checkout.</p>
     </div>
   </section>
 
@@ -405,8 +444,10 @@ footer.bottom .wordmark { color: var(--text); font-size: 14px; }
       <div style="display:grid; gap:20px; align-content:start">
         <span class="label">FAQ</span>
         <div class="faq">
-          <details><summary data-i18n="faq.q1">Is this a subscription?</summary><p data-i18n="faq.a1">No. You pay once and the license is yours. Updates within version 1 are free.</p></details>
-          <details><summary data-i18n="faq.q2">Does it need an internet connection?</summary><p data-i18n="faq.a2">Only to activate your license the first time. After that VELTARA runs offline, and audio processing never depends on a connection.</p></details>
+          <details><summary data-i18n="faq.q1">Is this a subscription?</summary><p data-i18n="faq.a1">Your choice. The Perpetual license is a one-time payment and it is yours. VELTARA Plus is a subscription that adds every monthly expansion pack.</p></details>
+          <details><summary data-i18n="faq.q7">How does rent-to-own work?</summary><p data-i18n="faq.a7">After 12 paid months of VELTARA Plus (or one yearly payment), VELTARA is yours for good. On your computers it unlocks permanently on its own, and we e-mail you a perpetual license key for any new computer. If you cancel later, you keep VELTARA and the packs you had.</p></details>
+          <details><summary data-i18n="faq.q8">What is in an expansion pack?</summary><p data-i18n="faq.a8">New presets, textures and MOTION grooves, one pack a month, installed from the PACKS button inside the plugin. Some packs are free for everyone; Plus members get all of them.</p></details>
+          <details><summary data-i18n="faq.q2">Does it need an internet connection?</summary><p data-i18n="faq.a2">To activate, and for a quick license check now and then: Perpetual works up to 60 days offline, Plus up to 14. Audio processing never depends on a connection.</p></details>
           <details><summary data-i18n="faq.q3">Will the glitch follow my project tempo?</summary><p data-i18n="faq.a3">Yes. Slices lock to your DAW's tempo and bar position, from half notes down to 1/32 and triplets. Press play in your DAW and the edits land on the grid.</p></details>
           <details><summary data-i18n="faq.q4">Can I use it on vocals and drums?</summary><p data-i18n="faq.a4">Yes. It was designed around melodic parts, but stutters and tape stops on drum loops and vocal chops work well.</p></details>
           <details><summary data-i18n="faq.q5">Can I release music made with the presets?</summary><p data-i18n="faq.a5">Yes. Everything you make with VELTARA is yours to release, royalty-free.</p></details>
@@ -429,7 +470,8 @@ footer.bottom .wordmark { color: var(--text); font-size: 14px; }
 // ------------------------------------------------------------------ store config
 // Fill CHECKOUT_URL with the Lemon Squeezy / Paddle checkout link on launch day.
 const STORE = {
-  checkoutUrl: "",
+  // Lemon Squeezy checkout links, one per plan (empty = store not open yet).
+  checkout: { perpetual: "", monthly: "", yearly: "" },
   listPrice: 50.00,
   launchDiscount: 0.15,
   launchStart: "2027-01-12T10:00:00-04:00",
@@ -443,14 +485,14 @@ const ES = {
   "cta.buyShort": "Comprar", "cta.buy": "Comprar VELTARA", "cta.how": "Ver el motor",
   "hero.title": "Convierte cualquier melodía en <em>textura</em>.",
   "hero.lede": "Pon VELTARA en un piano, un synth, una guitarra o un arpegio. Elige un preset o pulsa One Click Magic y la parte empieza a cortarse, difuminarse, ir al revés y respirar, sincronizada con tu tempo y con la melodía siempre arriba.",
-  "hero.fine": "Pago único. Sin suscripción. Precio de lanzamiento por tiempo limitado.",
+  "hero.fine": "Cómpralo una vez, o recibe cada pack nuevo con VELTARA Plus. Precio de lanzamiento por tiempo limitado.",
   "player.title": "Misma melodía · pulsa A/B",
   "player.note": "Renderizado por el plugin a partir de un arpegio a 120 BPM. Los niveles están igualados: escuchas la textura, no un salto de volumen.",
-  "spec.presets": "presets de fábrica en 13 bancos", "spec.slices": "cortes de glitch sincronizados", "spec.slots": "módulos de efecto reordenables",
+  "spec.presets": "presets de fábrica en 15 bancos", "spec.slices": "cortes de glitch sincronizados", "spec.slots": "módulos de efecto reordenables",
   "spec.latency": "de latencia añadida", "spec.ui": "interfaz redimensionable",
   "how.eyebrow": "Cómo funciona", "how.title": "Tres pasos de lo plano a lo terminado.",
   "how.s1t": "Cárgalo en una melodía", "how.s1": "Inserta VELTARA en cualquier instrumento o pista de audio: teclados, synths, guitarras, arpegios, chops vocales.",
-  "how.s2t": "Elige un sonido", "how.s2": "Explora 120 presets por género o pulsa One Click Magic. Escucha tu parte y elige una dirección que le quede.",
+  "how.s2t": "Elige un sonido", "how.s2": "Explora 156 presets por género o pulsa One Click Magic. Escucha tu parte y elige una dirección que le quede.",
   "how.s3t": "Dale forma a mano", "how.s3": "Arrastra el pad XY de cálido a aireado y de puro a texturizado, y ajusta seis macros: Texture, Movement, Space, Character, Depth y Density.",
   "engine.eyebrow": "El motor", "engine.title": "Siete módulos. Cada uno con personalidad.",
   "engine.lede": "Cada módulo tiene estilos que cambian cómo se comporta, no solo cuánto. Actívalos, desactívalos o cambia el orden de la cadena.",
@@ -468,13 +510,20 @@ const ES = {
   "smart.evolve": "Un movimiento lento y aleatorio cambia el filtro, la posición y la densidad de los granos cada 4 a 12 segundos, para que un loop nunca suene congelado.",
   "smart.morph": "Guarda dos sonidos como A y B y deslízate entre ellos. Las frecuencias se mueven en escala musical y la posición se guarda con tu sesión.",
   "shot.caption": "Todo el instrumento en una pantalla. Elige el tamaño de la ventana entre 50 % y 200 %, o arrastra la esquina.",
-  "banks.eyebrow": "Librería de fábrica", "banks.title": "120 presets, igualados en volumen y listos por género.",
+  "banks.eyebrow": "Librería de fábrica", "banks.title": "156 presets, igualados en volumen y listos por género.",
   "banks.lede": "Cada preset está medido contra la señal seca, así que cambiar de uno a otro nunca da saltos de volumen. Cada banco tiene su propio estilo de glitch y sus propios efectos.",
-  "price.eyebrow": "Precio", "price.title": "Pagas una vez. Es tuyo.",
-  "price.lede": "VELTARA es una compra única de $50. En el lanzamiento tiene 15 % de descuento por tiempo limitado.",
+  "price.eyebrow": "Precio", "price.title": "Cómpralo una vez, o recibe cada pack.",
+  "price.lede": "Ten VELTARA para siempre con un pago único de $50, o únete a VELTARA Plus y recibe packs de expansión nuevos cada mes. Doce meses de Plus y VELTARA es tuyo para siempre.",
+  "plan.perp": "Perpetua", "plan.perpPer": "pago único", "plan.perp1": "Packs de expansión gratis e incluidos",
+  "plan.perp2": "3 computadoras · funciona 60 días sin conexión",
+  "plan.plusM": "VELTARA Plus · mensual", "plan.plusY": "VELTARA Plus · anual", "plan.month": "/ mes", "plan.year": "/ año",
+  "plan.rto": "12 meses y es tuyo para siempre", "plan.rtoY": "un año pagado = tuyo para siempre", "plan.save": "AHORRA 28 %",
+  "plan.plus1": "Todo lo de la Perpetua", "plan.plus2": "Cada pack de expansión mensual: presets, texturas y grooves de MOTION",
+  "plan.plus3": "Librerías por género y mejoras del motor según salgan", "plan.plus4": "3 computadoras · funciona 14 días sin conexión",
+  "plan.plus5": "Cancela cuando quieras", "plan.start": "Empezar VELTARA Plus", "plan.startY": "Un año de Plus",
   "price.until": "El precio de lanzamiento termina en", "price.starts": "El lanzamiento empieza en", "price.over": "El precio de lanzamiento terminó",
   "price.i1": "VST3, AU y Standalone para macOS (Apple Silicon e Intel) y Windows",
-  "price.i2": "120 presets de fábrica en 13 bancos, más tus propias librerías",
+  "price.i2": "156 presets de fábrica en 15 bancos, más tus propias librerías",
   "price.i3": "Motores de glitch, granular, drive, mod FX, delay, lo-fi y reverb",
   "price.i4": "Actualizaciones gratis para toda la versión 1.x",
   "price.i5": "Actívalo hasta en 3 de tus computadoras",
@@ -483,8 +532,10 @@ const ES = {
   "req.eyebrow": "Requisitos del sistema", "req.mac": "macOS 10.15 o posterior · Apple Silicon (M1–M4) e Intel · VST3, AU, Standalone",
   "req.win": "Windows 10 u 11, 64 bits · VST3, Standalone", "req.hosts": "DAWs probados", "req.cpu": "CPU",
   "req.cpuv": "Cerca del 2 % de un núcleo a 48 kHz en un preset denso", "req.rates": "Frecuencias de muestreo",
-  "faq.q1": "¿Es una suscripción?", "faq.a1": "No. Pagas una vez y la licencia es tuya. Las actualizaciones dentro de la versión 1 son gratis.",
-  "faq.q2": "¿Necesita conexión a internet?", "faq.a2": "Solo para activar tu licencia la primera vez. Después VELTARA funciona sin conexión, y el procesamiento de audio nunca depende de ella.",
+  "faq.q1": "¿Es una suscripción?", "faq.a1": "Tú eliges. La licencia Perpetua es un pago único y es tuya. VELTARA Plus es una suscripción que añade cada pack de expansión mensual.",
+  "faq.q7": "¿Cómo funciona el rent-to-own?", "faq.a7": "Tras 12 meses pagados de VELTARA Plus (o un pago anual), VELTARA es tuyo para siempre. En tus computadoras se desbloquea solo, y te enviamos por e-mail una licencia perpetua para cualquier computadora nueva. Si cancelas después, te quedas con VELTARA y los packs que tenías.",
+  "faq.q8": "¿Qué trae un pack de expansión?", "faq.a8": "Presets, texturas y grooves de MOTION nuevos, un pack al mes, que se instalan desde el botón PACKS dentro del plugin. Algunos packs son gratis para todos; los miembros Plus los reciben todos.",
+  "faq.q2": "¿Necesita conexión a internet?", "faq.a2": "Para activar y para una verificación rápida de vez en cuando: la Perpetua funciona hasta 60 días sin conexión, Plus hasta 14. El procesamiento de audio nunca depende de la conexión.",
   "faq.q3": "¿El glitch sigue el tempo de mi proyecto?", "faq.a3": "Sí. Los cortes se sincronizan con el tempo y la posición de compás de tu DAW, desde blancas hasta 1/32 y tresillos. Dale play en tu DAW y los cortes caen en la rejilla.",
   "faq.q4": "¿Lo puedo usar en voces y baterías?", "faq.a4": "Sí. Está pensado para partes melódicas, pero los stutters y tape stops funcionan muy bien en loops de batería y chops vocales.",
   "faq.q5": "¿Puedo publicar música hecha con los presets?", "faq.a5": "Sí. Todo lo que hagas con VELTARA es tuyo para publicar, libre de regalías.",
@@ -550,7 +601,9 @@ setInterval(() => { tickCountdown(); applyPrices(); }, 1000);
 
 // ------------------------------------------------------------------ buy buttons
 document.querySelectorAll(".buy").forEach(a => {
-  if (STORE.checkoutUrl) { a.href = STORE.checkoutUrl; a.target = "_blank"; a.rel = "noopener"; return; }
+  const url = STORE.checkout[a.dataset.plan || "perpetual"];
+  if (url) { a.href = url; a.target = "_blank"; a.rel = "noopener"; return; }
+  if (! a.dataset.plan) return; // header / hero buttons just scroll to the plans
   a.addEventListener("click", () => {
     const n = document.getElementById("buy-notice");
     n.textContent = t("price.soon");
@@ -560,6 +613,8 @@ document.querySelectorAll(".buy").forEach(a => {
 
 // ------------------------------------------------------------------ banks
 const BANKS = [
+  ["Signature", 24, "Sombra · Perreo Nocturno · Hollow Crown", "The VELTARA sound: dark, cinematic, urbano"],
+  ["Spectral", 12, "Data Choir · Doubler Wide · Fifth Stack", "Spectral blur, shift and scatter"],
   ["Ambient Melodies", 9, "First Light · Slow Tide · Paper Lanterns", "Reverse glitch, soft halos"],
   ["Dark Textures", 9, "Undertow · Black Velvet · Abyss Choir", "Tape stops, octave-down grains"],
   ["R&B", 9, "Velvet Room · Silk Rhodes · After Hours", "Subtle tape stops, ensemble chorus"],
@@ -569,7 +624,7 @@ const BANKS = [
   ["Cinematic", 9, "Titan Rise · Northern Lights · Starfield", "Reverse slices, cloud reverb"],
   ["Electronic", 9, "Pulse Lattice · Circuit Bloom · Acid Fog", "Chaos glitch, phaser, flanger"],
   ["Vintage", 9, "Tape Memory · Dusty Vinyl · Cassette Dream", "Tape stops, wow & flutter, crackle"],
-  ["Glitch", 12, "Stutter Gun · Backspin City · Tape Stop Drama", "The new bank: edits first"],
+  ["Glitch", 12, "Stutter Gun · Backspin City · Tape Stop Drama", "Edits first"],
   ["Experimental", 9, "Fractal Rain · Time Fold · Mutant Choir", "1/32 chaos, wave folding"],
   ["Dreamy", 9, "Cloud Nine · Lucid Waves · Silver Lining", "Reverse glitch, shimmer"],
   ["Atmospheric", 9, "Open Sky · Weather System · Aurora Field", "Reverse glitch, diffuse echoes"],
@@ -579,14 +634,15 @@ const BANK_ES = {
   "Subtle tape stops, ensemble chorus": "Tape stops sutiles, chorus ensemble", "1/16 stutters, triplet echoes": "Stutters en 1/16, ecos en tresillo",
   "Shuffled eighths, dotted delays": "Corcheas reordenadas, delays con puntillo", "Shuffled sixteenths, ping-pong": "Semicorcheas reordenadas, ping-pong",
   "Reverse slices, cloud reverb": "Cortes al revés, reverb Cloud", "Chaos glitch, phaser, flanger": "Glitch caos, phaser, flanger",
-  "Tape stops, wow & flutter, crackle": "Tape stops, wow & flutter, crackle", "The new bank: edits first": "El banco nuevo: primero los cortes",
+  "Tape stops, wow & flutter, crackle": "Tape stops, wow & flutter, crackle", "Edits first": "Primero los cortes",
   "1/32 chaos, wave folding": "Caos en 1/32, wave folding", "Reverse glitch, shimmer": "Glitch reverse, shimmer",
   "Reverse glitch, diffuse echoes": "Glitch reverse, ecos difusos",
+  "The VELTARA sound: dark, cinematic, urbano": "El sonido VELTARA: oscuro, cinemático, urbano", "Spectral blur, shift and scatter": "Blur, shift y scatter espectral",
 };
 function renderBanks() {
   const el = document.getElementById("banks");
   el.innerHTML = BANKS.map(([name, n, examples, style]) => `
-    <article class="bank${name === "Glitch" ? " new" : ""}">
+    <article class="bank${name === "Signature" ? " new" : ""}">
       <header><b>${name}</b><span class="n">${n} presets</span></header>
       <p>${lang === "es" ? (BANK_ES[style] || style) : style}</p>
       <p style="color:var(--text);font-size:13px">${examples}</p>

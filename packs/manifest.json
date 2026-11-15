@@ -1,0 +1,39 @@
+{
+  "format": "veltara-content",
+  "version": 1,
+  "latestVersion": "0.11.0",
+  "latestNotes": "Expansion packs, VELTARA Plus and rent-to-own",
+  "downloadUrl": "https://tuckersito01.github.io/",
+  "packs": [
+    {
+      "id": "2026-11-bienvenida",
+      "name": "Bienvenida",
+      "version": "1.0.0",
+      "released": "2026-11",
+      "genre": "Urbano / R&B",
+      "description": "A free taste of the monthly packs: four night textures and two grooves.",
+      "access": "free",
+      "presets": 4,
+      "grooves": 2,
+      "minPluginVersion": "0.11.0",
+      "url": "https://tuckersito01.github.io/packs/2026-11-bienvenida.vxp",
+      "sha256": "81ac6cff3e21c6eeb6a8352c2db41e9e5a6c0c5c70f1b5c9c0d72ca5a63f1787",
+      "bytes": 18976
+    },
+    {
+      "id": "2026-11-noches-de-calle",
+      "name": "Noches de Calle",
+      "version": "1.0.0",
+      "released": "2026-11",
+      "genre": "Reggaeton / Trap / R&B",
+      "description": "Pack 01: sixteen dark night textures for urbano, trap and R&B, plus six MOTION grooves.",
+      "access": "plus",
+      "presets": 16,
+      "grooves": 6,
+      "minPluginVersion": "0.11.0",
+      "url": "https://tuckersito01.github.io/packs/2026-11-noches-de-calle.vxp",
+      "sha256": "c8d3886bfa5a4199a590881a92ec7a82d01a42075dc5c050ce1999152467c709",
+      "bytes": 76554
+    }
+  ]
+}
