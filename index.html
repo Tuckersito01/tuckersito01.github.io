@@ -403,7 +403,7 @@ footer.bottom .wordmark { color: var(--text); font-size: 14px; }
             <li data-i18n="plan.plus1">Everything in Perpetual</li>
             <li data-i18n="plan.plus2">Every monthly expansion pack: presets, textures and MOTION grooves</li>
             <li data-i18n="plan.plus3">Genre libraries and engine updates as they ship</li>
-            <li data-i18n="plan.plus4">3 computers · works 14 days offline</li>
+            <li data-i18n="plan.plus4">3 computers · checks in at each renewal</li>
             <li data-i18n="plan.plus5">Cancel anytime</li>
           </ul>
           <a class="btn primary buy" href="#pricing" data-plan="monthly"><span data-i18n="plan.start">Start VELTARA Plus</span></a>
@@ -416,7 +416,7 @@ footer.bottom .wordmark { color: var(--text); font-size: 14px; }
             <li data-i18n="plan.plus1">Everything in Perpetual</li>
             <li data-i18n="plan.plus2">Every monthly expansion pack: presets, textures and MOTION grooves</li>
             <li data-i18n="plan.plus3">Genre libraries and engine updates as they ship</li>
-            <li data-i18n="plan.plus4">3 computers · works 14 days offline</li>
+            <li data-i18n="plan.plus4">3 computers · checks in at each renewal</li>
           </ul>
           <a class="btn buy" href="#pricing" data-plan="yearly"><span data-i18n="plan.startY">Get a year of Plus</span></a>
         </div>
@@ -445,9 +445,9 @@ footer.bottom .wordmark { color: var(--text); font-size: 14px; }
         <span class="label">FAQ</span>
         <div class="faq">
           <details><summary data-i18n="faq.q1">Is this a subscription?</summary><p data-i18n="faq.a1">Your choice. The Perpetual license is a one-time payment and it is yours. VELTARA Plus is a subscription that adds every monthly expansion pack.</p></details>
-          <details><summary data-i18n="faq.q7">How does rent-to-own work?</summary><p data-i18n="faq.a7">After 12 paid months of VELTARA Plus (or one yearly payment), VELTARA is yours for good. On your computers it unlocks permanently on its own, and we e-mail you a perpetual license key for any new computer. If you cancel later, you keep VELTARA and the packs you had.</p></details>
+          <details><summary data-i18n="faq.q7">How does rent-to-own work?</summary><p data-i18n="faq.a7">After 12 monthly payments of VELTARA Plus (or one yearly payment), your license turns into a perpetual one automatically: VELTARA is yours for good, on every computer, with nothing to do. If you cancel later, you keep VELTARA and the packs.</p></details>
           <details><summary data-i18n="faq.q8">What is in an expansion pack?</summary><p data-i18n="faq.a8">New presets, textures and MOTION grooves, one pack a month, installed from the PACKS button inside the plugin. Some packs are free for everyone; Plus members get all of them.</p></details>
-          <details><summary data-i18n="faq.q2">Does it need an internet connection?</summary><p data-i18n="faq.a2">To activate, and for a quick license check now and then: Perpetual works up to 60 days offline, Plus up to 14. Audio processing never depends on a connection.</p></details>
+          <details><summary data-i18n="faq.q2">Does it need an internet connection?</summary><p data-i18n="faq.a2">To activate (you approve the computer in your browser) and for a quick license check now and then: Perpetual works up to 60 days offline; Plus checks in around each renewal. No internet on the studio computer? Activate it offline with a file. Audio processing never depends on a connection.</p></details>
           <details><summary data-i18n="faq.q3">Will the glitch follow my project tempo?</summary><p data-i18n="faq.a3">Yes. Slices lock to your DAW's tempo and bar position, from half notes down to 1/32 and triplets. Press play in your DAW and the edits land on the grid.</p></details>
           <details><summary data-i18n="faq.q4">Can I use it on vocals and drums?</summary><p data-i18n="faq.a4">Yes. It was designed around melodic parts, but stutters and tape stops on drum loops and vocal chops work well.</p></details>
           <details><summary data-i18n="faq.q5">Can I release music made with the presets?</summary><p data-i18n="faq.a5">Yes. Everything you make with VELTARA is yours to release, royalty-free.</p></details>
@@ -468,9 +468,9 @@ footer.bottom .wordmark { color: var(--text); font-size: 14px; }
 
 <script>
 // ------------------------------------------------------------------ store config
-// Fill CHECKOUT_URL with the Lemon Squeezy / Paddle checkout link on launch day.
+// Fill the checkout links with the Moonbase checkout links on launch day.
 const STORE = {
-  // Lemon Squeezy checkout links, one per plan (empty = store not open yet).
+  // Moonbase checkout links, one per plan (empty = store not open yet).
   checkout: { perpetual: "", monthly: "", yearly: "" },
   listPrice: 50.00,
   launchDiscount: 0.15,
@@ -519,7 +519,7 @@ const ES = {
   "plan.plusM": "VELTARA Plus · mensual", "plan.plusY": "VELTARA Plus · anual", "plan.month": "/ mes", "plan.year": "/ año",
   "plan.rto": "12 meses y es tuyo para siempre", "plan.rtoY": "un año pagado = tuyo para siempre", "plan.save": "AHORRA 28 %",
   "plan.plus1": "Todo lo de la Perpetua", "plan.plus2": "Cada pack de expansión mensual: presets, texturas y grooves de MOTION",
-  "plan.plus3": "Librerías por género y mejoras del motor según salgan", "plan.plus4": "3 computadoras · funciona 14 días sin conexión",
+  "plan.plus3": "Librerías por género y mejoras del motor según salgan", "plan.plus4": "3 computadoras · se verifica en cada renovación",
   "plan.plus5": "Cancela cuando quieras", "plan.start": "Empezar VELTARA Plus", "plan.startY": "Un año de Plus",
   "price.until": "El precio de lanzamiento termina en", "price.starts": "El lanzamiento empieza en", "price.over": "El precio de lanzamiento terminó",
   "price.i1": "VST3, AU y Standalone para macOS (Apple Silicon e Intel) y Windows",
@@ -533,9 +533,9 @@ const ES = {
   "req.win": "Windows 10 u 11, 64 bits · VST3, Standalone", "req.hosts": "DAWs probados", "req.cpu": "CPU",
   "req.cpuv": "Cerca del 2 % de un núcleo a 48 kHz en un preset denso", "req.rates": "Frecuencias de muestreo",
   "faq.q1": "¿Es una suscripción?", "faq.a1": "Tú eliges. La licencia Perpetua es un pago único y es tuya. VELTARA Plus es una suscripción que añade cada pack de expansión mensual.",
-  "faq.q7": "¿Cómo funciona el rent-to-own?", "faq.a7": "Tras 12 meses pagados de VELTARA Plus (o un pago anual), VELTARA es tuyo para siempre. En tus computadoras se desbloquea solo, y te enviamos por e-mail una licencia perpetua para cualquier computadora nueva. Si cancelas después, te quedas con VELTARA y los packs que tenías.",
+  "faq.q7": "¿Cómo funciona el rent-to-own?", "faq.a7": "Tras 12 pagos mensuales de VELTARA Plus (o un pago anual), tu licencia se convierte sola en perpetua: VELTARA es tuyo para siempre, en todas tus computadoras, sin hacer nada. Si cancelas después, te quedas con VELTARA y los packs.",
   "faq.q8": "¿Qué trae un pack de expansión?", "faq.a8": "Presets, texturas y grooves de MOTION nuevos, un pack al mes, que se instalan desde el botón PACKS dentro del plugin. Algunos packs son gratis para todos; los miembros Plus los reciben todos.",
-  "faq.q2": "¿Necesita conexión a internet?", "faq.a2": "Para activar y para una verificación rápida de vez en cuando: la Perpetua funciona hasta 60 días sin conexión, Plus hasta 14. El procesamiento de audio nunca depende de la conexión.",
+  "faq.q2": "¿Necesita conexión a internet?", "faq.a2": "Para activar (apruebas la computadora en tu navegador) y para una verificación rápida de vez en cuando: la Perpetua funciona hasta 60 días sin conexión; Plus se verifica en cada renovación. ¿La computadora del estudio no tiene internet? Se activa sin conexión con un archivo. El procesamiento de audio nunca depende de la conexión.",
   "faq.q3": "¿El glitch sigue el tempo de mi proyecto?", "faq.a3": "Sí. Los cortes se sincronizan con el tempo y la posición de compás de tu DAW, desde blancas hasta 1/32 y tresillos. Dale play en tu DAW y los cortes caen en la rejilla.",
   "faq.q4": "¿Lo puedo usar en voces y baterías?", "faq.a4": "Sí. Está pensado para partes melódicas, pero los stutters y tape stops funcionan muy bien en loops de batería y chops vocales.",
   "faq.q5": "¿Puedo publicar música hecha con los presets?", "faq.a5": "Sí. Todo lo que hagas con VELTARA es tuyo para publicar, libre de regalías.",
