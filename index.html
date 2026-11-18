@@ -201,7 +201,8 @@ figure.shot figcaption { color: var(--muted); font-size: 14px; }
 .faq details p { color: var(--muted); padding-bottom: 20px; max-width: 70ch; }
 
 footer.bottom { border-top: 1px solid var(--line); padding-block: 48px; color: var(--dim); font-size: 13px; }
-footer.bottom .wrap { display: grid; grid-template-columns: auto 1fr auto; gap: 28px; align-items: center; }
+footer.bottom .wrap { display: grid; grid-template-columns: auto minmax(0, 1fr) auto; gap: 18px 28px; align-items: center; }
+footer.bottom .legal { grid-column: 1 / -1; min-width: 0; overflow-wrap: anywhere; }
 footer.bottom .brand span { color: var(--text); font-size: 13px; }
 footer.bottom .tag { font: 500 10.5px var(--font-data); letter-spacing: .22em; }
 footer.bottom a { color: var(--muted); }
@@ -447,7 +448,7 @@ footer.bottom a { color: var(--muted); }
     <a class="brand" href="#top" aria-label="VELTARA, back to top"><img src="logo.svg" alt="" width="24" height="24"><span>VELTARA</span></a>
     <span class="tag">THE ART OF SOUND TEXTURE</span>
     <span><span data-i18n="foot.contact">Support</span>: <a href="mailto:admitonepr@gmail.com">admitonepr@gmail.com</a></span>
-    <span style="grid-column:1/-1">© 2026 Veltara Audio · <span data-i18n="foot.trademarks">VST is a trademark of Steinberg Media Technologies GmbH. Audio Units and macOS are trademarks of Apple Inc.</span></span>
+    <span class="legal">© 2026 Veltara Audio · <span data-i18n="foot.trademarks">VST is a trademark of Steinberg Media Technologies GmbH. Audio Units and macOS are trademarks of Apple Inc.</span></span>
   </div>
 </footer>
 
