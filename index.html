@@ -1,215 +1,218 @@
-<title>VELTARA</title>
-<meta name="claude:viewport-fit-sides" content="cover">
-<meta name="description" content="VELTARA turns melodies, synths, keys and guitars into moving texture: tempo-synced glitch, granular clouds and characterful effects in one plugin.">
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>VELTARA — The art of sound texture</title>
+<meta name="description" content="VELTARA turns melodies, synths, keys and guitars into moving texture: tempo-synced glitch, granular clouds and ten characterful effects in one plugin.">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<meta property="og:title" content="VELTARA — The art of sound texture">
+<meta property="og:description" content="Turn any melody into texture. VST3 · AU · Standalone for macOS and Windows.">
+<meta property="og:image" content="https://veltaravst.com/veltara-ui.webp">
+<meta name="theme-color" content="#101113">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Michroma&family=Instrument+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Unbounded:wght@300;400;500&family=Inter+Tight:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap">
 <style>
-/* Layout: a plugin rack read top to bottom. Hero = live A/B player; the page continues as racked modules. Single dark theme = the plugin's own identity. */
+/* Minimal, digital: one dark surface, hairlines, a lime signal colour used sparingly. */
 :root {
-  --bg: #101113;        /* plugin background */
-  --panel: #1b1e21;     /* plugin panels */
-  --panel-deep: #15171a;
-  --line: #2a2e33;
-  --accent: #c6ff42;    /* VELTARA lime */
+  --bg: #101113;
+  --panel: #15171a;
+  --panel-2: #1b1e21;
+  --line: #24282d;
+  --line-2: #2f343a;
+  --accent: #c6ff42;
   --accent-ink: #101113;
   --muted: #a7adb4;
+  --dim: #6f767e;
   --text: #f4f6f8;
-  --font-display: "Michroma", "Eurostile", "Arial Black", sans-serif;
-  --font-body: "Instrument Sans", "Helvetica Neue", Arial, sans-serif;
+  --font-display: "Unbounded", "Helvetica Neue", Arial, sans-serif;
+  --font-body: "Inter Tight", "Helvetica Neue", Arial, sans-serif;
   --font-data: "JetBrains Mono", ui-monospace, "SF Mono", Menlo, monospace;
-  --radius: 10px;
-  --wrap: 1120px;
+  --wrap: 1160px;
   color-scheme: dark;
 }
 * { box-sizing: border-box; }
 html { scroll-behavior: smooth; }
 @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } *, *::before, *::after { animation: none !important; transition: none !important; } }
 body {
-  background: var(--bg); color: var(--text);
-  font-family: var(--font-body); font-size: 16px; line-height: 1.6;
-  -webkit-font-smoothing: antialiased;
+  margin: 0; background: var(--bg); color: var(--text);
+  font-family: var(--font-body); font-size: 16px; line-height: 1.6; -webkit-font-smoothing: antialiased;
+  background-image: radial-gradient(rgba(167,173,180,.07) 1px, transparent 1px);
+  background-size: 22px 22px; background-attachment: fixed;
 }
-body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 10; background: var(--bg); }
 a { color: inherit; }
+::selection { background: var(--accent); color: var(--accent-ink); }
 :focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 4px; }
-.wrap {
-  max-width: var(--wrap); margin: 0 auto;
-  padding-left: max(16px, env(safe-area-inset-left, 0px));
-  padding-right: max(16px, env(safe-area-inset-right, 0px));
-}
-.label { font-family: var(--font-data); font-size: 12px; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); }
-h1, h2, h3 { text-wrap: balance; margin: 0; }
-h2 { font-family: var(--font-display); font-weight: 400; font-size: clamp(22px, 3.2vw, 34px); line-height: 1.25; letter-spacing: .02em; }
-h3 { font-size: 18px; font-weight: 600; }
+.wrap { max-width: var(--wrap); margin: 0 auto; padding-left: max(20px, env(safe-area-inset-left, 0px)); padding-right: max(20px, env(safe-area-inset-right, 0px)); }
+.label { font-family: var(--font-data); font-size: 11.5px; letter-spacing: .16em; text-transform: uppercase; color: var(--muted); display: inline-flex; align-items: center; gap: 10px; }
+.label::before { content: ""; width: 6px; height: 6px; border-radius: 50%; background: var(--accent); box-shadow: 0 0 10px var(--accent); }
+.label.plain::before { display: none; }
+h1, h2, h3 { margin: 0; text-wrap: balance; }
+h2 { font-family: var(--font-display); font-weight: 300; font-size: clamp(26px, 3.6vw, 42px); line-height: 1.12; letter-spacing: -.01em; }
+h3 { font-size: 17px; font-weight: 600; letter-spacing: .005em; }
 p { margin: 0; }
-.lede { color: var(--muted); max-width: 60ch; font-size: 17px; }
+.lede { color: var(--muted); max-width: 58ch; font-size: 17px; }
+em { font-style: normal; color: var(--accent); }
 
-/* ---------- header ---------- */
-header.top {
-  position: sticky; top: env(safe-area-inset-top, 0px); z-index: 9;
-  background: color-mix(in srgb, var(--bg) 88%, transparent);
-  backdrop-filter: blur(10px); border-bottom: 1px solid var(--line);
-}
-.top .wrap { display: flex; align-items: center; gap: 24px; padding-block: 14px; }
-.wordmark { font-family: var(--font-display); font-size: 18px; letter-spacing: .14em; text-decoration: none; }
-.top nav { display: flex; gap: 22px; margin-left: auto; }
-.top nav a { text-decoration: none; color: var(--muted); font-size: 14px; }
+/* header */
+header.top { position: sticky; top: 0; z-index: 20; background: color-mix(in srgb, var(--bg) 82%, transparent); backdrop-filter: blur(14px); border-bottom: 1px solid var(--line); }
+.top .wrap { display: flex; align-items: center; gap: 28px; height: 64px; }
+.brand { display: inline-flex; align-items: center; gap: 12px; text-decoration: none; }
+.brand img { width: 28px; height: 28px; display: block; }
+.brand span { font-family: var(--font-display); font-weight: 500; font-size: 15px; letter-spacing: .26em; }
+.top nav { display: flex; gap: 26px; margin-left: auto; }
+.top nav a { text-decoration: none; color: var(--muted); font-size: 14px; transition: color .15s; }
 .top nav a:hover { color: var(--text); }
-.lang { display: flex; border: 1px solid var(--line); border-radius: 999px; overflow: hidden; }
-.lang button { background: none; border: 0; color: var(--muted); font: 500 12px var(--font-data); padding: 6px 10px; cursor: pointer; }
-.lang button[aria-pressed="true"] { background: var(--panel); color: var(--text); }
-.btn {
-  display: inline-flex; align-items: center; justify-content: center; gap: 10px;
-  font: 600 15px var(--font-body); text-decoration: none; cursor: pointer;
-  padding: 13px 22px; border-radius: 8px; border: 1px solid var(--line);
-  background: var(--panel); color: var(--text); transition: transform .15s, background .15s;
-}
-.btn:hover { transform: translateY(-1px); }
+.lang { display: flex; border: 1px solid var(--line-2); border-radius: 999px; overflow: hidden; }
+.lang button { background: none; border: 0; color: var(--dim); font: 500 11.5px var(--font-data); padding: 6px 10px; cursor: pointer; letter-spacing: .08em; }
+.lang button[aria-pressed="true"] { background: var(--panel-2); color: var(--text); }
+@media (max-width: 880px) { .top nav { display: none; } .top .lang { margin-left: auto; } .top .wrap { gap: 14px; } }
+
+.btn { display: inline-flex; align-items: center; justify-content: center; gap: 10px; font: 600 15px var(--font-body); text-decoration: none; cursor: pointer;
+  padding: 13px 22px; border-radius: 999px; border: 1px solid var(--line-2); background: transparent; color: var(--text); transition: border-color .15s, background .15s, transform .15s, box-shadow .15s; }
+.btn:hover { border-color: var(--muted); transform: translateY(-1px); }
 .btn.primary { background: var(--accent); color: var(--accent-ink); border-color: var(--accent); }
-.btn.small { padding: 8px 14px; font-size: 14px; }
+.btn.primary:hover { box-shadow: 0 0 0 6px color-mix(in srgb, var(--accent) 16%, transparent), 0 0 40px -6px var(--accent); }
+.btn.small { padding: 8px 16px; font-size: 13.5px; }
 .btn .was { text-decoration: line-through; opacity: .55; font-weight: 500; }
-@media (max-width: 860px) { .top nav { display: none; } .top .wrap { gap: 12px; } .top .lang { margin-left: auto; } }
 
-/* ---------- hero ---------- */
-.hero { padding-block: 64px 56px; }
-.hero .wrap { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.08fr); gap: 48px; align-items: center; }
-.hero h1 {
-  font-family: var(--font-display); font-weight: 400;
-  font-size: clamp(30px, 4.6vw, 54px); line-height: 1.12; letter-spacing: .01em; margin-block: 18px 20px;
-}
-.hero h1 em { font-style: normal; color: var(--accent); }
-.hero .cta { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 28px; }
-.hero .fine { margin-top: 14px; font-size: 13px; color: var(--muted); }
-@media (max-width: 920px) { .hero .wrap { grid-template-columns: 1fr; } .hero { padding-block: 40px; } }
+/* hero */
+.hero { position: relative; padding-block: 88px 72px; overflow: hidden; }
+.hero::before { content: ""; position: absolute; inset: -30% -10% auto 40%; height: 720px; background: radial-gradient(closest-side, color-mix(in srgb, var(--accent) 13%, transparent), transparent 70%); pointer-events: none; }
+.hero .wrap { position: relative; display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr); gap: 56px; align-items: center; }
+.hero-mark { display: flex; align-items: center; gap: 18px; margin-bottom: 30px; }
+.hero-mark img { width: 64px; height: 64px; }
+.hero-mark .wm { font-family: var(--font-display); font-weight: 400; font-size: 22px; letter-spacing: .34em; }
+.hero-mark .wm small { display: block; font: 500 10.5px var(--font-data); letter-spacing: .24em; color: var(--muted); margin-top: 6px; }
+.hero h1 { font-family: var(--font-display); font-weight: 300; font-size: clamp(34px, 4.8vw, 58px); line-height: 1.04; letter-spacing: -.02em; margin-block: 18px 22px; }
+.hero .cta { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 32px; }
+.hero .fine { margin-top: 16px; font-size: 13px; color: var(--dim); }
+@media (max-width: 940px) { .hero .wrap { grid-template-columns: 1fr; gap: 40px; } .hero { padding-block: 48px; } }
 
-/* ---------- A/B player ---------- */
-.player { background: var(--panel); border: 1px solid var(--line); border-radius: 14px; padding: 18px; display: grid; gap: 14px; }
-.player-head { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; flex-wrap: wrap; }
-.player-head .now { font-family: var(--font-data); font-size: 13px; color: var(--text); }
+/* player */
+.player { position: relative; background: color-mix(in srgb, var(--panel) 88%, transparent); border: 1px solid var(--line-2); border-radius: 18px; padding: 20px; display: grid; gap: 16px; backdrop-filter: blur(6px); }
+.player::before { content: ""; position: absolute; inset: -1px; border-radius: 18px; padding: 1px; background: linear-gradient(140deg, color-mix(in srgb, var(--accent) 50%, transparent), transparent 40%); -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0); -webkit-mask-composite: xor; mask-composite: exclude; pointer-events: none; }
+.player-head { display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; }
+.player-head .now { font-family: var(--font-data); font-size: 12.5px; color: var(--text); }
 .presets { display: flex; flex-wrap: wrap; gap: 6px; }
-.chip {
-  font: 500 12.5px var(--font-body); padding: 7px 11px; border-radius: 999px; cursor: pointer;
-  background: var(--panel-deep); color: var(--muted); border: 1px solid var(--line);
-}
+.chip { font: 500 12.5px var(--font-body); padding: 6px 12px; border-radius: 999px; cursor: pointer; background: transparent; color: var(--muted); border: 1px solid var(--line-2); transition: color .15s, border-color .15s; }
+.chip:hover { color: var(--text); border-color: var(--muted); }
 .chip[aria-pressed="true"] { color: var(--accent-ink); background: var(--accent); border-color: var(--accent); }
-.chip small { font-family: var(--font-data); opacity: .7; margin-left: 4px; }
-.wave { position: relative; background: var(--panel-deep); border-radius: 10px; border: 1px solid var(--line); height: 150px; overflow: hidden; cursor: pointer; }
+.wave { position: relative; background: var(--bg); border-radius: 12px; border: 1px solid var(--line); height: 150px; overflow: hidden; cursor: pointer; }
 .wave canvas { display: block; width: 100%; height: 100%; }
 .transport { display: grid; grid-template-columns: auto 1fr auto; gap: 12px; align-items: center; }
-.play {
-  width: 52px; height: 52px; border-radius: 50%; border: 0; cursor: pointer;
-  background: var(--accent); color: var(--accent-ink); display: grid; place-items: center;
-}
+.play { width: 52px; height: 52px; border-radius: 50%; border: 0; cursor: pointer; background: var(--accent); color: var(--accent-ink); display: grid; place-items: center; box-shadow: 0 0 30px -8px var(--accent); }
 .play svg { width: 18px; height: 18px; fill: currentColor; }
-.ab { display: grid; grid-template-columns: 1fr 1fr; background: var(--panel-deep); border: 1px solid var(--line); border-radius: 10px; padding: 4px; position: relative; }
-.ab button { position: relative; z-index: 1; background: none; border: 0; color: var(--muted); font: 600 13px var(--font-data); letter-spacing: .1em; padding: 12px 8px; cursor: pointer; border-radius: 7px; }
+.ab { display: grid; grid-template-columns: 1fr 1fr; background: var(--bg); border: 1px solid var(--line); border-radius: 999px; padding: 4px; position: relative; }
+.ab button { position: relative; z-index: 1; background: none; border: 0; color: var(--muted); font: 600 12px var(--font-data); letter-spacing: .14em; padding: 11px 8px; cursor: pointer; border-radius: 999px; }
 .ab button[aria-pressed="true"] { color: var(--accent-ink); }
-.ab .thumb { position: absolute; top: 4px; bottom: 4px; left: 4px; width: calc(50% - 4px); background: var(--accent); border-radius: 7px; transition: transform .22s cubic-bezier(.3,.7,.2,1); }
+.ab .thumb { position: absolute; top: 4px; bottom: 4px; left: 4px; width: calc(50% - 4px); background: var(--accent); border-radius: 999px; transition: transform .22s cubic-bezier(.3,.7,.2,1); }
 .ab[data-side="wet"] .thumb { transform: translateX(100%); }
+@media (max-width: 480px) { .ab button { letter-spacing: .04em; font-size: 11px; padding-inline: 4px; } .time { min-width: 0; } }
 .time { font-family: var(--font-data); font-size: 12px; color: var(--muted); font-variant-numeric: tabular-nums; min-width: 84px; text-align: right; }
-.player-note { font-size: 12.5px; color: var(--muted); }
+.player-note { font-size: 12.5px; color: var(--dim); }
 .player-note.err { color: #ff8a7a; }
 
-/* ---------- spec strip ---------- */
-.specs { border-block: 1px solid var(--line); background: var(--panel-deep); }
-.specs .wrap { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); padding-block: 22px; gap: 16px; }
-.spec b { display: block; font-family: var(--font-data); font-weight: 500; font-size: 20px; color: var(--text); font-variant-numeric: tabular-nums; }
+/* numbers */
+.specs { border-block: 1px solid var(--line); }
+.specs .wrap { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); }
+.spec { padding: 26px 18px; border-left: 1px solid var(--line); }
+.spec:first-child { border-left: 0; padding-left: 0; }
+.spec b { display: block; font-family: var(--font-display); font-weight: 300; font-size: 26px; letter-spacing: -.01em; color: var(--text); font-variant-numeric: tabular-nums; }
 .spec span { font-size: 13px; color: var(--muted); }
-@media (max-width: 860px) { .specs .wrap { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 880px) { .specs .wrap { grid-template-columns: repeat(2, minmax(0, 1fr)); } .spec { border-left: 0; padding-left: 0; border-top: 1px solid var(--line); } }
 
-section.block { padding-block: 88px; }
-section.block > .wrap > header { display: grid; gap: 14px; margin-bottom: 40px; }
+section.block { padding-block: 104px; }
+section.block > .wrap > header { display: grid; gap: 16px; margin-bottom: 48px; max-width: 760px; }
 
-/* ---------- steps (a real sequence) ---------- */
-.steps { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; counter-reset: s; }
-.step { border-top: 2px solid var(--line); padding-top: 18px; display: grid; gap: 8px; }
-.step::before { counter-increment: s; content: "0" counter(s); font-family: var(--font-data); color: var(--accent); font-size: 13px; }
+/* steps */
+.steps { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 28px; counter-reset: s; }
+.step { border-top: 1px solid var(--line-2); padding-top: 22px; display: grid; gap: 10px; align-content: start; }
+.step::before { counter-increment: s; content: "0" counter(s); font-family: var(--font-data); color: var(--accent); font-size: 12px; letter-spacing: .14em; }
 .step p { color: var(--muted); }
-@media (max-width: 760px) { .steps { grid-template-columns: 1fr; } }
+@media (max-width: 780px) { .steps { grid-template-columns: 1fr; } }
 
-/* ---------- rack ---------- */
-.rack { display: grid; gap: 8px; }
-.slot {
-  display: grid; grid-template-columns: 150px minmax(0, 1fr) minmax(0, 1.25fr); gap: 20px; align-items: center;
-  background: var(--panel); border: 1px solid var(--line); border-radius: var(--radius); padding: 18px 20px;
-}
-.slot.hot { border-color: color-mix(in srgb, var(--accent) 55%, var(--line)); background: linear-gradient(90deg, color-mix(in srgb, var(--accent) 9%, var(--panel)), var(--panel) 55%); }
-.slot .name { font-family: var(--font-display); font-size: 15px; letter-spacing: .12em; }
-.slot .name small { display: block; font-family: var(--font-data); font-size: 11px; color: var(--accent); letter-spacing: .08em; margin-top: 4px; }
-.slot p { color: var(--muted); font-size: 15px; min-width: 0; }
-.modes { display: flex; flex-wrap: wrap; gap: 6px; }
-.mode { font: 500 12px var(--font-data); padding: 5px 9px; border-radius: 6px; background: var(--panel-deep); border: 1px solid var(--line); color: var(--text); }
-@media (max-width: 860px) { .slot { grid-template-columns: 1fr; gap: 10px; } }
+/* engine: a clean index of effects */
+.fx { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); border-top: 1px solid var(--line); }
+.fx article { display: grid; grid-template-columns: 120px minmax(0, 1fr); gap: 20px; padding: 22px 0; border-bottom: 1px solid var(--line); }
+.fx article:nth-child(odd) { padding-right: 32px; }
+.fx article:nth-child(even) { padding-left: 32px; border-left: 1px solid var(--line); }
+.fx .name { font-family: var(--font-data); font-size: 12.5px; letter-spacing: .16em; color: var(--accent); padding-top: 2px; }
+.fx p { color: var(--muted); font-size: 15px; }
+.fx .modes { margin-top: 10px; font-family: var(--font-data); font-size: 11.5px; color: var(--dim); letter-spacing: .04em; }
+@media (max-width: 860px) { .fx { grid-template-columns: 1fr; } .fx article:nth-child(n) { padding-inline: 0; border-left: 0; } .fx article { grid-template-columns: 1fr; gap: 6px; } }
 
-/* ---------- smart features ---------- */
-.smart { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1px; background: var(--line); border: 1px solid var(--line); border-radius: var(--radius); overflow: hidden; }
-.smart > div { background: var(--bg); padding: 26px; display: grid; gap: 8px; align-content: start; }
-.smart p { color: var(--muted); }
-@media (max-width: 760px) { .smart { grid-template-columns: 1fr; } }
-
-/* ---------- screenshot ---------- */
-figure.shot { margin: 0; display: grid; gap: 14px; }
-figure.shot img { width: 100%; height: auto; border-radius: 12px; border: 1px solid var(--line); box-shadow: 0 30px 80px -30px rgba(198,255,66,.18); }
+/* screenshot */
+figure.shot { margin: 0; display: grid; gap: 16px; }
+figure.shot img { width: 100%; height: auto; display: block; border-radius: 16px; border: 1px solid var(--line-2); box-shadow: 0 40px 120px -40px color-mix(in srgb, var(--accent) 30%, transparent); }
 figure.shot figcaption { color: var(--muted); font-size: 14px; }
+.duo { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 56px; align-items: center; }
+@media (max-width: 900px) { .duo { grid-template-columns: 1fr; gap: 32px; } }
+.ticks { list-style: none; margin: 0; padding: 0; display: grid; gap: 14px; }
+.ticks li { display: grid; grid-template-columns: 18px 1fr; gap: 12px; color: var(--muted); }
+.ticks li b { color: var(--text); font-weight: 600; }
+.ticks li::before { content: ""; width: 7px; height: 7px; margin-top: 9px; border-radius: 50%; background: var(--accent); box-shadow: 0 0 8px var(--accent); }
 
-/* ---------- banks ---------- */
-.banks { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 10px; }
-.bank { border: 1px solid var(--line); border-radius: var(--radius); padding: 16px 18px; display: grid; gap: 6px; background: var(--panel-deep); }
+/* banks */
+.banks { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); border-top: 1px solid var(--line); }
+.bank { padding: 18px 20px 18px 0; border-bottom: 1px solid var(--line); display: grid; gap: 4px; }
 .bank header { display: flex; justify-content: space-between; align-items: baseline; gap: 8px; }
 .bank b { font-weight: 600; }
-.bank .n { font-family: var(--font-data); font-size: 12px; color: var(--accent); }
+.bank .n { font-family: var(--font-data); font-size: 11.5px; color: var(--accent); }
 .bank p { color: var(--muted); font-size: 13.5px; }
-.bank.new { border-color: color-mix(in srgb, var(--accent) 55%, var(--line)); }
+.bank .ex { color: var(--dim); font-size: 12.5px; }
+@media (max-width: 900px) { .banks { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 560px) { .banks { grid-template-columns: 1fr; } }
 
-/* ---------- pricing ---------- */
-.price-grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 40px; align-items: center; }
-.card { background: var(--panel); border: 1px solid color-mix(in srgb, var(--accent) 40%, var(--line)); border-radius: 16px; padding: 30px; display: grid; gap: 18px; }
-.card .row { display: flex; align-items: baseline; gap: 14px; flex-wrap: wrap; }
-.card .now { font-family: var(--font-display); font-size: clamp(40px, 6vw, 56px); line-height: 1; }
-.card .old { font-family: var(--font-data); color: var(--muted); text-decoration: line-through; font-size: 18px; }
-.badge { font: 600 12px var(--font-data); background: var(--accent); color: var(--accent-ink); padding: 5px 9px; border-radius: 6px; letter-spacing: .06em; }
-.card ul { list-style: none; padding: 0; margin: 0; display: grid; gap: 9px; }
-.card li { display: grid; grid-template-columns: 18px 1fr; gap: 10px; color: var(--text); font-size: 15px; }
-.card li::before { content: ""; width: 10px; height: 10px; margin-top: 7px; border-radius: 2px; background: var(--accent); }
-.countdown { display: flex; gap: 10px; flex-wrap: wrap; }
-.countdown div { background: var(--panel-deep); border: 1px solid var(--line); border-radius: 8px; padding: 8px 12px; min-width: 64px; text-align: center; }
-.countdown b { display: block; font: 500 22px var(--font-data); font-variant-numeric: tabular-nums; }
-.countdown span { font-size: 11px; color: var(--muted); text-transform: uppercase; letter-spacing: .1em; }
+/* pricing */
+.price-head { display: grid; grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr); gap: 32px; align-items: end; }
+.plans { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; align-items: stretch; }
+.card { position: relative; background: var(--panel); border: 1px solid var(--line-2); border-radius: 18px; padding: 28px; display: grid; gap: 16px; align-content: start; grid-template-rows: auto auto auto 1fr auto; }
+.card.featured { border-color: color-mix(in srgb, var(--accent) 55%, var(--line-2)); box-shadow: 0 30px 90px -50px var(--accent); }
+.card .row { display: flex; align-items: baseline; gap: 12px; flex-wrap: wrap; }
+.card .now { font-family: var(--font-display); font-weight: 300; font-size: clamp(36px, 4.6vw, 48px); line-height: 1; letter-spacing: -.02em; }
+.card .old { font-family: var(--font-data); color: var(--dim); text-decoration: line-through; font-size: 16px; }
+.per { font-family: var(--font-data); color: var(--muted); font-size: 13px; margin: 0; }
+.badge { font: 600 11px var(--font-data); background: var(--accent); color: var(--accent-ink); padding: 4px 8px; border-radius: 999px; letter-spacing: .08em; }
+.card ul { list-style: none; padding: 0; margin: 0; display: grid; gap: 9px; align-content: start; }
+.card li { display: grid; grid-template-columns: 16px 1fr; gap: 10px; color: var(--muted); font-size: 14.5px; }
+.card li::before { content: ""; width: 6px; height: 6px; margin-top: 9px; border-radius: 50%; background: var(--accent); }
+.countdown { display: flex; gap: 8px; flex-wrap: wrap; }
+.countdown div { border: 1px solid var(--line-2); border-radius: 12px; padding: 8px 12px; min-width: 66px; text-align: center; }
+.countdown b { display: block; font: 300 24px var(--font-display); font-variant-numeric: tabular-nums; }
+.countdown span { font: 500 10px var(--font-data); color: var(--muted); text-transform: uppercase; letter-spacing: .14em; }
 .notice { font-size: 14px; color: var(--muted); }
 .notice.on { color: var(--accent); }
-@media (max-width: 860px) { .price-grid { grid-template-columns: 1fr; } }
-.price-head { display: grid; grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr); gap: 32px; align-items: end; }
-.plans { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 18px; align-items: stretch; }
-.plans .card { border-color: var(--line); align-content: start; grid-template-rows: auto auto auto 1fr auto; }
-.plans .card ul { align-content: start; }
-.plans .card.featured { border-color: color-mix(in srgb, var(--accent) 60%, var(--line)); }
-.plans .card .now { font-size: clamp(36px, 5vw, 48px); }
-.plans .per { font-family: var(--font-data); color: var(--muted); font-size: 14px; margin: 0; }
-@media (max-width: 960px) { .plans, .price-head { grid-template-columns: 1fr; } }
+@media (max-width: 980px) { .plans, .price-head { grid-template-columns: 1fr; } }
 
-/* ---------- requirements + faq ---------- */
-.req { width: 100%; border-collapse: collapse; font-size: 15px; }
+/* requirements + faq */
+.two { display: grid; grid-template-columns: minmax(0, .9fr) minmax(0, 1.1fr); gap: 64px; }
+@media (max-width: 880px) { .two { grid-template-columns: 1fr; gap: 44px; } }
+.req { width: 100%; border-collapse: collapse; font-size: 14.5px; }
 .req th, .req td { text-align: left; padding: 14px 0; border-bottom: 1px solid var(--line); vertical-align: top; }
-.req th { width: 34%; color: var(--muted); font-weight: 500; padding-right: 16px; }
-.faq { display: grid; gap: 8px; }
-.faq details { background: var(--panel); border: 1px solid var(--line); border-radius: var(--radius); padding: 4px 20px; }
-.faq summary { cursor: pointer; padding: 16px 0; font-weight: 600; list-style: none; display: flex; justify-content: space-between; gap: 16px; }
+.req th { width: 34%; color: var(--dim); font: 500 11.5px var(--font-data); letter-spacing: .12em; text-transform: uppercase; padding-right: 16px; padding-top: 17px; }
+.faq { border-top: 1px solid var(--line); }
+.faq details { border-bottom: 1px solid var(--line); }
+.faq summary { cursor: pointer; padding: 18px 0; font-weight: 600; list-style: none; display: flex; justify-content: space-between; gap: 16px; }
 .faq summary::-webkit-details-marker { display: none; }
 .faq summary::after { content: "+"; font-family: var(--font-data); color: var(--accent); }
-.faq details[open] summary::after { content: "–"; }
-.faq details p { color: var(--muted); padding-bottom: 18px; max-width: 70ch; }
-.two { display: grid; grid-template-columns: minmax(0, .9fr) minmax(0, 1.1fr); gap: 56px; }
-@media (max-width: 860px) { .two { grid-template-columns: 1fr; gap: 40px; } }
+.faq details[open] summary::after { content: "−"; }
+.faq details p { color: var(--muted); padding-bottom: 20px; max-width: 70ch; }
 
-footer.bottom { border-top: 1px solid var(--line); padding-block: 40px; color: var(--muted); font-size: 13px; }
-footer.bottom .wrap { display: flex; justify-content: space-between; gap: 20px; flex-wrap: wrap; align-items: center; }
-footer.bottom .wordmark { color: var(--text); font-size: 14px; }
+footer.bottom { border-top: 1px solid var(--line); padding-block: 48px; color: var(--dim); font-size: 13px; }
+footer.bottom .wrap { display: grid; grid-template-columns: auto 1fr auto; gap: 28px; align-items: center; }
+footer.bottom .brand span { color: var(--text); font-size: 13px; }
+footer.bottom .tag { font: 500 10.5px var(--font-data); letter-spacing: .22em; }
+footer.bottom a { color: var(--muted); }
+@media (max-width: 760px) { footer.bottom .wrap { grid-template-columns: 1fr; } }
 </style>
+</head>
+<body>
 
 <header class="top">
   <div class="wrap">
-    <a class="wordmark" href="#top">VELTARA</a>
+    <a class="brand" href="#top" aria-label="VELTARA, home"><img src="logo.svg" alt="" width="28" height="28"><span>VELTARA</span></a>
     <nav aria-label="Sections">
       <a href="#listen" data-i18n="nav.listen">Listen</a>
       <a href="#engine" data-i18n="nav.engine">Engine</a>
@@ -229,9 +232,13 @@ footer.bottom .wordmark { color: var(--text); font-size: 14px; }
   <section class="hero" id="listen">
     <div class="wrap">
       <div>
+        <div class="hero-mark">
+          <img src="logo.svg" alt="" width="64" height="64">
+          <div class="wm">VELTARA<small>THE ART OF SOUND TEXTURE</small></div>
+        </div>
         <span class="label">VST3 · AU · Standalone — macOS &amp; Windows</span>
         <h1 data-i18n-html="hero.title">Turn any melody into <em>texture</em>.</h1>
-        <p class="lede" data-i18n="hero.lede">Put VELTARA on a piano, a synth, a guitar or an arp. Pick a preset or hit One Click Magic, and the part starts to stutter, smear, reverse and breathe, locked to your tempo, with the melody still on top.</p>
+        <p class="lede" data-i18n="hero.lede">Put VELTARA on a piano, a synth, a guitar or an arp. Pick a preset and the part starts to stutter, smear, reverse and breathe, locked to your tempo, with the melody still on top.</p>
         <div class="cta">
           <a class="btn primary buy" href="#pricing"><span data-i18n="cta.buy">Get VELTARA</span> · <span class="price-now">$42.50</span> <span class="was">$50</span></a>
           <a class="btn" href="#engine" data-i18n="cta.how">See the engine</a>
@@ -264,9 +271,9 @@ footer.bottom .wordmark { color: var(--text); font-size: 14px; }
 
   <div class="specs" aria-label="Key numbers">
     <div class="wrap">
-      <div class="spec"><b>156</b><span data-i18n="spec.presets">factory presets in 15 banks</span></div>
+      <div class="spec"><b>150</b><span data-i18n="spec.presets">factory presets in 15 banks</span></div>
+      <div class="spec"><b>10</b><span data-i18n="spec.fx">effects, each its own algorithm</span></div>
       <div class="spec"><b>1/2 → 1/32</b><span data-i18n="spec.slices">tempo-synced glitch slices</span></div>
-      <div class="spec"><b>9</b><span data-i18n="spec.slots">reorderable effect slots</span></div>
       <div class="spec"><b>0 ms</b><span data-i18n="spec.latency">added latency</span></div>
       <div class="spec"><b>50–200%</b><span data-i18n="spec.ui">resizable interface</span></div>
     </div>
@@ -280,8 +287,8 @@ footer.bottom .wordmark { color: var(--text); font-size: 14px; }
       </header>
       <div class="steps">
         <div class="step"><h3 data-i18n="how.s1t">Load it on a melody</h3><p data-i18n="how.s1">Insert VELTARA on any instrument or audio track: keys, synths, guitars, arps, vocal chops.</p></div>
-        <div class="step"><h3 data-i18n="how.s2t">Pick a sound</h3><p data-i18n="how.s2">Browse 156 presets by genre or press One Click Magic. It listens to your part and chooses a direction that fits it.</p></div>
-        <div class="step"><h3 data-i18n="how.s3t">Shape it by hand</h3><p data-i18n="how.s3">Drag the XY pad from warm to airy and from pure to textured, then dial in six macros: Texture, Movement, Space, Character, Depth and Density.</p></div>
+        <div class="step"><h3 data-i18n="how.s2t">Pick a sound</h3><p data-i18n="how.s2">Browse 150 presets by genre in a visual browser. Each card shows how much texture, movement and space it brings.</p></div>
+        <div class="step"><h3 data-i18n="how.s3t">Play it by hand</h3><p data-i18n="how.s3">Four macros shape everything: Texture, Movement, Space, Character. Then send the XY pad to one effect and play it like an instrument.</p></div>
       </div>
     </div>
   </section>
@@ -290,60 +297,37 @@ footer.bottom .wordmark { color: var(--text); font-size: 14px; }
     <div class="wrap">
       <header>
         <span class="label" data-i18n="engine.eyebrow">The engine</span>
-        <h2 data-i18n="engine.title">Seven modules. Each one has a personality.</h2>
-        <p class="lede" data-i18n="engine.lede">Every module has styles that change how it behaves, not just how much. Turn them on, off, or reorder the chain.</p>
+        <h2 data-i18n="engine.title">Ten effects. Ten different algorithms.</h2>
+        <p class="lede" data-i18n="engine.lede">Every mode is its own processing, not the same effect under another name. A tape delay wobbles and darkens; a digital one stays exact. A folder sounds metallic; a tube adds warmth.</p>
       </header>
-      <div class="rack">
-        <div class="slot hot">
-          <div class="name">GLITCH<small data-i18n="engine.new">NEW IN v0.4</small></div>
-          <p data-i18n="engine.glitch">Cuts your part into slices synced to the host tempo and edits them: retriggers, backspins, tape stops, reorders. 16 patterns that repeat every two bars, so the edits groove instead of sounding random.</p>
-          <div class="modes"><span class="mode">Stutter 2–16x</span><span class="mode">Reverse</span><span class="mode">Tape Stop</span><span class="mode">Shuffle</span><span class="mode">Chaos</span><span class="mode">1/16T</span></div>
-        </div>
-        <div class="slot">
-          <div class="name">GRAIN</div>
-          <p data-i18n="engine.grain">Live granular clouds from your own audio: size, density, position, pitch, reverse grains, harmonic intervals and Freeze.</p>
-          <div class="modes"><span class="mode">64 grains</span><span class="mode">±24 st</span><span class="mode">Harmonic</span><span class="mode">Freeze</span></div>
-        </div>
-        <div class="slot">
-          <div class="name">DRIVE</div>
-          <p data-i18n="engine.drive">Four saturation curves with anti-aliasing, plus a tone tilt from dark to bright.</p>
-          <div class="modes"><span class="mode">Tape</span><span class="mode">Tube</span><span class="mode">Fuzz</span><span class="mode">Fold</span></div>
-        </div>
-        <div class="slot">
-          <div class="name">MOD FX</div>
-          <p data-i18n="engine.mod">From a lush string-machine ensemble to a jet flanger and a six-stage phaser with feedback.</p>
-          <div class="modes"><span class="mode">Chorus</span><span class="mode">Ensemble</span><span class="mode">Flanger</span><span class="mode">Phaser</span></div>
-        </div>
-        <div class="slot">
-          <div class="name">DELAY</div>
-          <p data-i18n="engine.delay">Echoes that duck under your playing and bloom in the gaps. Tape adds wow and flutter; Reverse makes every repeat swell backwards.</p>
-          <div class="modes"><span class="mode">Digital</span><span class="mode">Tape</span><span class="mode">Diffuse</span><span class="mode">Reverse</span><span class="mode">Ducking</span></div>
-        </div>
-        <div class="slot">
-          <div class="name">LO-FI</div>
-          <p data-i18n="engine.lofi">Wobbly tape pitch, bit and sample-rate reduction, and hiss with crackle that only plays while your part does.</p>
-          <div class="modes"><span class="mode">Wow &amp; Flutter</span><span class="mode">2–16 bit</span><span class="mode">Noise</span></div>
-        </div>
-        <div class="slot">
-          <div class="name">REVERB</div>
-          <p data-i18n="engine.reverb">A modulated eight-line reverb with octave shimmer, a low cut that keeps the bass clean, and a Freeze that holds the tail forever.</p>
-          <div class="modes"><span class="mode">Room</span><span class="mode">Hall</span><span class="mode">Cloud</span><span class="mode">Shimmer</span><span class="mode">Freeze</span></div>
-        </div>
+      <div class="fx">
+        <article><div class="name">GLITCH</div><div><p data-i18n="engine.glitch">Cuts your part into tempo-synced slices and edits them: retriggers, backspins, tape stops, reorders, thrown across the stereo field.</p><div class="modes">Chaos · Stutter · Reverse · Tape Stop · Shuffle</div></div></article>
+        <article><div class="name">GRAIN</div><div><p data-i18n="engine.grain">Live granular clouds from your own audio: size, density, position, pitch, reverse grains, harmonic intervals and Freeze.</p><div class="modes">64 grains · ±24 st · Freeze</div></div></article>
+        <article><div class="name">FILTER</div><div><p data-i18n="engine.filter">A resonant multimode filter that morphs between shapes and sweeps musically across the spectrum.</p><div class="modes">Cutoff · Resonance · Morph</div></div></article>
+        <article><div class="name">DRIVE</div><div><p data-i18n="engine.drive">Four saturation curves with anti-aliasing: soft dark tape, warm tube with even harmonics, hard fuzz and a metallic wave folder.</p><div class="modes">Tape · Tube · Fuzz · Fold</div></div></article>
+        <article><div class="name">MOD FX</div><div><p data-i18n="engine.mod">From a lush ensemble to a resonant jet flanger and a deep six-stage phaser.</p><div class="modes">Chorus · Ensemble · Flanger · Phaser</div></div></article>
+        <article><div class="name">LO-FI</div><div><p data-i18n="engine.lofi">Worn-tape wobble that drifts on each side, bit and sample-rate reduction, and hiss that only plays while your part does.</p><div class="modes">Wow · Bits · Rate · Noise</div></div></article>
+        <article><div class="name">DELAY</div><div><p data-i18n="engine.delay">Echoes that duck under your playing. Digital is exact, Tape wobbles and saturates every pass, Diffuse smears, Reverse swells backwards.</p><div class="modes">Digital · Tape · Diffuse · Reverse</div></div></article>
+        <article><div class="name">REVERB</div><div><p data-i18n="engine.reverb">A modulated eight-line reverb with octave shimmer, a low cut that keeps the bass clean, and a Freeze that holds the tail.</p><div class="modes">Size · Decay · Shimmer · Freeze</div></div></article>
+        <article><div class="name">SPECTRAL</div><div><p data-i18n="engine.spectral">Works on the frequencies themselves: blurs them, shifts them and scatters partials into a glassy cloud.</p><div class="modes">Blur · Shift · Scatter</div></div></article>
+        <article><div class="name">HARMONY</div><div><p data-i18n="engine.harmony">Stacks pitched voices around your melody, spread and detuned into choirs and fifths.</p><div class="modes">Voices · Spread · Detune</div></div></article>
       </div>
     </div>
   </section>
 
   <section class="block" style="padding-top:0">
-    <div class="wrap">
-      <header>
-        <span class="label" data-i18n="smart.eyebrow">Built for melodies</span>
-        <h2 data-i18n="smart.title">Heavy texture. The hook stays on top.</h2>
-      </header>
-      <div class="smart">
-        <div><h3>Melody Preservation</h3><p data-i18n="smart.preserve">Pulls the texture back while a note speaks and carves a little space around 2 kHz, so the melody keeps cutting through.</p></div>
-        <div><h3>Texture Follower</h3><p data-i18n="smart.follow">Reads your dynamics: play harder and the grains get denser and shorter; let a note ring and the space opens up.</p></div>
-        <div><h3>Texture Evolution</h3><p data-i18n="smart.evolve">Slow random motion reshapes the filter, grain position and density over 4 to 12 seconds, so a loop never sounds frozen.</p></div>
-        <div><h3>Preset Morphing</h3><p data-i18n="smart.morph">Store two sounds as A and B and slide between them. Frequencies move on a musical scale and the position is saved with your session.</p></div>
+    <div class="wrap duo">
+      <figure class="shot">
+        <img src="veltara-pad-effects.webp" width="1100" height="440" alt="The XY pad drawing ten effects: filter curve, saturation curve, modulation wave, stepped lo-fi wave, delay echoes, reverb cloud, glitch slices, spectral bars, harmony voices and grain swarm." loading="lazy">
+      </figure>
+      <div style="display:grid; gap:18px">
+        <span class="label" data-i18n="pad.eyebrow">XY pad</span>
+        <h2 data-i18n="pad.title">A pad you play, not a pad you look at.</h2>
+        <ul class="ticks">
+          <li data-i18n-html="pad.l1"><span><b>Pick the effect it plays.</b> Each one has its own two axes: cutoff and resonance for the filter, feedback and width for the delay, size and density for grains.</span></li>
+          <li data-i18n-html="pad.l2"><span><b>The centre is your preset.</b> Move away to explore, double-click to come back.</span></li>
+          <li data-i18n-html="pad.l3"><span><b>Smooth and click-free</b>, audible while you drag, and saved with your session.</span></li>
+        </ul>
       </div>
     </div>
   </section>
@@ -351,8 +335,8 @@ footer.bottom .wordmark { color: var(--text); font-size: 14px; }
   <section class="block" style="padding-top:0">
     <div class="wrap">
       <figure class="shot">
-        <img src="veltara-ui.webp" width="1100" height="780" alt="VELTARA plugin window: XY pad, six macro knobs, output meters and the Glitch module panel." loading="lazy">
-        <figcaption data-i18n="shot.caption">The whole instrument on one screen. Choose the window size from 50% to 200%, or drag the corner.</figcaption>
+        <img src="veltara-ui.webp" width="1100" height="780" alt="VELTARA plugin window: XY pad, four macro knobs with LED rings, output meters and eight performance pads." loading="lazy">
+        <figcaption data-i18n="shot.caption">The whole instrument on one screen: four macros, the XY pad, eight performance pads. ADVANCED opens four effect knobs: Grit, Mod FX, Echoes, Spectrum.</figcaption>
       </figure>
     </div>
   </section>
@@ -361,34 +345,34 @@ footer.bottom .wordmark { color: var(--text); font-size: 14px; }
     <div class="wrap">
       <header>
         <span class="label" data-i18n="banks.eyebrow">Factory library</span>
-        <h2 data-i18n="banks.title">156 presets, level-matched and genre-ready.</h2>
-        <p class="lede" data-i18n="banks.lede">Every preset is measured against the dry signal, so switching never jumps in volume. Each bank has its own glitch style and its own effects.</p>
+        <h2 data-i18n="banks.title">150 presets. Every one sounds different.</h2>
+        <p class="lede" data-i18n="banks.lede">Each preset is level-matched against the dry signal, so switching never jumps in volume, and checked against the rest of the library so no two sound alike.</p>
       </header>
       <div class="banks" id="banks"></div>
     </div>
   </section>
 
   <section class="block" id="pricing" style="padding-top:0">
-    <div class="wrap" style="display:grid; gap:28px">
+    <div class="wrap" style="display:grid; gap:32px">
       <div class="price-head">
-        <div style="display:grid; gap:14px">
+        <div style="display:grid; gap:16px">
           <span class="label" data-i18n="price.eyebrow">Pricing</span>
           <h2 data-i18n="price.title">Buy it once, or get every pack.</h2>
           <p class="lede" data-i18n="price.lede">Own VELTARA for a one-time $50, or join VELTARA Plus for new expansion packs every month. Twelve months of Plus and VELTARA is yours for good.</p>
         </div>
         <div id="countdown-wrap" style="display:grid; gap:10px">
-          <span class="label" id="countdown-label" data-i18n="price.until">Launch price ends in</span>
+          <span class="label plain" id="countdown-label" data-i18n="price.until">Launch price ends in</span>
           <div class="countdown" id="countdown" aria-live="polite"></div>
         </div>
       </div>
       <div class="plans">
         <div class="card">
-          <span class="label" data-i18n="plan.perp">Perpetual</span>
+          <span class="label plain" data-i18n="plan.perp">Perpetual</span>
           <div class="row"><span class="now price-now">$42.50</span><span class="old">$50.00</span><span class="badge">−15%</span></div>
           <p class="per" data-i18n="plan.perpPer">one-time payment</p>
           <ul>
             <li data-i18n="price.i1">VST3, AU and Standalone for macOS (Apple Silicon and Intel) and Windows</li>
-            <li data-i18n="price.i2">156 factory presets in 15 banks, plus your own libraries</li>
+            <li data-i18n="price.i2">150 factory presets in 15 banks, plus your own libraries</li>
             <li data-i18n="plan.perp1">Free and included expansion packs</li>
             <li data-i18n="price.i4">Free updates for every 1.x version</li>
             <li data-i18n="plan.perp2">3 computers · works 60 days offline</li>
@@ -401,7 +385,7 @@ footer.bottom .wordmark { color: var(--text); font-size: 14px; }
           <p class="per" data-i18n="plan.rto">12 months and it's yours for good</p>
           <ul>
             <li data-i18n="plan.plus1">Everything in Perpetual</li>
-            <li data-i18n="plan.plus2">Every monthly expansion pack: presets, textures and MOTION grooves</li>
+            <li data-i18n="plan.plus2">Every monthly expansion pack: new presets and textures</li>
             <li data-i18n="plan.plus3">Genre libraries and engine updates as they ship</li>
             <li data-i18n="plan.plus4">3 computers · checks in at each renewal</li>
             <li data-i18n="plan.plus5">Cancel anytime</li>
@@ -409,12 +393,12 @@ footer.bottom .wordmark { color: var(--text); font-size: 14px; }
           <a class="btn primary buy" href="#pricing" data-plan="monthly"><span data-i18n="plan.start">Start VELTARA Plus</span></a>
         </div>
         <div class="card">
-          <span class="label" data-i18n="plan.plusY">VELTARA Plus · yearly</span>
+          <span class="label plain" data-i18n="plan.plusY">VELTARA Plus · yearly</span>
           <div class="row"><span class="now">$69</span><span class="per" data-i18n="plan.year">/ year</span><span class="badge" data-i18n="plan.save">SAVE 28%</span></div>
           <p class="per" data-i18n="plan.rtoY">one year paid = yours for good</p>
           <ul>
             <li data-i18n="plan.plus1">Everything in Perpetual</li>
-            <li data-i18n="plan.plus2">Every monthly expansion pack: presets, textures and MOTION grooves</li>
+            <li data-i18n="plan.plus2">Every monthly expansion pack: new presets and textures</li>
             <li data-i18n="plan.plus3">Genre libraries and engine updates as they ship</li>
             <li data-i18n="plan.plus4">3 computers · checks in at each renewal</li>
           </ul>
@@ -427,26 +411,26 @@ footer.bottom .wordmark { color: var(--text); font-size: 14px; }
 
   <section class="block" id="faq" style="padding-top:0">
     <div class="wrap two">
-      <div style="display:grid; gap:20px; align-content:start">
+      <div style="display:grid; gap:22px; align-content:start">
         <span class="label" data-i18n="req.eyebrow">System requirements</span>
         <div style="overflow-x:auto">
           <table class="req">
             <tbody>
               <tr><th>macOS</th><td data-i18n="req.mac">macOS 10.15 or later · Apple Silicon (M1–M4) and Intel · VST3, AU, Standalone</td></tr>
               <tr><th>Windows</th><td data-i18n="req.win">Windows 10 or 11, 64-bit · VST3, Standalone</td></tr>
-              <tr><th data-i18n="req.hosts">Tested hosts</th><td>Ableton Live, Logic Pro, FL Studio, Cubase, Studio One, Reaper, Bitwig</td></tr>
-              <tr><th data-i18n="req.cpu">CPU</th><td data-i18n="req.cpuv">About 2% of one core at 48 kHz on a dense preset</td></tr>
+              <tr><th data-i18n="req.hosts">Hosts</th><td>Ableton Live, Logic Pro, FL Studio, Cubase, Studio One, Reaper, Bitwig</td></tr>
+              <tr><th data-i18n="req.cpu">CPU</th><td data-i18n="req.cpuv">About 3% of one core at 48 kHz, a few percent more with every effect on</td></tr>
               <tr><th data-i18n="req.rates">Sample rates</th><td>44.1 – 192 kHz</td></tr>
             </tbody>
           </table>
         </div>
       </div>
-      <div style="display:grid; gap:20px; align-content:start">
+      <div style="display:grid; gap:22px; align-content:start">
         <span class="label">FAQ</span>
         <div class="faq">
           <details><summary data-i18n="faq.q1">Is this a subscription?</summary><p data-i18n="faq.a1">Your choice. The Perpetual license is a one-time payment and it is yours. VELTARA Plus is a subscription that adds every monthly expansion pack.</p></details>
           <details><summary data-i18n="faq.q7">How does rent-to-own work?</summary><p data-i18n="faq.a7">After 12 monthly payments of VELTARA Plus (or one yearly payment), your license turns into a perpetual one automatically: VELTARA is yours for good, on every computer, with nothing to do. If you cancel later, you keep VELTARA and the packs.</p></details>
-          <details><summary data-i18n="faq.q8">What is in an expansion pack?</summary><p data-i18n="faq.a8">New presets, textures and MOTION grooves, one pack a month, installed from the PACKS button inside the plugin. Some packs are free for everyone; Plus members get all of them.</p></details>
+          <details><summary data-i18n="faq.q8">What is in an expansion pack?</summary><p data-i18n="faq.a8">New presets and textures, one pack a month, installed from the PACKS button inside the plugin. Some packs are free for everyone; Plus members get all of them.</p></details>
           <details><summary data-i18n="faq.q2">Does it need an internet connection?</summary><p data-i18n="faq.a2">To activate (you approve the computer in your browser) and for a quick license check now and then: Perpetual works up to 60 days offline; Plus checks in around each renewal. No internet on the studio computer? Activate it offline with a file. Audio processing never depends on a connection.</p></details>
           <details><summary data-i18n="faq.q3">Will the glitch follow my project tempo?</summary><p data-i18n="faq.a3">Yes. Slices lock to your DAW's tempo and bar position, from half notes down to 1/32 and triplets. Press play in your DAW and the edits land on the grid.</p></details>
           <details><summary data-i18n="faq.q4">Can I use it on vocals and drums?</summary><p data-i18n="faq.a4">Yes. It was designed around melodic parts, but stutters and tape stops on drum loops and vocal chops work well.</p></details>
@@ -460,9 +444,10 @@ footer.bottom .wordmark { color: var(--text); font-size: 14px; }
 
 <footer class="bottom">
   <div class="wrap">
-    <span><span class="wordmark">VELTARA</span> &nbsp;·&nbsp; THE ART OF SOUND TEXTURE</span>
-    <span><span data-i18n="foot.contact">Support</span>: <a href="mailto:admitonepr@gmail.com" style="color:inherit">admitonepr@gmail.com</a></span>
-    <span>© 2026 Veltara Audio · <span data-i18n="foot.trademarks">VST is a trademark of Steinberg Media Technologies GmbH. Audio Units and macOS are trademarks of Apple Inc.</span></span>
+    <a class="brand" href="#top" aria-label="VELTARA, back to top"><img src="logo.svg" alt="" width="24" height="24"><span>VELTARA</span></a>
+    <span class="tag">THE ART OF SOUND TEXTURE</span>
+    <span><span data-i18n="foot.contact">Support</span>: <a href="mailto:admitonepr@gmail.com">admitonepr@gmail.com</a></span>
+    <span style="grid-column:1/-1">© 2026 Veltara Audio · <span data-i18n="foot.trademarks">VST is a trademark of Steinberg Media Technologies GmbH. Audio Units and macOS are trademarks of Apple Inc.</span></span>
   </div>
 </footer>
 
@@ -484,57 +469,58 @@ const ES = {
   "nav.listen": "Escuchar", "nav.engine": "Motor", "nav.presets": "Presets", "nav.pricing": "Precio", "nav.faq": "Preguntas",
   "cta.buyShort": "Comprar", "cta.buy": "Comprar VELTARA", "cta.how": "Ver el motor",
   "hero.title": "Convierte cualquier melodía en <em>textura</em>.",
-  "hero.lede": "Pon VELTARA en un piano, un synth, una guitarra o un arpegio. Elige un preset o pulsa One Click Magic y la parte empieza a cortarse, difuminarse, ir al revés y respirar, sincronizada con tu tempo y con la melodía siempre arriba.",
+  "hero.lede": "Pon VELTARA en un piano, un synth, una guitarra o un arpegio. Elige un preset y la parte empieza a cortarse, difuminarse, ir al revés y respirar, sincronizada con tu tempo y con la melodía siempre arriba.",
   "hero.fine": "Cómpralo una vez, o recibe cada pack nuevo con VELTARA Plus. Precio de lanzamiento por tiempo limitado.",
   "player.title": "Misma melodía · pulsa A/B",
   "player.note": "Renderizado por el plugin a partir de un arpegio a 120 BPM. Los niveles están igualados: escuchas la textura, no un salto de volumen.",
-  "spec.presets": "presets de fábrica en 15 bancos", "spec.slices": "cortes de glitch sincronizados", "spec.slots": "módulos de efecto reordenables",
+  "spec.presets": "presets de fábrica en 15 bancos", "spec.slices": "cortes de glitch sincronizados", "spec.fx": "efectos, cada uno con su algoritmo",
   "spec.latency": "de latencia añadida", "spec.ui": "interfaz redimensionable",
   "how.eyebrow": "Cómo funciona", "how.title": "Tres pasos de lo plano a lo terminado.",
   "how.s1t": "Cárgalo en una melodía", "how.s1": "Inserta VELTARA en cualquier instrumento o pista de audio: teclados, synths, guitarras, arpegios, chops vocales.",
-  "how.s2t": "Elige un sonido", "how.s2": "Explora 156 presets por género o pulsa One Click Magic. Escucha tu parte y elige una dirección que le quede.",
-  "how.s3t": "Dale forma a mano", "how.s3": "Arrastra el pad XY de cálido a aireado y de puro a texturizado, y ajusta seis macros: Texture, Movement, Space, Character, Depth y Density.",
-  "engine.eyebrow": "El motor", "engine.title": "Siete módulos. Cada uno con personalidad.",
-  "engine.lede": "Cada módulo tiene estilos que cambian cómo se comporta, no solo cuánto. Actívalos, desactívalos o cambia el orden de la cadena.",
-  "engine.new": "NUEVO EN v0.4",
-  "engine.glitch": "Corta tu parte en fragmentos sincronizados con el tempo y los edita: repeticiones, backspins, tape stops, reordenamientos. 16 patrones que se repiten cada dos compases, así que los cortes van con el groove en vez de sonar al azar.",
+  "how.s2t": "Elige un sonido", "how.s2": "Explora 150 presets por género en un navegador visual. Cada tarjeta muestra cuánta textura, movimiento y espacio aporta.",
+  "how.s3t": "Tócalo a mano", "how.s3": "Cuatro macros le dan forma a todo: Texture, Movement, Space y Character. Luego manda el pad XY a un efecto y tócalo como un instrumento.",
+  "engine.eyebrow": "El motor", "engine.title": "Diez efectos. Diez algoritmos distintos.",
+  "engine.lede": "Cada modo es su propio procesamiento, no el mismo efecto con otro nombre. Un delay de cinta se tambalea y se oscurece; uno digital se queda exacto. Un folder suena metálico; un tubo da calor.",
+  "engine.glitch": "Corta tu parte en fragmentos sincronizados con el tempo y los edita: repeticiones, backspins, tape stops, reordenamientos, lanzados por todo el estéreo.",
+  "engine.filter": "Un filtro multimodo resonante que se transforma entre formas y barre el espectro de forma musical.",
+  "engine.spectral": "Trabaja sobre las frecuencias mismas: las difumina, las desplaza y dispersa los parciales en una nube de cristal.",
+  "engine.harmony": "Apila voces afinadas alrededor de tu melodía, abiertas y desafinadas en coros y quintas.",
+  "pad.eyebrow": "Pad XY", "pad.title": "Un pad que se toca, no un pad que se mira.",
+  "pad.l1": "<span><b>Elige el efecto que toca.</b> Cada uno tiene sus propios dos ejes: corte y resonancia en el filtro, feedback y anchura en el delay, tamaño y densidad en los granos.</span>",
+  "pad.l2": "<span><b>El centro es tu preset.</b> Aléjate para explorar, doble clic para volver.</span>",
+  "pad.l3": "<span><b>Suave y sin clics</b>, se oye mientras arrastras y se guarda con tu sesión.</span>",
   "engine.grain": "Nubes granulares en vivo a partir de tu propio audio: tamaño, densidad, posición, pitch, granos al revés, intervalos armónicos y Freeze.",
-  "engine.drive": "Cuatro curvas de saturación con anti-aliasing, más un control de tono de oscuro a brillante.",
-  "engine.mod": "Desde un ensemble exuberante tipo string machine hasta un flanger de avión y un phaser de seis etapas con feedback.",
-  "engine.delay": "Ecos que bajan mientras tocas y florecen en los silencios. Tape añade wow y flutter; Reverse hace que cada repetición crezca al revés.",
-  "engine.lofi": "Pitch tembloroso de cinta, reducción de bits y de frecuencia de muestreo, y un hiss con crackle que solo suena mientras suena tu parte.",
-  "engine.reverb": "Una reverb modulada de ocho líneas con shimmer de octava, un low cut que mantiene limpio el bajo y un Freeze que sostiene la cola para siempre.",
-  "smart.eyebrow": "Hecho para melodías", "smart.title": "Mucha textura. El hook sigue arriba.",
-  "smart.preserve": "Baja la textura mientras suena una nota y abre un poco de espacio alrededor de 2 kHz para que la melodía siga cortando.",
-  "smart.follow": "Lee tu dinámica: toca más fuerte y los granos se vuelven más densos y cortos; deja sonar una nota y el espacio se abre.",
-  "smart.evolve": "Un movimiento lento y aleatorio cambia el filtro, la posición y la densidad de los granos cada 4 a 12 segundos, para que un loop nunca suene congelado.",
-  "smart.morph": "Guarda dos sonidos como A y B y deslízate entre ellos. Las frecuencias se mueven en escala musical y la posición se guarda con tu sesión.",
-  "shot.caption": "Todo el instrumento en una pantalla. Elige el tamaño de la ventana entre 50 % y 200 %, o arrastra la esquina.",
-  "banks.eyebrow": "Librería de fábrica", "banks.title": "156 presets, igualados en volumen y listos por género.",
-  "banks.lede": "Cada preset está medido contra la señal seca, así que cambiar de uno a otro nunca da saltos de volumen. Cada banco tiene su propio estilo de glitch y sus propios efectos.",
+  "engine.drive": "Cuatro curvas de saturación con anti-aliasing: cinta suave y oscura, tubo cálido con armónicos pares, fuzz duro y un wave folder metálico.",
+  "engine.mod": "Desde un ensemble exuberante hasta un flanger de avión resonante y un phaser profundo de seis etapas.",
+  "engine.delay": "Ecos que bajan mientras tocas. Digital es exacto, Tape se tambalea y satura en cada pasada, Diffuse se emborrona, Reverse crece al revés.",
+  "engine.lofi": "Tambaleo de cinta gastada distinto en cada lado, reducción de bits y de frecuencia de muestreo, y un hiss que solo suena mientras suena tu parte.",
+  "engine.reverb": "Una reverb modulada de ocho líneas con shimmer de octava, un low cut que mantiene limpio el bajo y un Freeze que sostiene la cola.",
+  "shot.caption": "Todo el instrumento en una pantalla: cuatro macros, el pad XY y ocho pads de performance. ADVANCED abre cuatro knobs de efectos: Grit, Mod FX, Echoes y Spectrum.",
+  "banks.eyebrow": "Librería de fábrica", "banks.title": "150 presets. Cada uno suena distinto.",
+  "banks.lede": "Cada preset está igualado en volumen contra la señal seca, así que cambiar nunca da saltos, y comparado con el resto de la librería para que no haya dos iguales.",
   "price.eyebrow": "Precio", "price.title": "Cómpralo una vez, o recibe cada pack.",
   "price.lede": "Ten VELTARA para siempre con un pago único de $50, o únete a VELTARA Plus y recibe packs de expansión nuevos cada mes. Doce meses de Plus y VELTARA es tuyo para siempre.",
   "plan.perp": "Perpetua", "plan.perpPer": "pago único", "plan.perp1": "Packs de expansión gratis e incluidos",
   "plan.perp2": "3 computadoras · funciona 60 días sin conexión",
   "plan.plusM": "VELTARA Plus · mensual", "plan.plusY": "VELTARA Plus · anual", "plan.month": "/ mes", "plan.year": "/ año",
   "plan.rto": "12 meses y es tuyo para siempre", "plan.rtoY": "un año pagado = tuyo para siempre", "plan.save": "AHORRA 28 %",
-  "plan.plus1": "Todo lo de la Perpetua", "plan.plus2": "Cada pack de expansión mensual: presets, texturas y grooves de MOTION",
+  "plan.plus1": "Todo lo de la Perpetua", "plan.plus2": "Cada pack de expansión mensual: presets y texturas nuevas",
   "plan.plus3": "Librerías por género y mejoras del motor según salgan", "plan.plus4": "3 computadoras · se verifica en cada renovación",
   "plan.plus5": "Cancela cuando quieras", "plan.start": "Empezar VELTARA Plus", "plan.startY": "Un año de Plus",
   "price.until": "El precio de lanzamiento termina en", "price.starts": "El lanzamiento empieza en", "price.over": "El precio de lanzamiento terminó",
   "price.i1": "VST3, AU y Standalone para macOS (Apple Silicon e Intel) y Windows",
-  "price.i2": "156 presets de fábrica en 15 bancos, más tus propias librerías",
+  "price.i2": "150 presets de fábrica en 15 bancos, más tus propias librerías",
   "price.i3": "Motores de glitch, granular, drive, mod FX, delay, lo-fi y reverb",
   "price.i4": "Actualizaciones gratis para toda la versión 1.x",
   "price.i5": "Actívalo hasta en 3 de tus computadoras",
   "price.secure": "Pago seguro. Los impuestos se calculan al pagar.",
   "price.soon": "La tienda abre el día del lanzamiento: 12 de enero de 2027.",
   "req.eyebrow": "Requisitos del sistema", "req.mac": "macOS 10.15 o posterior · Apple Silicon (M1–M4) e Intel · VST3, AU, Standalone",
-  "req.win": "Windows 10 u 11, 64 bits · VST3, Standalone", "req.hosts": "DAWs probados", "req.cpu": "CPU",
-  "req.cpuv": "Cerca del 2 % de un núcleo a 48 kHz en un preset denso", "req.rates": "Frecuencias de muestreo",
+  "req.win": "Windows 10 u 11, 64 bits · VST3, Standalone", "req.hosts": "DAWs", "req.cpu": "CPU",
+  "req.cpuv": "Cerca del 3 % de un núcleo a 48 kHz, unos pocos puntos más con todos los efectos encendidos", "req.rates": "Frecuencias de muestreo",
   "faq.q1": "¿Es una suscripción?", "faq.a1": "Tú eliges. La licencia Perpetua es un pago único y es tuya. VELTARA Plus es una suscripción que añade cada pack de expansión mensual.",
   "faq.q7": "¿Cómo funciona el rent-to-own?", "faq.a7": "Tras 12 pagos mensuales de VELTARA Plus (o un pago anual), tu licencia se convierte sola en perpetua: VELTARA es tuyo para siempre, en todas tus computadoras, sin hacer nada. Si cancelas después, te quedas con VELTARA y los packs.",
-  "faq.q8": "¿Qué trae un pack de expansión?", "faq.a8": "Presets, texturas y grooves de MOTION nuevos, un pack al mes, que se instalan desde el botón PACKS dentro del plugin. Algunos packs son gratis para todos; los miembros Plus los reciben todos.",
+  "faq.q8": "¿Qué trae un pack de expansión?", "faq.a8": "Presets y texturas nuevas, un pack al mes, que se instalan desde el botón PACKS dentro del plugin. Algunos packs son gratis para todos; los miembros Plus los reciben todos.",
   "faq.q2": "¿Necesita conexión a internet?", "faq.a2": "Para activar (apruebas la computadora en tu navegador) y para una verificación rápida de vez en cuando: la Perpetua funciona hasta 60 días sin conexión; Plus se verifica en cada renovación. ¿La computadora del estudio no tiene internet? Se activa sin conexión con un archivo. El procesamiento de audio nunca depende de la conexión.",
   "faq.q3": "¿El glitch sigue el tempo de mi proyecto?", "faq.a3": "Sí. Los cortes se sincronizan con el tempo y la posición de compás de tu DAW, desde blancas hasta 1/32 y tresillos. Dale play en tu DAW y los cortes caen en la rejilla.",
   "faq.q4": "¿Lo puedo usar en voces y baterías?", "faq.a4": "Sí. Está pensado para partes melódicas, pero los stutters y tape stops funcionan muy bien en loops de batería y chops vocales.",
@@ -564,6 +550,7 @@ function setLang(next) {
   try { localStorage.setItem("veltara-lang", next); } catch (e) {}
   renderBanks();
   tickCountdown();
+  drawWave();
 }
 document.querySelectorAll(".lang button").forEach(b => b.addEventListener("click", () => setLang(b.dataset.lang)));
 
@@ -615,19 +602,19 @@ document.querySelectorAll(".buy").forEach(a => {
 const BANKS = [
   ["Signature", 24, "Sombra · Perreo Nocturno · Hollow Crown", "The VELTARA sound: dark, cinematic, urbano"],
   ["Spectral", 12, "Data Choir · Doubler Wide · Fifth Stack", "Spectral blur, shift and scatter"],
-  ["Ambient Melodies", 9, "First Light · Slow Tide · Paper Lanterns", "Reverse glitch, soft halos"],
-  ["Dark Textures", 9, "Undertow · Black Velvet · Abyss Choir", "Tape stops, octave-down grains"],
+  ["Ambient Melodies", 8, "First Light · Slow Tide · Glass Garden", "Reverse glitch, soft halos"],
+  ["Dark Textures", 8, "Undertow · Black Velvet · Abyss Choir", "Tape stops, octave-down grains"],
   ["R&B", 9, "Velvet Room · Silk Rhodes · After Hours", "Subtle tape stops, ensemble chorus"],
   ["Trap", 9, "Midnight Bells · Ghost Flute · Reverse Omen", "1/16 stutters, triplet echoes"],
-  ["Reggaeton", 9, "Dembow Glow · Calle Luna · Perreo Haze", "Shuffled eighths, dotted delays"],
-  ["Afrobeat", 9, "Lagos Sunset · Kalimba Dust · Palm Wine", "Shuffled sixteenths, ping-pong"],
+  ["Reggaeton", 8, "Dembow Glow · Calle Luna · Perreo Haze", "Shuffled eighths, dotted delays"],
+  ["Afrobeat", 8, "Lagos Sunset · Kalimba Dust · Palm Wine", "Shuffled sixteenths, ping-pong"],
   ["Cinematic", 9, "Titan Rise · Northern Lights · Starfield", "Reverse slices, cloud reverb"],
   ["Electronic", 9, "Pulse Lattice · Circuit Bloom · Acid Fog", "Chaos glitch, phaser, flanger"],
   ["Vintage", 9, "Tape Memory · Dusty Vinyl · Cassette Dream", "Tape stops, wow & flutter, crackle"],
   ["Glitch", 12, "Stutter Gun · Backspin City · Tape Stop Drama", "Edits first"],
   ["Experimental", 9, "Fractal Rain · Time Fold · Mutant Choir", "1/32 chaos, wave folding"],
-  ["Dreamy", 9, "Cloud Nine · Lucid Waves · Silver Lining", "Reverse glitch, shimmer"],
-  ["Atmospheric", 9, "Open Sky · Weather System · Aurora Field", "Reverse glitch, diffuse echoes"],
+  ["Dreamy", 8, "Cloud Nine · Lucid Waves · Silver Lining", "Reverse glitch, shimmer"],
+  ["Atmospheric", 8, "Open Sky · Weather System · Aurora Field", "Reverse glitch, diffuse echoes"],
 ];
 const BANK_ES = {
   "Reverse glitch, soft halos": "Glitch reverse, halos suaves", "Tape stops, octave-down grains": "Tape stops, granos una octava abajo",
@@ -642,10 +629,10 @@ const BANK_ES = {
 function renderBanks() {
   const el = document.getElementById("banks");
   el.innerHTML = BANKS.map(([name, n, examples, style]) => `
-    <article class="bank${name === "Signature" ? " new" : ""}">
-      <header><b>${name}</b><span class="n">${n} presets</span></header>
+    <article class="bank">
+      <header><b>${name}</b><span class="n">${String(n).padStart(2, "0")}</span></header>
       <p>${lang === "es" ? (BANK_ES[style] || style) : style}</p>
-      <p style="color:var(--text);font-size:13px">${examples}</p>
+      <p class="ex">${examples}</p>
     </article>`).join("");
 }
 
@@ -761,7 +748,7 @@ function drawWave() {
   g.setTransform(dpr, 0, 0, dpr, 0, 0);
   g.clearRect(0, 0, w, h);
   const css = getComputedStyle(document.documentElement);
-  const accent = css.getPropertyValue("--accent").trim(), muted = css.getPropertyValue("--muted").trim(), line = css.getPropertyValue("--line").trim();
+  const accent = css.getPropertyValue("--accent").trim(), muted = css.getPropertyValue("--muted").trim(), line = css.getPropertyValue("--line-2").trim();
   const bars = Math.max(60, Math.floor(w / 4));
   const draw = (buf, color, alpha) => {
     if (!buf) return;
@@ -795,3 +782,5 @@ applyPrices();
 setLang(initial);
 drawWave();
 </script>
+</body>
+</html>
