@@ -220,6 +220,7 @@ footer.bottom a { color: var(--muted); }
       <a href="#presets" data-i18n="nav.presets">Presets</a>
       <a href="#pricing" data-i18n="nav.pricing">Pricing</a>
       <a href="#faq" data-i18n="nav.faq">FAQ</a>
+      <a href="https://store.veltaravst.com" target="_blank" rel="noopener" data-i18n="nav.account">My account</a>
     </nav>
     <div class="lang" role="group" aria-label="Language">
       <button type="button" id="lang-en" data-lang="en" aria-pressed="true">EN</button>
@@ -437,6 +438,7 @@ footer.bottom a { color: var(--muted); }
           <details><summary data-i18n="faq.q4">Can I use it on vocals and drums?</summary><p data-i18n="faq.a4">Yes. It was designed around melodic parts, but stutters and tape stops on drum loops and vocal chops work well.</p></details>
           <details><summary data-i18n="faq.q5">Can I release music made with the presets?</summary><p data-i18n="faq.a5">Yes. Everything you make with VELTARA is yours to release, royalty-free.</p></details>
           <details><summary data-i18n="faq.q6">How many computers can I use?</summary><p data-i18n="faq.a6">Up to three at a time, for example a studio Mac, a laptop and a Windows PC. You can move an activation from your account.</p></details>
+          <details><summary data-i18n="faq.q9">Where do I find my license and downloads?</summary><p data-i18n-html="faq.a9">In your account at <a href="https://store.veltaravst.com" target="_blank" rel="noopener">store.veltaravst.com</a>: your licenses, activated computers, invoices and installers, all in one place.</p></details>
         </div>
       </div>
     </div>
@@ -447,7 +449,7 @@ footer.bottom a { color: var(--muted); }
   <div class="wrap">
     <a class="brand" href="#top" aria-label="VELTARA, back to top"><img src="logo.svg" alt="" width="24" height="24"><span>VELTARA</span></a>
     <span class="tag">THE ART OF SOUND TEXTURE</span>
-    <span><span data-i18n="foot.contact">Support</span>: <a href="mailto:veltaravst@gmail.com">veltaravst@gmail.com</a></span>
+    <span class="foot-links"><a href="https://store.veltaravst.com" target="_blank" rel="noopener" data-i18n="nav.account">My account</a> &nbsp;·&nbsp; <span data-i18n="foot.contact">Support</span>: <a href="mailto:veltaravst@gmail.com">veltaravst@gmail.com</a></span>
     <span class="legal">© 2026 Veltara Audio · <span data-i18n="foot.trademarks">VST is a trademark of Steinberg Media Technologies GmbH. Audio Units and macOS are trademarks of Apple Inc.</span></span>
   </div>
 </footer>
@@ -467,6 +469,7 @@ const STORE = {
 // ------------------------------------------------------------------ i18n
 const ES = {
   "foot.contact": "Soporte",
+  "nav.account": "Mi cuenta",
   "nav.listen": "Escuchar", "nav.engine": "Motor", "nav.presets": "Presets", "nav.pricing": "Precio", "nav.faq": "Preguntas",
   "cta.buyShort": "Comprar", "cta.buy": "Comprar VELTARA", "cta.how": "Ver el motor",
   "hero.title": "Convierte cualquier melodía en <em>textura</em>.",
@@ -527,6 +530,8 @@ const ES = {
   "faq.q4": "¿Lo puedo usar en voces y baterías?", "faq.a4": "Sí. Está pensado para partes melódicas, pero los stutters y tape stops funcionan muy bien en loops de batería y chops vocales.",
   "faq.q5": "¿Puedo publicar música hecha con los presets?", "faq.a5": "Sí. Todo lo que hagas con VELTARA es tuyo para publicar, libre de regalías.",
   "faq.q6": "¿En cuántas computadoras lo puedo usar?", "faq.a6": "Hasta tres a la vez, por ejemplo un Mac de estudio, un portátil y un PC con Windows. Puedes mover una activación desde tu cuenta.",
+  "faq.q9": "¿Dónde encuentro mi licencia y mis descargas?",
+  "faq.a9": "En tu cuenta en <a href=\"https://store.veltaravst.com\" target=\"_blank\" rel=\"noopener\">store.veltaravst.com</a>: tus licencias, las computadoras activadas, las facturas y los instaladores, todo en un mismo lugar.",
   "foot.trademarks": "VST es una marca de Steinberg Media Technologies GmbH. Audio Units y macOS son marcas de Apple Inc.",
   "cd.days": "días", "cd.hours": "horas", "cd.min": "min", "cd.sec": "seg",
 };
