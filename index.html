@@ -3,10 +3,10 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>VELTARA — The art of sound texture</title>
-<meta name="description" content="VELTARA turns melodies, synths, keys and guitars into moving texture: tempo-synced glitch, granular clouds and ten characterful effects in one plugin.">
+<title>VELTARA FX — The art of sound texture</title>
+<meta name="description" content="VELTARA FX turns melodies, synths, keys and guitars into moving texture: tempo-synced glitch, granular clouds and ten characterful effects in one plugin.">
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
-<meta property="og:title" content="VELTARA — The art of sound texture">
+<meta property="og:title" content="VELTARA FX — The art of sound texture">
 <meta property="og:description" content="Turn any melody into texture. VST3 · AU · Standalone for macOS and Windows.">
 <meta property="og:image" content="https://veltaravst.com/veltara-ui.webp">
 <meta name="theme-color" content="#101113">
@@ -83,7 +83,8 @@ header.top { position: sticky; top: 0; z-index: 20; background: color-mix(in srg
 .hero .wrap { position: relative; display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr); gap: 56px; align-items: center; }
 .hero-mark { display: flex; align-items: center; gap: 18px; margin-bottom: 30px; }
 .hero-mark img { width: 64px; height: 64px; }
-.hero-mark .wm { font-family: var(--font-display); font-weight: 400; font-size: 22px; letter-spacing: .34em; }
+.hero-mark .wm { white-space: nowrap; font-family: var(--font-display); font-weight: 400; font-size: 22px; letter-spacing: .34em; }
+.hero-mark .wm .wm-fx { color: var(--accent); font-weight: 400; letter-spacing: .2em; text-shadow: 0 0 18px color-mix(in srgb, var(--accent) 45%, transparent); }
 .hero-mark .wm small { display: block; font: 500 10.5px var(--font-data); letter-spacing: .24em; color: var(--muted); margin-top: 6px; }
 .hero h1 { font-family: var(--font-display); font-weight: 300; font-size: clamp(34px, 4.8vw, 58px); line-height: 1.04; letter-spacing: -.02em; margin-block: 18px 22px; }
 .hero .cta { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 32px; }
@@ -295,13 +296,13 @@ footer.bottom a { color: var(--muted); }
       <div>
         <div class="hero-mark">
           <img src="logo.svg" alt="" width="64" height="64">
-          <div class="wm">VELTARA<small>THE ART OF SOUND TEXTURE</small></div>
+          <div class="wm">VELTARA <span class="wm-fx">FX</span><small>THE ART OF SOUND TEXTURE</small></div>
         </div>
         <span class="label">VST3 · AU · Standalone — macOS &amp; Windows</span>
         <h1 data-i18n-html="hero.title">Turn any melody into <em>texture</em>.</h1>
-        <p class="lede" data-i18n="hero.lede">Put VELTARA on a piano, a synth, a guitar or an arp. Pick a preset and the part starts to stutter, smear, reverse and breathe, locked to your tempo, with the melody still on top.</p>
+        <p class="lede" data-i18n="hero.lede">Put VELTARA FX on a piano, a synth, a guitar or an arp. Pick a preset and the part starts to stutter, smear, reverse and breathe, locked to your tempo, with the melody still on top.</p>
         <div class="cta">
-          <a class="btn primary buy" href="#pricing"><span data-i18n="cta.buy">Get VELTARA</span> · <span class="price-now">$42.50</span> <span class="was">$50</span></a>
+          <a class="btn primary buy" href="#pricing"><span data-i18n="cta.buy">Get VELTARA FX</span> · <span class="price-now">$42.50</span> <span class="was">$50</span></a>
           <a class="btn" href="#engine" data-i18n="cta.how">See the engine</a>
         </div>
         <p class="fine" data-i18n="hero.fine">Buy once, or get every new pack with VELTARA Plus. Launch price for a limited time.</p>
@@ -321,7 +322,7 @@ footer.bottom a { color: var(--muted); }
           <div class="ab" id="ab" data-side="wet" role="group" aria-label="Dry or processed">
             <span class="thumb" aria-hidden="true"></span>
             <button type="button" id="ab-dry" data-side="dry" aria-pressed="false">DRY</button>
-            <button type="button" id="ab-wet" data-side="wet" aria-pressed="true">VELTARA</button>
+            <button type="button" id="ab-wet" data-side="wet" aria-pressed="true">VELTARA FX</button>
           </div>
           <span class="time" id="time">0:00 / 0:10</span>
         </div>
@@ -349,7 +350,7 @@ footer.bottom a { color: var(--muted); }
         <h2 data-i18n="how.title">Three moves from plain to finished.</h2>
       </header>
       <div class="steps">
-        <div class="step"><h3 data-i18n="how.s1t">Load it on a melody</h3><p data-i18n="how.s1">Insert VELTARA on any instrument or audio track: keys, synths, guitars, arps, vocal chops.</p></div>
+        <div class="step"><h3 data-i18n="how.s1t">Load it on a melody</h3><p data-i18n="how.s1">Insert VELTARA FX on any instrument or audio track: keys, synths, guitars, arps, vocal chops.</p></div>
         <div class="step"><h3 data-i18n="how.s2t">Pick a sound</h3><p data-i18n="how.s2">Browse 150 presets by genre in a visual browser. Each card shows how much texture, movement and space it brings.</p></div>
         <div class="step"><h3 data-i18n="how.s3t">Play it by hand</h3><p data-i18n="how.s3">Four macros shape everything: Texture, Movement, Space, Character. Then send the XY pad to one effect and play it like an instrument.</p></div>
       </div>
@@ -398,7 +399,7 @@ footer.bottom a { color: var(--muted); }
   <section class="block" style="padding-top:0">
     <div class="wrap">
       <figure class="shot">
-        <div class="tilt"><img src="veltara-ui.webp" width="1100" height="780" alt="VELTARA plugin window: XY pad, four macro knobs with LED rings, output meters and eight performance pads." loading="lazy"></div>
+        <div class="tilt"><img src="veltara-ui.webp" width="1100" height="780" alt="VELTARA FX plugin window: XY pad, four macro knobs with LED rings, output meters and eight performance pads." loading="lazy"></div>
         <figcaption data-i18n="shot.caption">The whole instrument on one screen: four macros, the XY pad, eight performance pads. ADVANCED opens four effect knobs: Grit, Mod FX, Echoes, Spectrum.</figcaption>
       </figure>
     </div>
@@ -421,7 +422,7 @@ footer.bottom a { color: var(--muted); }
         <div style="display:grid; gap:16px">
           <span class="label" data-i18n="price.eyebrow">Pricing</span>
           <h2 data-i18n="price.title">Buy it once, or get every pack.</h2>
-          <p class="lede" data-i18n="price.lede">Own VELTARA for a one-time $50, or join VELTARA Plus for new expansion packs every month. Twelve months of Plus and VELTARA is yours for good.</p>
+          <p class="lede" data-i18n="price.lede">Own VELTARA FX for a one-time $50, or join VELTARA Plus for new expansion packs every month. Twelve months of Plus and VELTARA FX is yours for good.</p>
         </div>
         <div id="countdown-wrap" style="display:grid; gap:10px">
           <span class="label plain" id="countdown-label" data-i18n="price.until">Launch price ends in</span>
@@ -440,7 +441,7 @@ footer.bottom a { color: var(--muted); }
             <li data-i18n="price.i4">Free updates for every 1.x version</li>
             <li data-i18n="plan.perp2">3 computers · works 60 days offline</li>
           </ul>
-          <a class="btn buy" href="#pricing" data-plan="perpetual"><span data-i18n="cta.buy">Get VELTARA</span> · <span class="price-now">$42.50</span></a>
+          <a class="btn buy" href="#pricing" data-plan="perpetual"><span data-i18n="cta.buy">Get VELTARA FX</span> · <span class="price-now">$42.50</span></a>
         </div>
         <div class="card featured">
           <span class="label" data-i18n="plan.plusM">VELTARA Plus · monthly</span>
@@ -492,12 +493,12 @@ footer.bottom a { color: var(--muted); }
         <span class="label">FAQ</span>
         <div class="faq">
           <details><summary data-i18n="faq.q1">Is this a subscription?</summary><p data-i18n="faq.a1">Your choice. The Perpetual license is a one-time payment and it is yours. VELTARA Plus is a subscription that adds every monthly expansion pack.</p></details>
-          <details><summary data-i18n="faq.q7">How does rent-to-own work?</summary><p data-i18n="faq.a7">After 12 monthly payments of VELTARA Plus (or one yearly payment), your license turns into a perpetual one automatically: VELTARA is yours for good, on every computer, with nothing to do. If you cancel later, you keep VELTARA and the packs.</p></details>
+          <details><summary data-i18n="faq.q7">How does rent-to-own work?</summary><p data-i18n="faq.a7">After 12 monthly payments of VELTARA Plus (or one yearly payment), your license turns into a perpetual one automatically: VELTARA FX is yours for good, on every computer, with nothing to do. If you cancel later, you keep VELTARA FX and the packs.</p></details>
           <details><summary data-i18n="faq.q8">What is in an expansion pack?</summary><p data-i18n="faq.a8">New presets and textures, one pack a month, installed from the PACKS button inside the plugin. Some packs are free for everyone; Plus members get all of them.</p></details>
           <details><summary data-i18n="faq.q2">Does it need an internet connection?</summary><p data-i18n="faq.a2">To activate (you approve the computer in your browser) and for a quick license check now and then: Perpetual works up to 60 days offline; Plus checks in around each renewal. No internet on the studio computer? Activate it offline with a file. Audio processing never depends on a connection.</p></details>
           <details><summary data-i18n="faq.q3">Will the glitch follow my project tempo?</summary><p data-i18n="faq.a3">Yes. Slices lock to your DAW's tempo and bar position, from half notes down to 1/32 and triplets. Press play in your DAW and the edits land on the grid.</p></details>
           <details><summary data-i18n="faq.q4">Can I use it on vocals and drums?</summary><p data-i18n="faq.a4">Yes. It was designed around melodic parts, but stutters and tape stops on drum loops and vocal chops work well.</p></details>
-          <details><summary data-i18n="faq.q5">Can I release music made with the presets?</summary><p data-i18n="faq.a5">Yes. Everything you make with VELTARA is yours to release, royalty-free.</p></details>
+          <details><summary data-i18n="faq.q5">Can I release music made with the presets?</summary><p data-i18n="faq.a5">Yes. Everything you make with VELTARA FX is yours to release, royalty-free.</p></details>
           <details><summary data-i18n="faq.q6">How many computers can I use?</summary><p data-i18n="faq.a6">Up to three at a time, for example a studio Mac, a laptop and a Windows PC. You can move an activation from your account.</p></details>
           <details><summary data-i18n="faq.q9">Where do I find my license and downloads?</summary><p data-i18n-html="faq.a9">In your account at <a href="https://store.veltaravst.com" target="_blank" rel="noopener">store.veltaravst.com</a>: your licenses, activated computers, invoices and installers, all in one place.</p></details>
         </div>
@@ -533,16 +534,16 @@ const ES = {
   "foot.contact": "Soporte",
   "nav.account": "Mi cuenta",
   "nav.listen": "Escuchar", "nav.engine": "Motor", "nav.presets": "Presets", "nav.pricing": "Precio", "nav.faq": "Preguntas",
-  "cta.buyShort": "Comprar", "cta.buy": "Comprar VELTARA", "cta.how": "Ver el motor",
+  "cta.buyShort": "Comprar", "cta.buy": "Comprar VELTARA FX", "cta.how": "Ver el motor",
   "hero.title": "Convierte cualquier melodía en <em>textura</em>.",
-  "hero.lede": "Pon VELTARA en un piano, un synth, una guitarra o un arpegio. Elige un preset y la parte empieza a cortarse, difuminarse, ir al revés y respirar, sincronizada con tu tempo y con la melodía siempre arriba.",
+  "hero.lede": "Pon VELTARA FX en un piano, un synth, una guitarra o un arpegio. Elige un preset y la parte empieza a cortarse, difuminarse, ir al revés y respirar, sincronizada con tu tempo y con la melodía siempre arriba.",
   "hero.fine": "Cómpralo una vez, o recibe cada pack nuevo con VELTARA Plus. Precio de lanzamiento por tiempo limitado.",
   "player.title": "Misma melodía · pulsa A/B",
   "player.note": "Renderizado por el plugin a partir de un arpegio a 120 BPM. Los niveles están igualados: escuchas la textura, no un salto de volumen.",
   "spec.presets": "presets de fábrica en 15 bancos", "spec.slices": "cortes de glitch sincronizados", "spec.fx": "efectos, cada uno con su algoritmo",
   "spec.latency": "de latencia añadida", "spec.ui": "interfaz redimensionable",
   "how.eyebrow": "Cómo funciona", "how.title": "Tres pasos de lo plano a lo terminado.",
-  "how.s1t": "Cárgalo en una melodía", "how.s1": "Inserta VELTARA en cualquier instrumento o pista de audio: teclados, synths, guitarras, arpegios, chops vocales.",
+  "how.s1t": "Cárgalo en una melodía", "how.s1": "Inserta VELTARA FX en cualquier instrumento o pista de audio: teclados, synths, guitarras, arpegios, chops vocales.",
   "how.s2t": "Elige un sonido", "how.s2": "Explora 150 presets por género en un navegador visual. Cada tarjeta muestra cuánta textura, movimiento y espacio aporta.",
   "how.s3t": "Tócalo a mano", "how.s3": "Cuatro macros le dan forma a todo: Texture, Movement, Space y Character. Luego manda el pad XY a un efecto y tócalo como un instrumento.",
   "engine.eyebrow": "El motor", "engine.title": "Diez efectos. Diez algoritmos distintos.",
@@ -565,7 +566,7 @@ const ES = {
   "banks.eyebrow": "Librería de fábrica", "banks.title": "150 presets. Cada uno suena distinto.",
   "banks.lede": "Cada preset está igualado en volumen contra la señal seca, así que cambiar nunca da saltos, y comparado con el resto de la librería para que no haya dos iguales.",
   "price.eyebrow": "Precio", "price.title": "Cómpralo una vez, o recibe cada pack.",
-  "price.lede": "Ten VELTARA para siempre con un pago único de $50, o únete a VELTARA Plus y recibe packs de expansión nuevos cada mes. Doce meses de Plus y VELTARA es tuyo para siempre.",
+  "price.lede": "Ten VELTARA FX para siempre con un pago único de $50, o únete a VELTARA Plus y recibe packs de expansión nuevos cada mes. Doce meses de Plus y VELTARA FX es tuyo para siempre.",
   "plan.perp": "Perpetua", "plan.perpPer": "pago único", "plan.perp1": "Packs de expansión gratis e incluidos",
   "plan.perp2": "3 computadoras · funciona 60 días sin conexión",
   "plan.plusM": "VELTARA Plus · mensual", "plan.plusY": "VELTARA Plus · anual", "plan.month": "/ mes", "plan.year": "/ año",
@@ -585,12 +586,12 @@ const ES = {
   "req.win": "Windows 10 u 11, 64 bits · VST3, Standalone", "req.hosts": "DAWs", "req.cpu": "CPU",
   "req.cpuv": "Cerca del 3 % de un núcleo a 48 kHz, unos pocos puntos más con todos los efectos encendidos", "req.rates": "Frecuencias de muestreo",
   "faq.q1": "¿Es una suscripción?", "faq.a1": "Tú eliges. La licencia Perpetua es un pago único y es tuya. VELTARA Plus es una suscripción que añade cada pack de expansión mensual.",
-  "faq.q7": "¿Cómo funciona el rent-to-own?", "faq.a7": "Tras 12 pagos mensuales de VELTARA Plus (o un pago anual), tu licencia se convierte sola en perpetua: VELTARA es tuyo para siempre, en todas tus computadoras, sin hacer nada. Si cancelas después, te quedas con VELTARA y los packs.",
+  "faq.q7": "¿Cómo funciona el rent-to-own?", "faq.a7": "Tras 12 pagos mensuales de VELTARA Plus (o un pago anual), tu licencia se convierte sola en perpetua: VELTARA FX es tuyo para siempre, en todas tus computadoras, sin hacer nada. Si cancelas después, te quedas con VELTARA FX y los packs.",
   "faq.q8": "¿Qué trae un pack de expansión?", "faq.a8": "Presets y texturas nuevas, un pack al mes, que se instalan desde el botón PACKS dentro del plugin. Algunos packs son gratis para todos; los miembros Plus los reciben todos.",
   "faq.q2": "¿Necesita conexión a internet?", "faq.a2": "Para activar (apruebas la computadora en tu navegador) y para una verificación rápida de vez en cuando: la Perpetua funciona hasta 60 días sin conexión; Plus se verifica en cada renovación. ¿La computadora del estudio no tiene internet? Se activa sin conexión con un archivo. El procesamiento de audio nunca depende de la conexión.",
   "faq.q3": "¿El glitch sigue el tempo de mi proyecto?", "faq.a3": "Sí. Los cortes se sincronizan con el tempo y la posición de compás de tu DAW, desde blancas hasta 1/32 y tresillos. Dale play en tu DAW y los cortes caen en la rejilla.",
   "faq.q4": "¿Lo puedo usar en voces y baterías?", "faq.a4": "Sí. Está pensado para partes melódicas, pero los stutters y tape stops funcionan muy bien en loops de batería y chops vocales.",
-  "faq.q5": "¿Puedo publicar música hecha con los presets?", "faq.a5": "Sí. Todo lo que hagas con VELTARA es tuyo para publicar, libre de regalías.",
+  "faq.q5": "¿Puedo publicar música hecha con los presets?", "faq.a5": "Sí. Todo lo que hagas con VELTARA FX es tuyo para publicar, libre de regalías.",
   "faq.q6": "¿En cuántas computadoras lo puedo usar?", "faq.a6": "Hasta tres a la vez, por ejemplo un Mac de estudio, un portátil y un PC con Windows. Puedes mover una activación desde tu cuenta.",
   "faq.q9": "¿Dónde encuentro mi licencia y mis descargas?",
   "faq.a9": "En tu cuenta en <a href=\"https://store.veltaravst.com\" target=\"_blank\" rel=\"noopener\">store.veltaravst.com</a>: tus licencias, las computadoras activadas, las facturas y los instaladores, todo en un mismo lugar.",
