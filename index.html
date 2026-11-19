@@ -200,6 +200,64 @@ figure.shot figcaption { color: var(--muted); font-size: 14px; }
 .faq details[open] summary::after { content: "−"; }
 .faq details p { color: var(--muted); padding-bottom: 20px; max-width: 70ch; }
 
+/* ---------------------------------------------------------------- motion */
+/* Hero: a living texture field (reacts to the cursor and to the demo audio). */
+#field { position: absolute; inset: 0; width: 100%; height: 100%; display: block; pointer-events: none;
+  -webkit-mask-image: linear-gradient(to bottom, #000 55%, transparent); mask-image: linear-gradient(to bottom, #000 55%, transparent); }
+/* "texture": a short digital glitch every few seconds. */
+.hero h1 em { position: relative; display: inline-block; text-shadow: 0 0 34px color-mix(in srgb, var(--accent) 40%, transparent); animation: jitter 5s infinite steps(1); }
+.hero h1 em::before, .hero h1 em::after { content: attr(data-text); position: absolute; left: 0; top: 0; width: 100%; pointer-events: none; opacity: 0; }
+.hero h1 em::before { color: var(--text); animation: sliceA 5s infinite steps(1); }
+.hero h1 em::after { color: var(--accent); filter: brightness(.7); animation: sliceB 5s infinite steps(1); }
+@keyframes jitter { 0%, 86%, 100% { transform: none; } 87% { transform: skewX(-8deg); } 89% { transform: translateX(2px); } 91% { transform: skewX(6deg); } 93% { transform: none; } }
+@keyframes sliceA { 0%, 86%, 95%, 100% { opacity: 0; transform: none; clip-path: inset(0); }
+  87% { opacity: 1; transform: translateX(-6px); clip-path: inset(8% 0 64% 0); } 89% { transform: translateX(7px); clip-path: inset(52% 0 22% 0); }
+  91% { transform: translateX(-3px); clip-path: inset(30% 0 48% 0); } 93% { transform: translateX(4px); clip-path: inset(76% 0 4% 0); } }
+@keyframes sliceB { 0%, 87%, 96%, 100% { opacity: 0; transform: none; clip-path: inset(0); }
+  88% { opacity: 1; transform: translateX(6px); clip-path: inset(40% 0 38% 0); } 90% { transform: translateX(-8px); clip-path: inset(12% 0 70% 0); }
+  92% { transform: translateX(3px); clip-path: inset(64% 0 12% 0); } 94% { transform: translateX(-2px); clip-path: inset(22% 0 58% 0); } }
+/* The play button breathes until it is pressed. */
+.play { position: relative; transition: transform .15s; }
+.play:hover { transform: scale(1.06); }
+.play::after { content: ""; position: absolute; inset: -2px; border-radius: 50%; border: 1.5px solid var(--accent); animation: ring 2.2s cubic-bezier(.2,.6,.3,1) infinite; pointer-events: none; }
+.play.on::after { display: none; }
+@keyframes ring { from { transform: scale(1); opacity: .8; } to { transform: scale(1.7); opacity: 0; } }
+/* Scroll progress line under the header. */
+header.top::after { content: ""; position: absolute; left: 0; bottom: -1px; height: 1px; width: 100%; background: var(--accent); box-shadow: 0 0 10px var(--accent); transform-origin: 0 50%; transform: scaleX(var(--p, 0)); }
+/* Preset names scrolling past. */
+.marquee { overflow: hidden; border-bottom: 1px solid var(--line); padding-block: 22px;
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent); mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent); }
+.marquee .track { display: flex; width: max-content; animation: marquee 70s linear infinite; }
+.marquee:hover .track { animation-play-state: paused; }
+.marquee span { font: 300 clamp(20px, 2.6vw, 30px) var(--font-display); letter-spacing: -.01em; color: var(--dim); white-space: nowrap; display: inline-flex; align-items: center; }
+.marquee span::after { content: ""; width: 7px; height: 7px; border-radius: 50%; background: var(--accent); box-shadow: 0 0 10px var(--accent); margin-inline: 30px; }
+.marquee span:nth-child(4n+1) { color: var(--text); }
+@keyframes marquee { to { transform: translateX(-50%); } }
+/* Things slide in as you reach them. */
+.js .reveal { opacity: 0; transform: translateY(28px); transition: opacity .9s cubic-bezier(.2,.7,.2,1), transform .9s cubic-bezier(.2,.7,.2,1); transition-delay: var(--d, 0s); }
+.js .reveal.in { opacity: 1; transform: none; }
+/* Effects index: a lime line sweeps under the row you point at. */
+.fx article { position: relative; }
+.fx article::after { content: ""; position: absolute; left: 0; right: 0; bottom: -1px; height: 1px; background: var(--accent); box-shadow: 0 0 12px var(--accent); transform: scaleX(0); transform-origin: 0 50%; transition: transform .5s cubic-bezier(.2,.7,.2,1); }
+.fx article:hover::after { transform: scaleX(1); }
+.fx article .name { transition: letter-spacing .4s, text-shadow .4s; }
+.fx article:hover .name { letter-spacing: .26em; text-shadow: 0 0 14px var(--accent); }
+/* Screenshots tilt with the cursor and catch a light sweep. */
+figure.shot .tilt { position: relative; border-radius: 16px; transform: perspective(1200px) rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg)); transition: transform .5s cubic-bezier(.2,.7,.2,1); will-change: transform; }
+figure.shot .tilt::after { content: ""; position: absolute; inset: 0; border-radius: 16px; pointer-events: none;
+  background: linear-gradient(105deg, transparent 35%, rgba(244,246,248,.10) 50%, transparent 65%); background-size: 250% 100%; background-position: 120% 0; transition: background-position 1.2s cubic-bezier(.2,.7,.2,1); }
+figure.shot .tilt.in::after, figure.shot .tilt:hover::after { background-position: -20% 0; }
+/* The featured plan has a light running round its edge. */
+@property --ang { syntax: "<angle>"; initial-value: 0deg; inherits: false; }
+.card.featured::before { content: ""; position: absolute; inset: -1px; border-radius: 18px; padding: 1.5px; pointer-events: none;
+  background: conic-gradient(from var(--ang), transparent 0 62%, var(--accent) 80%, transparent 96%);
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0); -webkit-mask-composite: xor; mask-composite: exclude; animation: orbit 5s linear infinite; }
+@keyframes orbit { to { --ang: 360deg; } }
+.card { transition: transform .3s cubic-bezier(.2,.7,.2,1), border-color .3s; }
+.card:hover { transform: translateY(-4px); }
+.bank { transition: background .3s; }
+.bank:hover { background: linear-gradient(90deg, color-mix(in srgb, var(--accent) 6%, transparent), transparent 70%); }
+
 footer.bottom { border-top: 1px solid var(--line); padding-block: 48px; color: var(--dim); font-size: 13px; }
 footer.bottom .wrap { display: grid; grid-template-columns: auto minmax(0, 1fr) auto; gap: 18px 28px; align-items: center; }
 footer.bottom .legal { grid-column: 1 / -1; min-width: 0; overflow-wrap: anywhere; }
@@ -232,6 +290,7 @@ footer.bottom a { color: var(--muted); }
 
 <main id="top">
   <section class="hero" id="listen">
+    <canvas id="field" aria-hidden="true"></canvas>
     <div class="wrap">
       <div>
         <div class="hero-mark">
@@ -273,13 +332,15 @@ footer.bottom a { color: var(--muted); }
 
   <div class="specs" aria-label="Key numbers">
     <div class="wrap">
-      <div class="spec"><b>150</b><span data-i18n="spec.presets">factory presets in 15 banks</span></div>
-      <div class="spec"><b>10</b><span data-i18n="spec.fx">effects, each its own algorithm</span></div>
+      <div class="spec"><b data-count="150">150</b><span data-i18n="spec.presets">factory presets in 15 banks</span></div>
+      <div class="spec"><b data-count="10">10</b><span data-i18n="spec.fx">effects, each its own algorithm</span></div>
       <div class="spec"><b>1/2 → 1/32</b><span data-i18n="spec.slices">tempo-synced glitch slices</span></div>
       <div class="spec"><b>0 ms</b><span data-i18n="spec.latency">added latency</span></div>
       <div class="spec"><b>50–200%</b><span data-i18n="spec.ui">resizable interface</span></div>
     </div>
   </div>
+
+  <div class="marquee" aria-hidden="true"><div class="track" id="marquee"></div></div>
 
   <section class="block">
     <div class="wrap">
@@ -320,7 +381,7 @@ footer.bottom a { color: var(--muted); }
   <section class="block" style="padding-top:0">
     <div class="wrap duo">
       <figure class="shot">
-        <img src="veltara-pad-effects.webp" width="1100" height="440" alt="The XY pad drawing ten effects: filter curve, saturation curve, modulation wave, stepped lo-fi wave, delay echoes, reverb cloud, glitch slices, spectral bars, harmony voices and grain swarm." loading="lazy">
+        <div class="tilt"><img src="veltara-pad-effects.webp" width="1100" height="440" alt="The XY pad drawing ten effects: filter curve, saturation curve, modulation wave, stepped lo-fi wave, delay echoes, reverb cloud, glitch slices, spectral bars, harmony voices and grain swarm." loading="lazy"></div>
       </figure>
       <div style="display:grid; gap:18px">
         <span class="label" data-i18n="pad.eyebrow">XY pad</span>
@@ -337,7 +398,7 @@ footer.bottom a { color: var(--muted); }
   <section class="block" style="padding-top:0">
     <div class="wrap">
       <figure class="shot">
-        <img src="veltara-ui.webp" width="1100" height="780" alt="VELTARA plugin window: XY pad, four macro knobs with LED rings, output meters and eight performance pads." loading="lazy">
+        <div class="tilt"><img src="veltara-ui.webp" width="1100" height="780" alt="VELTARA plugin window: XY pad, four macro knobs with LED rings, output meters and eight performance pads." loading="lazy"></div>
         <figcaption data-i18n="shot.caption">The whole instrument on one screen: four macros, the XY pad, eight performance pads. ADVANCED opens four effect knobs: Grit, Mod FX, Echoes, Spectrum.</figcaption>
       </figure>
     </div>
@@ -455,6 +516,7 @@ footer.bottom a { color: var(--muted); }
 </footer>
 
 <script>
+document.documentElement.classList.add("js");
 // ------------------------------------------------------------------ store config
 // Fill the checkout links with the Moonbase checkout links on launch day.
 const STORE = {
@@ -557,6 +619,8 @@ function setLang(next) {
   renderBanks();
   tickCountdown();
   drawWave();
+  const em = document.querySelector(".hero h1 em");
+  if (em) em.dataset.text = em.textContent;
 }
 document.querySelectorAll(".lang button").forEach(b => b.addEventListener("click", () => setLang(b.dataset.lang)));
 
@@ -690,12 +754,17 @@ async function start(at) {
     const [dry, wet] = await Promise.all([loadBuffer("dry"), loadBuffer(player.current.id)]);
     stopNodes();
     const ctx = player.ctx, when = ctx.currentTime + 0.05;
+    if (!player.analyser) {
+      player.analyser = ctx.createAnalyser();
+      player.analyser.fftSize = 256; player.analyser.smoothingTimeConstant = 0.8;
+      player.analyser.connect(ctx.destination);
+    }
     player.nodes = [["dry", dry], ["wet", wet]].map(([side, buf]) => {
       const src = ctx.createBufferSource();
       src.buffer = buf; src.loop = true;
       const gain = ctx.createGain();
       gain.gain.value = player.side === side ? 1 : 0;
-      src.connect(gain).connect(ctx.destination);
+      src.connect(gain).connect(player.analyser);
       src.start(when, at % buf.duration);
       return { side, src, gain };
     });
@@ -712,6 +781,7 @@ function pause() { player.offset = position(); stopNodes(); player.playing = fal
 function setPlayIcon() {
   document.getElementById("play-icon").innerHTML = player.playing ? '<path d="M6 4h4v16H6zM14 4h4v16h-4z"/>' : '<path d="M6 4l15 8-15 8z"/>';
   document.getElementById("play").setAttribute("aria-label", player.playing ? "Pause" : "Play");
+  if (player.playing) document.getElementById("play").classList.add("on");
 }
 function setSide(side) {
   player.side = side;
@@ -779,6 +849,110 @@ function drawWave() {
 }
 (function loop() { if (player.playing) drawWave(); requestAnimationFrame(loop); })();
 window.addEventListener("resize", drawWave);
+
+// ------------------------------------------------------------------ motion
+const calm = matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+// Preset names scrolling past (two copies so the loop is seamless).
+(function marquee() {
+  const names = BANKS.flatMap(b => b[2].split(" · "));
+  const row = names.map(n => `<span>${n}</span>`).join("");
+  document.getElementById("marquee").innerHTML = row + row;
+})();
+
+// Scroll progress line under the header.
+(function progress() {
+  const top = document.querySelector("header.top");
+  const set = () => { const max = document.documentElement.scrollHeight - innerHeight; top.style.setProperty("--p", max > 0 ? (scrollY / max).toFixed(4) : 0); };
+  addEventListener("scroll", set, { passive: true }); addEventListener("resize", set); set();
+})();
+
+// Slide things in as they come into view, a little staggered inside each group.
+(function reveal() {
+  const groups = [
+    [".block header", 0], [".steps .step", 0.1], [".fx article", 0.05], ["figure.shot .tilt", 0], [".duo > div", 0.1],
+    [".banks", 0], [".plans .card", 0.12], [".price-head > div", 0.1], [".two > div", 0.12], [".specs .spec", 0.08],
+  ];
+  const els = [];
+  groups.forEach(([sel, step]) => document.querySelectorAll(sel).forEach((el, i) => {
+    el.classList.add("reveal"); el.style.setProperty("--d", (i % 6) * step + "s"); els.push(el);
+  }));
+  if (calm || !("IntersectionObserver" in window)) { els.forEach(el => el.classList.add("in")); return; }
+  const io = new IntersectionObserver(entries => entries.forEach(en => {
+    if (!en.isIntersecting) return;
+    en.target.classList.add("in"); io.unobserve(en.target);
+    en.target.querySelectorAll?.("[data-count]").forEach(countUp);
+    if (en.target.matches("[data-count]")) countUp(en.target);
+  }), { rootMargin: "0px 0px -8% 0px", threshold: 0.12 });
+  els.forEach(el => io.observe(el));
+})();
+function countUp(el) {
+  if (calm || el.dataset.done) return; el.dataset.done = 1;
+  const to = +el.dataset.count, t0 = performance.now(), dur = 1400;
+  (function step(now) {
+    const k = Math.min(1, (now - t0) / dur), e = 1 - Math.pow(1 - k, 3);
+    el.textContent = Math.round(to * e);
+    if (k < 1) requestAnimationFrame(step);
+  })(t0);
+}
+
+// Screenshots tilt toward the cursor.
+document.querySelectorAll("figure.shot .tilt").forEach(el => {
+  if (calm || matchMedia("(hover: none)").matches) return;
+  el.addEventListener("pointermove", e => {
+    const r = el.getBoundingClientRect(), x = (e.clientX - r.left) / r.width - 0.5, y = (e.clientY - r.top) / r.height - 0.5;
+    el.style.setProperty("--ry", (x * 6).toFixed(2) + "deg"); el.style.setProperty("--rx", (-y * 5).toFixed(2) + "deg");
+  });
+  el.addEventListener("pointerleave", () => { el.style.setProperty("--ry", "0deg"); el.style.setProperty("--rx", "0deg"); });
+});
+
+// Hero texture field: rows of dots that flow, bend toward the cursor and
+// move with the demo audio (VELTARA side only).
+(function field() {
+  const cv = document.getElementById("field"), hero = document.querySelector(".hero");
+  if (!cv || !cv.getContext) return;
+  const g = cv.getContext("2d");
+  let w = 0, h = 0, dpr = 1, mx = -1e4, my = -1e4, visible = true, level = 0;
+  const bins = new Uint8Array(128), smooth = new Float32Array(128);
+  const accent = getComputedStyle(document.documentElement).getPropertyValue("--accent").trim() || "#c6ff42";
+  function size() { dpr = Math.min(2, window.devicePixelRatio || 1); w = cv.clientWidth; h = cv.clientHeight; cv.width = Math.round(w * dpr); cv.height = Math.round(h * dpr); }
+  size(); addEventListener("resize", () => { size(); if (calm) draw(0); });
+  hero.addEventListener("pointermove", e => { const r = cv.getBoundingClientRect(); mx = e.clientX - r.left; my = e.clientY - r.top; });
+  hero.addEventListener("pointerleave", () => { mx = my = -1e4; });
+  if ("IntersectionObserver" in window) new IntersectionObserver(([en]) => { visible = en.isIntersecting; }).observe(hero);
+  function draw(t) {
+    let target = 0;
+    const live = player.analyser && player.playing;
+    if (live) {
+      player.analyser.getByteFrequencyData(bins);
+      let s = 0; for (let i = 0; i < 64; i++) s += bins[i]; target = s / (64 * 255);
+      if (player.side === "dry") target *= 0.35;
+    }
+    for (let i = 0; i < 128; i++) smooth[i] += ((live ? bins[i] / 255 : 0) - smooth[i]) * 0.15;
+    level += (target - level) * 0.08;
+    g.setTransform(dpr, 0, 0, dpr, 0, 0); g.clearRect(0, 0, w, h);
+    g.fillStyle = accent;
+    const rows = 20, gap = w < 600 ? 12 : 14, cols = Math.ceil(w / gap), top = h * 0.12, span = h * 0.8;
+    const wet = player.side === "wet" ? 1 : 0.35;
+    for (let r = 0; r < rows; r++) {
+      const y0 = top + r * span / rows, depth = r / rows;
+      for (let c = 0; c <= cols; c++) {
+        const x = c * gap;
+        const band = smooth[Math.min(63, Math.floor((c / cols) * 64))] * wet;
+        const dx = x - mx, dy = y0 - my, lens = Math.exp(-(dx * dx + dy * dy) / 26000);
+        const amp = 5 + 22 * lens + 46 * band * (0.4 + level) + 10 * level;
+        const y = y0 + Math.sin(x * 0.011 + t * 0.8 + r * 0.42) * amp * 0.7 + Math.sin(x * 0.027 - t * 1.25 + r * 0.9) * amp * 0.3;
+        const a = 0.08 + 0.14 * (1 - depth) + 0.55 * lens + 0.6 * band;
+        g.globalAlpha = Math.min(0.9, a);
+        const s = 1.3 + 1.4 * lens + 1.6 * band;
+        g.fillRect(x - s / 2, y - s / 2, s, s);
+      }
+    }
+    g.globalAlpha = 1;
+  }
+  if (calm) { draw(0); return; }
+  (function frame(ts) { requestAnimationFrame(frame); if (visible && !document.hidden) draw(ts / 1000); })(0);
+})();
 
 // ------------------------------------------------------------------ boot
 let saved = null;
