@@ -495,6 +495,110 @@ footer.bottom a { color: var(--muted); }
 header.top::after { content: ""; position: absolute; left: 0; bottom: -1px; height: 1px; width: 100%; background: var(--accent); box-shadow: 0 0 10px var(--accent); transform-origin: 0 50%; transform: scaleX(var(--p, 0)); }
 .js .reveal { opacity: 0; transform: translateY(26px); transition: opacity .9s cubic-bezier(.2,.7,.2,1), transform .9s cubic-bezier(.2,.7,.2,1); transition-delay: var(--d, 0s); }
 .js .reveal.in { opacity: 1; transform: none; }
+
+/* ======================================================================================
+   Components adapted from Uiverse.io (MIT License, (c) 2023 Uiverse.io and the authors
+   named below). Recoloured to the VELTARA palette, resized, made touch- and
+   reduced-motion-safe. Full notice: CREDITS.md.
+   ====================================================================================== */
+@property --spin { syntax: "<angle>"; initial-value: 0deg; inherits: false; }
+
+/* 1. "Sparkle button" by MuhammadHasann (after Jhey Tompkins): light orbiting the border,
+      a halo ring on hover, a press that gives. Used for every BUY button. */
+.btn.primary { position: relative; isolation: isolate; overflow: hidden; --active: 0;
+  transform: scale(calc(1 + var(--active) * .03));
+  box-shadow: 0 12px 40px -14px var(--accent), inset 0 1px 0 rgba(255,255,255,.55), inset 0 -2px 6px rgba(16,17,19,.25), 0 0 0 calc(var(--active) * 6px) rgba(198,255,66,.22);
+  transition: transform .25s ease, box-shadow .3s ease; }
+.btn.primary::before { content: ""; position: absolute; inset: 0; border-radius: inherit; padding: 1.5px; z-index: -1; pointer-events: none;
+  background: conic-gradient(from var(--spin), transparent 0 62%, rgba(255,255,255,.95) 78%, transparent 92%);
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0); -webkit-mask-composite: xor; mask-composite: exclude;
+  animation: spin 2.6s linear infinite; }
+.btn.primary::after { content: ""; position: absolute; inset: 0; border-radius: inherit; z-index: -1; pointer-events: none;
+  background: radial-gradient(120% 90% at 50% -10%, rgba(255,255,255,.5), transparent 55%); opacity: calc(.45 + var(--active) * .35); transition: opacity .3s; }
+.btn.primary:is(:hover, :focus-visible) { --active: 1; transform: scale(1.03); box-shadow: 0 0 0 6px rgba(198,255,66,.22), 0 0 48px -6px var(--accent), inset 0 1px 0 rgba(255,255,255,.6); }
+.btn.primary:active { transform: scale(.98); transition-duration: .08s; }
+@keyframes spin { to { --spin: 360deg; } }
+
+/* 2. "Glass glow button" by VashonG: frosted glass, a sheen that crosses on hover and a
+      green light bar that grows under the label. Used for every secondary button. */
+.btn:not(.primary) { position: relative; overflow: hidden; isolation: isolate;
+  background: rgba(255,255,255,.045); border-color: rgba(255,255,255,.12); border-top-color: rgba(255,255,255,.2);
+  -webkit-backdrop-filter: blur(12px); backdrop-filter: blur(12px); transition: letter-spacing .4s, border-color .3s, transform .2s, background .3s; }
+.btn:not(.primary)::before { content: ""; position: absolute; inset: 0 auto 0 -60%; width: 50%; z-index: -1; pointer-events: none;
+  background: linear-gradient(to left, rgba(255,255,255,.16), transparent); transform: skewX(-30deg); transition: left .6s ease; }
+.btn:not(.primary)::after { content: ""; position: absolute; left: 50%; bottom: -3px; width: 28px; height: 6px; transform: translateX(-50%); border-radius: 6px; z-index: -1; pointer-events: none;
+  background: var(--accent); box-shadow: 0 0 6px var(--accent), 0 0 18px var(--accent), 0 0 34px rgba(198,255,66,.6); transition: width .45s ease, height .45s ease, bottom .45s ease, opacity .3s; opacity: .9; }
+.btn:not(.primary):is(:hover, :focus-visible) { border-color: rgba(198,255,66,.45); background: rgba(255,255,255,.07); }
+.btn:not(.primary):is(:hover, :focus-visible)::before { left: 130%; }
+.btn:not(.primary):is(:hover, :focus-visible)::after { width: 70%; height: 3px; bottom: 0; opacity: 1; }
+.btn:not(.primary):active { transform: scale(.98); }
+
+/* 3. "Glowing hover card" by csozidev + a light that follows the cursor: the brushed edge
+      turns green-to-chrome and glows; a soft spotlight sits under the pointer. */
+.eng, .bank, .detail, .fact, .card, .trust .panel, .explain .panel {
+  background-image: radial-gradient(380px circle at var(--mx, -500px) var(--my, -500px), rgba(198,255,66,.075), transparent 60%),
+                    linear-gradient(180deg, color-mix(in srgb, var(--panel-2) 92%, transparent), color-mix(in srgb, var(--panel) 94%, transparent));
+  transition: transform .35s cubic-bezier(.2,.7,.2,1), filter .35s, box-shadow .35s; }
+:is(.eng, .bank, .detail, .fact, .card, .trust .panel, .explain .panel):hover::before {
+  background: linear-gradient(137deg, var(--accent) 0%, #c9ced4 45%, rgba(167,173,180,.25) 70%, var(--accent) 100%); }
+:is(.eng, .bank, .detail, .fact, .trust .panel, .explain .panel):hover { filter: drop-shadow(0 0 22px rgba(198,255,66,.16)); }
+
+/* 4. "Popular card" halo by Aryan-81: the yearly plan sits on a soft green-to-chrome glow. */
+.card.featured { box-shadow: 0 0 0 1px rgba(198,255,66,.18), 0 0 70px -18px rgba(198,255,66,.55), 0 0 120px -40px rgba(201,206,212,.55); }
+.card.featured:hover { box-shadow: 0 0 0 1px rgba(198,255,66,.3), 0 0 90px -14px rgba(198,255,66,.7), 0 0 150px -40px rgba(201,206,212,.6); }
+
+/* 5. "Metal toggle" by vinodjangid07: the DRY / VELTARA FX switch gets a brushed-chrome thumb,
+      tinted green on the processed side. */
+.ab .thumb { background: conic-gradient(from 20deg, #7a8088, #f4f6f8, #8b929a, #ffffff, #7a8088, #e6e9ec, #7a8088);
+  box-shadow: 2px 2px 8px rgba(0,0,0,.45), inset 0 0 0 1px rgba(255,255,255,.35); }
+.ab[data-side="wet"] .thumb { background: conic-gradient(from 20deg, #8fbf2b, #e9ffb0, #a8d93a, #f4ffd6, #8fbf2b, #d6ff7a, #8fbf2b);
+  box-shadow: 0 0 18px -4px var(--accent), 2px 2px 8px rgba(0,0,0,.45), inset 0 0 0 1px rgba(255,255,255,.4); }
+.ab button[aria-pressed="true"] { color: #101113; }
+
+/* 6. "Glow bars loader" by funkyjuice213: green bars while a demo loads, and the bank EQ. */
+.play .bars { display: none; gap: 3px; align-items: center; height: 22px; }
+.play.loading .bars { display: flex; }
+.play.loading svg { display: none; }
+.bars i, .eq i { width: 4px; height: 12px; border-radius: 4px; background: linear-gradient(#f4ffd6, var(--accent)); box-shadow: 0 0 8px 1px rgba(198,255,66,.7); }
+.play .bars i { background: linear-gradient(#ffffff, #3d5410); box-shadow: none; animation: bar 1s ease-in-out infinite; }
+.play .bars i:nth-child(2) { animation-delay: .1s; } .play .bars i:nth-child(3) { animation-delay: .2s; } .play .bars i:nth-child(4) { animation-delay: .3s; }
+.eq { gap: 3px; height: 16px; } .eq i { width: 3px; height: 30%; }
+@keyframes bar { 0%, 100% { transform: scaleY(1); } 50% { transform: scaleY(1.9); } }
+
+/* 7. "Shiny glass badge" by elijahgummer: the launch date in the hero, with a glint. */
+.glass-badge { position: relative; display: inline-flex; align-items: center; gap: 8px; margin-bottom: 18px; padding: 7px 14px; border-radius: 999px;
+  font: 500 11px var(--font-data); letter-spacing: .14em; text-transform: uppercase; color: var(--text);
+  background: rgba(255,255,255,.07); border: 1px solid rgba(255,255,255,.16); -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px);
+  box-shadow: 0 2px 10px rgba(0,0,0,.3), inset 0 1px 0 rgba(255,255,255,.12); }
+.glass-badge b { color: var(--accent); font-weight: 500; }
+.glass-badge .glint { position: absolute; top: -11px; right: 6px; width: 22px; height: 22px; pointer-events: none; filter: blur(.4px); animation: glint 5s ease-in-out infinite; }
+.glass-badge .glint::before, .glass-badge .glint::after { content: ""; position: absolute; }
+.glass-badge .glint::before { width: 1px; height: 100%; left: 11px; background: linear-gradient(transparent, rgba(255,255,255,.9), transparent); }
+.glass-badge .glint::after { height: 1px; width: 100%; top: 11px; background: linear-gradient(to left, transparent, rgba(255,255,255,.9), transparent); }
+@keyframes glint { 0%, 70%, 100% { transform: rotate(0) scale(.6); opacity: .4; } 80% { transform: rotate(90deg) scale(1.6); opacity: 1; } 90% { transform: rotate(180deg) scale(.9); opacity: .7; } }
+
+/* Floating hero callouts (subtle) */
+.callout { animation: callin .7s cubic-bezier(.2,.7,.2,1) forwards, float 6s ease-in-out infinite; animation-delay: var(--d), calc(var(--d) + .7s); }
+@keyframes float { 0%, 100% { translate: 0 0; } 50% { translate: 0 -4px; } }
+
+/* Plus benefits row */
+.perks { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; }
+@media (max-width: 980px) { .perks { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 520px) { .perks { grid-template-columns: 1fr; } }
+.perk { padding: 18px; display: grid; gap: 8px; align-content: start; }
+.perk .ic { width: 34px; height: 34px; border-radius: 10px; display: grid; place-items: center; background: rgba(198,255,66,.1); color: var(--accent); box-shadow: inset 0 0 0 1px rgba(198,255,66,.25); }
+.perk .ic svg { width: 17px; height: 17px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+.perk h3 { font-size: 15px; } .perk p { color: var(--muted); font-size: 13.5px; }
+.perk { transition: transform .35s cubic-bezier(.2,.7,.2,1), filter .35s; }
+.perk:hover { transform: translateY(-3px); filter: drop-shadow(0 0 22px rgba(198,255,66,.16)); }
+.perk:hover::before { background: linear-gradient(137deg, var(--accent) 0%, #c9ced4 45%, rgba(167,173,180,.25) 70%, var(--accent) 100%); }
+
+/* Touch screens: no hover-only tricks, lighter effects */
+@media (hover: none) {
+  .btn:not(.primary)::before { display: none; }
+  :is(.eng, .bank, .detail, .fact, .trust .panel, .explain .panel, .perk):hover { filter: none; transform: none; }
+  .btn:not(.primary) { -webkit-backdrop-filter: none; backdrop-filter: none; }
+}
 </style>
 </head>
 <body>
@@ -531,6 +635,7 @@ header.top::after { content: ""; position: absolute; left: 0; bottom: -1px; heig
           <img src="logo.svg" alt="" width="52" height="52">
           <div class="wm">VELTARA <span class="wm-fx">FX</span><small>THE ART OF SOUND TEXTURE</small></div>
         </div>
+        <span class="glass-badge"><span class="glint" aria-hidden="true"></span><span data-i18n="hero.badge">Launching</span> <b data-i18n="hero.badgeDate">Jan 12, 2027</b></span><br>
         <span class="label" data-i18n="hero.kicker">Creative texture FX for melodies</span>
         <h1 data-i18n-html="hero.title"><span class="metal">Turn any melody into</span> <em>texture</em>.</h1>
         <p class="lede" data-i18n="hero.lede">VELTARA FX is a creative multi-effect for melodic parts. Put it on keys, synths, guitars or arps, pick one of 150 presets, and the part starts to stutter, smear, reverse and breathe, locked to your tempo, with the melody still on top.</p>
@@ -597,7 +702,7 @@ header.top::after { content: ""; position: absolute; left: 0; bottom: -1px; heig
           <div class="wave" id="wave" title="Click to jump"><canvas id="wave-canvas"></canvas><span class="side" id="wave-side">VELTARA FX</span></div>
           <div class="transport">
             <button class="play" id="play" type="button" aria-label="Play">
-              <svg viewBox="0 0 24 24" id="play-icon"><path d="M6 4l15 8-15 8z"/></svg>
+              <svg viewBox="0 0 24 24" id="play-icon"><path d="M6 4l15 8-15 8z"/></svg><span class="bars" aria-hidden="true"><i></i><i></i><i></i><i></i></span>
             </button>
             <div class="ab" id="ab" data-side="wet" role="group" aria-label="Dry or processed">
               <span class="thumb" aria-hidden="true"></span>
@@ -784,6 +889,13 @@ header.top::after { content: ""; position: absolute; left: 0; bottom: -1px; heig
       </div>
       <p class="notice" id="buy-notice" aria-live="polite" data-i18n="price.secure">Secure checkout. Taxes calculated at checkout.</p>
 
+      <div class="perks" aria-label="What VELTARA Plus members get">
+        <div class="perk panel"><span class="ic"><svg viewBox="0 0 24 24"><path d="M21 16V8l-9-5-9 5v8l9 5 9-5z"/><path d="M3.3 7.6 12 12l8.7-4.4M12 22V12"/></svg></span><h3 data-i18n="perk.t1">A new pack every month</h3><p data-i18n="perk.p1">New presets and textures, installed from the PACKS button inside the plugin.</p></div>
+        <div class="perk panel"><span class="ic"><svg viewBox="0 0 24 24"><path d="M4 19V5M9 19V9M14 19v-6M19 19V3"/></svg></span><h3 data-i18n="perk.t2">Genre libraries</h3><p data-i18n="perk.p2">Libraries built around the sound of a genre, as they ship.</p></div>
+        <div class="perk panel"><span class="ic"><svg viewBox="0 0 24 24"><path d="M21 12a9 9 0 1 1-3-6.7"/><path d="M21 4v5h-5"/></svg></span><h3 data-i18n="perk.t3">Engine updates</h3><p data-i18n="perk.p3">New engine features as they ship, plus every 1.x update.</p></div>
+        <div class="perk panel"><span class="ic"><svg viewBox="0 0 24 24"><path d="M12 2l3 6 6 .9-4.5 4.3 1 6.3L12 16.6 6.5 19.5l1-6.3L3 8.9 9 8z"/></svg></span><h3 data-i18n="perk.t4">Yours along the way</h3><p data-i18n="perk.p4">At payment 12, or with the yearly payment, VELTARA FX becomes yours for good.</p></div>
+      </div>
+
       <div class="explain">
         <div class="panel">
           <h3 data-i18n="ex.t1">Buying vs. subscribing</h3>
@@ -897,7 +1009,7 @@ header.top::after { content: ""; position: absolute; left: 0; bottom: -1px; heig
     <a class="brand" href="#top" aria-label="VELTARA, back to top"><img src="logo.svg" alt="" width="24" height="24"><span>VELTARA</span></a>
     <span class="tag2">THE ART OF SOUND TEXTURE</span>
     <span class="foot-links"><a href="https://store.veltaravst.com" target="_blank" rel="noopener" data-i18n="nav.account">My account</a> &nbsp;·&nbsp; <span data-i18n="foot.contact">Support</span>: <a href="mailto:veltaravst@gmail.com">veltaravst@gmail.com</a></span>
-    <span class="legal">© 2026 Veltara Audio · <span data-i18n="foot.trademarks">VST is a trademark of Steinberg Media Technologies GmbH. Audio Units and macOS are trademarks of Apple Inc.</span></span>
+    <span class="legal">© 2026 Veltara Audio · <span data-i18n="foot.ui">Some interface effects adapted from</span> <a href="https://uiverse.io" target="_blank" rel="noopener">Uiverse.io</a> (MIT) · <span data-i18n="foot.trademarks">VST is a trademark of Steinberg Media Technologies GmbH. Audio Units and macOS are trademarks of Apple Inc.</span></span>
   </div>
 </footer>
 
@@ -1109,11 +1221,17 @@ const ES = {
   "plan.plus6": "Si cancelas antes de 12 pagos: acceso completo hasta que termine el mes pagado, luego modo demo",
   "cmp.r10": "Si cancelas", "cmp.r10a": "No hay nada que cancelar", "cmp.r10b": "Antes del pago 12: funciona hasta el final del mes pagado, luego demo", "cmp.r10c": "Ya es tuyo",
   "faq.q10": "¿Qué hace el modo demo?", "faq.a10": "Antes de activar (o cuando termina un período de Plus sin renovar), VELTARA FX funciona como demo: 8 de los 10 motores (SPECTRAL y HARMONY necesitan licencia), los 50 presets STARTER, una sola instancia sonando a la vez, sin guardar presets propios y 1.5 s de silencio una vez por minuto. Nunca toca tus proyectos: abren y se guardan como siempre, y todos los ajustes vuelven al activar.",
+  "hero.badge": "Lanzamiento", "hero.badgeDate": "12 ene 2027",
+  "perk.t1": "Un pack nuevo cada mes", "perk.p1": "Presets y texturas nuevas, que se instalan desde el botón PACKS dentro del plugin.",
+  "perk.t2": "Librerías por género", "perk.p2": "Librerías construidas alrededor del sonido de un género, según salgan.",
+  "perk.t3": "Mejoras del motor", "perk.p3": "Funciones nuevas del motor según salgan, más todas las actualizaciones 1.x.",
+  "perk.t4": "Tuyo por el camino", "perk.p4": "En el pago 12, o con el pago anual, VELTARA FX es tuyo para siempre.",
   "bar.sub": "Pago único o VELTARA Plus",
   "help.fab": "Ayuda rápida", "help.title": "Ayuda rápida", "help.sub": "Respuestas al instante sobre VELTARA FX", "help.label": "Tu pregunta",
   "help.ph": "Pregunta sobre licencias, DAWs, precios…",
   "help.foot": "Las respuestas salen de nuestras páginas de ayuda. ¿No la encuentras? <a href=\"mailto:veltaravst@gmail.com\">veltaravst@gmail.com</a>",
   "zoom.close": "Cerrar", "zoom.tip": "Clic para ampliar · arrastra para mover · Esc para cerrar",
+  "foot.ui": "Algunos efectos de la interfaz adaptados de",
   "foot.trademarks": "VST es una marca de Steinberg Media Technologies GmbH. Audio Units y macOS son marcas de Apple Inc.",
   "cd.days": "días", "cd.hours": "horas", "cd.min": "min", "cd.sec": "seg",
 };
@@ -1257,7 +1375,7 @@ function renderBanks() {
 function renderBankList() {
   document.getElementById("banklist").innerHTML = DEMOS.filter(d => !d.extra).map(d => `
     <button type="button" data-demo="${d.id}" aria-pressed="false"><span><span class="bn">${d.bank}</span><span class="pn">${d.name}</span></span>
-    <span class="eq" aria-hidden="true"><i></i><i></i><i></i></span></button>`).join("");
+    <span class="eq" aria-hidden="true"><i></i><i></i><i></i><i></i></span></button>`).join("");
   syncButtons();
 }
 
@@ -1292,8 +1410,11 @@ async function start(at) {
   ensureCtx();
   note.classList.remove("err");
   const want = player.current.id;
+  const playBtn = document.getElementById("play");
+  if (!player.buffers[want] || !player.buffers.dry) playBtn.classList.add("loading");
   try {
     const [dry, wet] = await Promise.all([loadBuffer("dry"), loadBuffer(want)]);
+    playBtn.classList.remove("loading");
     if (player.current.id !== want) return;   // switched while loading
     stopNodes();
     const ctx = player.ctx, when = ctx.currentTime + 0.04;
@@ -1314,6 +1435,7 @@ async function start(at) {
     player.offset = at; player.startAt = when; player.playing = true;
     syncButtons(); drawWave();
   } catch (e) {
+    document.getElementById("play").classList.remove("loading");
     note.textContent = lang === "es" ? "No se pudo cargar el audio de la demo." : "The demo audio could not be loaded.";
     note.classList.add("err");
     player.playing = false; syncButtons();
@@ -1572,7 +1694,7 @@ function countUp(el) {
 }
 function reveal() {
   const groups = [[".sec-head", 0], [".steps .step", 0.1], [".eng", 0.05], [".tour-stage", 0], [".detail", 0.08], [".duo > *", 0.1],
-    [".banks", 0], [".lib-facts .fact", 0.08], [".plans .card", 0.12], [".explain .panel", 0.1], [".compare-wrap", 0], [".trust .panel", 0.1], [".two > div", 0.12], [".specs .spec", 0.08], [".final", 0], [".lab > *", 0.1]];
+    [".banks", 0], [".lib-facts .fact", 0.08], [".plans .card", 0.12], [".explain .panel", 0.1], [".perks .perk", 0.08], [".compare-wrap", 0], [".trust .panel", 0.1], [".two > div", 0.12], [".specs .spec", 0.08], [".final", 0], [".lab > *", 0.1]];
   const els = [];
   groups.forEach(([sel, step]) => document.querySelectorAll(sel).forEach((el, i) => { if (el.classList.contains("reveal")) return; el.classList.add("reveal"); el.style.setProperty("--d", (i % 6) * step + "s"); els.push(el); }));
   if (calm || !("IntersectionObserver" in window)) { els.forEach(el => el.classList.add("in")); return; }
@@ -1856,6 +1978,23 @@ function helpSearch(q) {
     const b = e.target.closest("[data-k]"); if (b) { const en = KB.find(x => x.id === b.dataset.k); add(b.textContent, "me"); answer(en, L(), []); return; }
     const a = e.target.closest('a[href^="#"]'); if (a && innerWidth < 560) close();
   });
+})();
+
+// ------------------------------------------------------------------ cursor spotlight on cards
+(function spotlight() {
+  if (calm || !matchMedia("(hover: hover)").matches) return;
+  let raf = 0, last = null;
+  document.addEventListener("pointermove", e => {
+    last = e; if (raf) return;
+    raf = requestAnimationFrame(() => {
+      raf = 0;
+      const el = last.target.closest && last.target.closest(".eng, .bank, .detail, .fact, .card, .trust .panel, .explain .panel, .perk");
+      if (!el) return;
+      const r = el.getBoundingClientRect();
+      el.style.setProperty("--mx", (last.clientX - r.left).toFixed(0) + "px");
+      el.style.setProperty("--my", (last.clientY - r.top).toFixed(0) + "px");
+    });
+  }, { passive: true });
 })();
 
 // ------------------------------------------------------------------ boot
