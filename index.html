@@ -451,6 +451,46 @@ footer.bottom a { color: var(--muted); }
 .buybar .t span { color: var(--muted); }
 @media (max-width: 760px) { .buybar { display: flex; } }
 
+/* quick help: instant answers from a curated knowledge base (no server, no AI) */
+.help-fab { position: fixed; right: max(18px, env(safe-area-inset-right, 0px)); bottom: max(18px, env(safe-area-inset-bottom, 0px)); z-index: 45; display: inline-flex; align-items: center; gap: 8px;
+  height: 52px; padding: 0 18px 0 14px; border-radius: 999px; border: 0; cursor: pointer; background: var(--accent); color: var(--accent-ink); font: 600 14px var(--font-body);
+  box-shadow: 0 14px 40px -12px var(--accent), 0 6px 18px -8px #000; transition: transform .2s, bottom .4s cubic-bezier(.2,.7,.2,1); }
+.help-fab:hover { transform: translateY(-2px); }
+.help-fab svg { width: 20px; height: 20px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+.help-fab[aria-expanded="true"] { opacity: 0; pointer-events: none; }
+@media (max-width: 760px) { .help-fab { padding: 0; width: 52px; justify-content: center; } .help-fab span { display: none; } body.bar-on .help-fab { bottom: 84px; } }
+.help { position: fixed; right: max(18px, env(safe-area-inset-right, 0px)); bottom: max(18px, env(safe-area-inset-bottom, 0px)); z-index: 50; width: min(390px, calc(100vw - 36px)); height: min(600px, calc(100vh - 110px));
+  display: none; flex-direction: column; border-radius: 20px; overflow: hidden; background: color-mix(in srgb, var(--bg-2) 96%, transparent); border: 1px solid var(--line-2);
+  box-shadow: 0 40px 100px -30px #000, 0 30px 80px -50px var(--accent); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); }
+.help.open { display: flex; animation: helpin .35s cubic-bezier(.2,.7,.2,1); }
+@keyframes helpin { from { opacity: 0; transform: translateY(14px) scale(.98); } }
+@media (max-width: 560px) { .help { right: 0; left: 0; bottom: 0; width: 100%; height: min(86vh, 100dvh - 60px); border-radius: 20px 20px 0 0; } }
+.help-head { display: flex; align-items: center; gap: 12px; padding: 14px 14px 12px 16px; border-bottom: 1px solid var(--line); background: linear-gradient(180deg, var(--panel-2), transparent); }
+.help-head img { width: 30px; height: 30px; }
+.help-head b { display: block; font-size: 15px; }
+.help-head small { color: var(--muted); font-size: 12px; }
+.help-head .x { margin-left: auto; width: 36px; height: 36px; border-radius: 10px; border: 1px solid var(--line-2); background: none; color: var(--text); cursor: pointer; font-size: 18px; line-height: 1; }
+.help-log { flex: 1; overflow-y: auto; padding: 16px; display: flex; flex-direction: column; gap: 10px; scrollbar-width: thin; }
+.msg { max-width: 88%; padding: 10px 13px; border-radius: 14px; font-size: 14px; line-height: 1.5; }
+.msg.bot { align-self: flex-start; background: var(--panel-2); border: 1px solid var(--line); border-top-left-radius: 4px; color: var(--text); }
+.msg.bot p + p { margin-top: 8px; }
+.msg.bot a { color: var(--accent); }
+.msg.me { align-self: flex-end; background: var(--accent); color: var(--accent-ink); border-top-right-radius: 4px; font-weight: 500; }
+.msg .q { font: 500 10.5px var(--font-data); letter-spacing: .12em; text-transform: uppercase; color: var(--accent); display: block; margin-bottom: 4px; }
+.help-sugg { display: flex; flex-wrap: wrap; gap: 6px; }
+.help-sugg button { font: 500 12.5px var(--font-body); color: var(--text); background: none; border: 1px solid var(--line-2); border-radius: 999px; padding: 7px 11px; cursor: pointer; text-align: left; min-height: 34px; }
+.help-sugg button:hover { border-color: var(--accent); color: var(--accent); }
+.help-form { display: flex; gap: 8px; padding: 12px; border-top: 1px solid var(--line); }
+.help-form input { flex: 1; min-width: 0; background: var(--bg); border: 1px solid var(--line-2); border-radius: 999px; color: var(--text); font: 15px var(--font-body); padding: 11px 15px; }
+.help-form input:focus { outline: none; border-color: var(--accent); }
+.help-form button { width: 44px; height: 44px; border-radius: 50%; border: 0; background: var(--accent); color: var(--accent-ink); cursor: pointer; display: grid; place-items: center; flex: none; }
+.help-form button svg { width: 18px; height: 18px; fill: currentColor; }
+.help-foot { font-size: 11.5px; color: var(--dim); padding: 0 14px 12px; }
+.help-foot a { color: var(--muted); }
+.typing { display: inline-flex; gap: 4px; }
+.typing i { width: 6px; height: 6px; border-radius: 50%; background: var(--muted); animation: blink 1s infinite; }
+.typing i:nth-child(2) { animation-delay: .15s; } .typing i:nth-child(3) { animation-delay: .3s; }
+
 /* motion helpers */
 header.top::after { content: ""; position: absolute; left: 0; bottom: -1px; height: 1px; width: 100%; background: var(--accent); box-shadow: 0 0 10px var(--accent); transform-origin: 0 50%; transform: scaleX(var(--p, 0)); }
 .js .reveal { opacity: 0; transform: translateY(26px); transition: opacity .9s cubic-bezier(.2,.7,.2,1), transform .9s cubic-bezier(.2,.7,.2,1); transition-delay: var(--d, 0s); }
@@ -863,6 +903,22 @@ header.top::after { content: ""; position: absolute; left: 0; bottom: -1px; heig
   <a class="btn primary small buy" href="#pricing" tabindex="-1"><span data-i18n="cta.buyShort">Buy</span> <span class="price-now">$42.50</span></a>
 </div>
 
+<button class="help-fab" id="help-fab" type="button" aria-expanded="false" aria-controls="help"><svg viewBox="0 0 24 24"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1-4.6A8 8 0 1 1 21 12z"/><path d="M9.5 9.5a2.5 2.5 0 0 1 4.8 1c0 1.7-2.3 2-2.3 3.3M12 17h.01"/></svg><span data-i18n="help.fab">Quick help</span></button>
+<section class="help" id="help" role="dialog" aria-modal="false" aria-labelledby="help-title">
+  <div class="help-head">
+    <img src="logo.svg" alt="" width="30" height="30">
+    <div><b id="help-title" data-i18n="help.title">Quick help</b><small data-i18n="help.sub">Instant answers about VELTARA FX</small></div>
+    <button class="x" id="help-close" type="button" aria-label="Close">×</button>
+  </div>
+  <div class="help-log" id="help-log" aria-live="polite"></div>
+  <form class="help-form" id="help-form" autocomplete="off">
+    <label class="sr" for="help-q" data-i18n="help.label">Your question</label>
+    <input id="help-q" type="text" maxlength="200" enterkeyhint="send" data-i18n-ph="help.ph" placeholder="Ask about licenses, DAWs, prices…">
+    <button type="submit" aria-label="Send"><svg viewBox="0 0 24 24"><path d="M3 20l18-8L3 4v6l12 2-12 2z"/></svg></button>
+  </form>
+  <p class="help-foot" data-i18n-html="help.foot">Answers come from our help pages. Not finding it? <a href="mailto:veltaravst@gmail.com">veltaravst@gmail.com</a></p>
+</section>
+
 <dialog class="zoom" id="zoom" aria-label="Zoomed screenshot">
   <button class="btn small zoom-close" id="zoom-close" type="button" data-i18n="zoom.close">Close</button>
   <div class="zoom-box" id="zoom-box"><img id="zoom-img" alt=""></div>
@@ -1048,6 +1104,9 @@ const ES = {
   "final.eyebrow": "Cuando quieras", "final.title": "<span class=\"metal\">Ponle textura</span> a tu próxima melodía.",
   "final.lede": "150 presets, diez motores y un pad que se toca. Pago único o VELTARA Plus.",
   "bar.sub": "Pago único o VELTARA Plus",
+  "help.fab": "Ayuda rápida", "help.title": "Ayuda rápida", "help.sub": "Respuestas al instante sobre VELTARA FX", "help.label": "Tu pregunta",
+  "help.ph": "Pregunta sobre licencias, DAWs, precios…",
+  "help.foot": "Las respuestas salen de nuestras páginas de ayuda. ¿No la encuentras? <a href=\"mailto:veltaravst@gmail.com\">veltaravst@gmail.com</a>",
   "zoom.close": "Cerrar", "zoom.tip": "Clic para ampliar · arrastra para mover · Esc para cerrar",
   "foot.trademarks": "VST es una marca de Steinberg Media Technologies GmbH. Audio Units y macOS son marcas de Apple Inc.",
   "cd.days": "días", "cd.hours": "horas", "cd.min": "min", "cd.sec": "seg",
@@ -1086,6 +1145,7 @@ const EN_EXTRA = {
 const EN = {};
 document.querySelectorAll("[data-i18n]").forEach(el => { EN[el.dataset.i18n] = el.textContent; });
 document.querySelectorAll("[data-i18n-html]").forEach(el => { EN[el.dataset.i18nHtml] = el.innerHTML; });
+document.querySelectorAll("[data-i18n-ph]").forEach(el => { EN[el.dataset.i18nPh] = el.placeholder; });
 Object.assign(EN, EN_EXTRA, ENGINE_EN, TOUR_EN);
 let lang = "en";
 const t = key => (lang === "es" ? ES : EN)[key] ?? EN[key] ?? key;
@@ -1095,6 +1155,7 @@ function setLang(next) {
   document.documentElement.lang = next;
   document.querySelectorAll("[data-i18n]").forEach(el => { el.textContent = t(el.dataset.i18n); });
   document.querySelectorAll("[data-i18n-html]").forEach(el => { el.innerHTML = t(el.dataset.i18nHtml); });
+  document.querySelectorAll("[data-i18n-ph]").forEach(el => { el.placeholder = t(el.dataset.i18nPh); });
   document.querySelectorAll(".lang button").forEach(b => b.setAttribute("aria-pressed", String(b.dataset.lang === next)));
   try { localStorage.setItem("veltara-lang", next); } catch (e) {}
   renderBanks(); renderEngines(); renderBankList(); showNow(); setTour(tourView);
@@ -1488,7 +1549,7 @@ const calm = matchMedia("(prefers-reduced-motion: reduce)").matches;
     top.style.setProperty("--p", max > 0 ? (scrollY / max).toFixed(4) : 0);
     const pr = pricing.getBoundingClientRect();
     const show = scrollY > hero.offsetHeight - 80 && !(pr.top < innerHeight && pr.bottom > 0);
-    bar.classList.toggle("show", show); bar.setAttribute("aria-hidden", String(!show));
+    bar.classList.toggle("show", show); bar.setAttribute("aria-hidden", String(!show)); document.body.classList.toggle("bar-on", show);
     bar.querySelector("a").tabIndex = show ? 0 : -1;
   };
   addEventListener("scroll", set, { passive: true }); addEventListener("resize", set); set();
@@ -1624,6 +1685,167 @@ function reveal() {
   pick(0);
   if (calm) { draw(0); return; }
   requestAnimationFrame(frame);
+})();
+
+// ------------------------------------------------------------------ quick help
+// Instant answers from a curated knowledge base, in English and Spanish. Runs entirely in
+// the page: no server, no AI, nothing sent anywhere. Unknown questions go to the support email.
+const KB = [
+  { id: "activate", k: ["activate", "activation", "activar", "activacion", "activo", "serial", "license key", "clave", "codigo", "register", "registrar", "unlock", "desbloquear"],
+    q: ["How do I activate VELTARA FX?", "¿Cómo activo VELTARA FX?"],
+    a: ["Open VELTARA FX in your DAW and click <b>ACTIVATE IN BROWSER</b>. Your browser opens; sign in and approve the computer. That's it, no serial numbers to type.",
+        "Abre VELTARA FX en tu DAW y haz clic en <b>ACTIVATE IN BROWSER</b>. Se abre tu navegador; entra con tu cuenta y aprueba la computadora. Listo, sin seriales que escribir."] },
+  { id: "offline", k: ["offline", "sin internet", "sin conexion", "no internet", "internet", "conexion", "connection", "studio computer", "air gapped", "archivo", "file"],
+    q: ["Does it need an internet connection?", "¿Necesita internet?"],
+    a: ["Only to activate and for a quick license check now and then. Perpetual works up to 60 days offline; Plus checks in around each renewal. A studio computer with no internet can be activated offline with a file. Audio processing never depends on a connection.",
+        "Solo para activar y para una verificación rápida de vez en cuando. La Perpetua funciona hasta 60 días sin conexión; Plus se verifica en cada renovación. Una computadora de estudio sin internet se activa sin conexión con un archivo. El procesamiento de audio nunca depende de la conexión."] },
+  { id: "computers", k: ["computers", "computadoras", "computadora", "machines", "maquinas", "laptop", "portatil", "how many", "cuantas", "seats", "activations", "activaciones", "move", "mover", "transfer", "transferir", "new computer", "nueva computadora"],
+    q: ["How many computers can I use?", "¿En cuántas computadoras lo puedo usar?"],
+    a: ["Up to three at a time, Mac and Windows mixed. To move it to a new computer, free a seat from your account at <a href=\"https://store.veltaravst.com\" target=\"_blank\" rel=\"noopener\">store.veltaravst.com</a> (or deactivate it inside the plugin) and activate the new one.",
+        "Hasta tres a la vez, Mac y Windows mezclados. Para pasarlo a otra computadora, libera un puesto desde tu cuenta en <a href=\"https://store.veltaravst.com\" target=\"_blank\" rel=\"noopener\">store.veltaravst.com</a> (o desactívalo dentro del plugin) y activa la nueva."] },
+  { id: "download", k: ["download", "descargar", "descarga", "install", "instalar", "instalacion", "installer", "instalador", "where", "donde", "account", "cuenta", "invoice", "factura", "lost", "perdi"],
+    q: ["Where do I download it and find my license?", "¿Dónde lo descargo y encuentro mi licencia?"],
+    a: ["Everything is in your account at <a href=\"https://store.veltaravst.com\" target=\"_blank\" rel=\"noopener\">store.veltaravst.com</a>: installers, licenses, activated computers and invoices.",
+        "Todo está en tu cuenta en <a href=\"https://store.veltaravst.com\" target=\"_blank\" rel=\"noopener\">store.veltaravst.com</a>: instaladores, licencias, computadoras activadas y facturas."] },
+  { id: "price", k: ["price", "precio", "cost", "cuesta", "cuanto", "how much", "cheap", "barato", "discount", "descuento", "oferta", "sale", "pay", "pagar", "pago", "dollars", "dolares"],
+    q: ["How much does it cost?", "¿Cuánto cuesta?"],
+    a: ["Perpetual: $50 one-time ($42.50 with the 15% launch price). VELTARA Plus: $7.99 per month or $69 per year, with every monthly expansion pack. <a href=\"#pricing\">See the plans</a>.",
+        "Perpetua: $50 pago único ($42.50 con el 15 % de lanzamiento). VELTARA Plus: $7.99 al mes o $69 al año, con cada pack de expansión mensual. <a href=\"#pricing\">Ver los planes</a>."] },
+  { id: "launch", k: ["launch", "lanzamiento", "when", "cuando", "release", "sale", "available", "disponible", "buy now", "comprar ya", "store open", "abre", "fecha", "date", "january", "enero"],
+    q: ["When can I buy it?", "¿Cuándo lo puedo comprar?"],
+    a: ["The store opens on launch day, January 12, 2027. The 15% launch price runs until January 26.",
+        "La tienda abre el día del lanzamiento, el 12 de enero de 2027. El precio de lanzamiento con 15 % dura hasta el 26 de enero."] },
+  { id: "plans", k: ["subscription", "suscripcion", "subscribe", "suscribir", "perpetual", "perpetua", "plus", "difference", "diferencia", "which plan", "que plan", "monthly", "mensual", "yearly", "anual", "own", "mio"],
+    q: ["Perpetual or VELTARA Plus: what's the difference?", "Perpetua o VELTARA Plus: ¿qué cambia?"],
+    a: ["Same plugin. Perpetual is a one-time payment: the plugin, the 150 presets, the free packs and every 1.x update are yours. VELTARA Plus is a subscription that adds every monthly expansion pack, and after 12 monthly payments (or one yearly payment) the license becomes yours for good.",
+        "Es el mismo plugin. La Perpetua es un pago único: el plugin, los 150 presets, los packs gratis y todas las actualizaciones 1.x son tuyos. VELTARA Plus es una suscripción que añade cada pack de expansión mensual, y tras 12 pagos mensuales (o un pago anual) la licencia es tuya para siempre."] },
+  { id: "rto", k: ["rent to own", "rent-to-own", "12 months", "12 meses", "12 payments", "12 pagos", "keep", "quedo", "yours", "tuyo", "for good", "para siempre", "own it"],
+    q: ["How does rent-to-own work?", "¿Cómo funciona el rent-to-own?"],
+    a: ["After 12 monthly payments of VELTARA Plus, or one yearly payment, your license turns into a perpetual one automatically, with nothing to do. If you cancel later, you keep VELTARA FX and the packs.",
+        "Tras 12 pagos mensuales de VELTARA Plus, o un pago anual, tu licencia se convierte sola en perpetua, sin hacer nada. Si cancelas después, te quedas con VELTARA FX y los packs."] },
+  { id: "cancel", k: ["cancel", "cancelar", "cancelo", "stop subscription", "parar", "unsubscribe", "darme de baja", "baja"],
+    q: ["Can I cancel VELTARA Plus?", "¿Puedo cancelar VELTARA Plus?"],
+    a: ["Yes, the monthly plan can be cancelled anytime. Once you've made 12 monthly payments (or one yearly payment), VELTARA FX and the packs stay yours after cancelling.",
+        "Sí, el plan mensual se puede cancelar cuando quieras. Cuando ya llevas 12 pagos mensuales (o un pago anual), VELTARA FX y los packs siguen siendo tuyos aunque canceles."] },
+  { id: "packs", k: ["pack", "packs", "expansion", "expansiones", "new presets", "presets nuevos", "monthly pack", "content", "contenido"],
+    q: ["What is an expansion pack?", "¿Qué es un pack de expansión?"],
+    a: ["New presets and textures, one pack a month, installed from the <b>PACKS</b> button inside the plugin. Some packs are free for everyone; VELTARA Plus members get all of them.",
+        "Presets y texturas nuevas, un pack al mes, que se instalan desde el botón <b>PACKS</b> dentro del plugin. Algunos son gratis para todos; los miembros de VELTARA Plus los reciben todos."] },
+  { id: "daw", k: ["daw", "ableton", "logic", "fl studio", "fl", "cubase", "studio one", "reaper", "bitwig", "garageband", "host", "works with", "funciona con", "compatible", "compatibilidad"],
+    q: ["Which DAWs does it work in?", "¿En qué DAWs funciona?"],
+    a: ["Ableton Live, Logic Pro, FL Studio, Cubase, Studio One, Reaper and Bitwig, as VST3 or AU (AU on Mac). There's also a Standalone app.",
+        "Ableton Live, Logic Pro, FL Studio, Cubase, Studio One, Reaper y Bitwig, como VST3 o AU (AU en Mac). También hay una app Standalone."] },
+  { id: "protools", k: ["pro tools", "protools", "aax", "avid"],
+    q: ["Does it work in Pro Tools (AAX)?", "¿Funciona en Pro Tools (AAX)?"],
+    a: ["Not yet: VELTARA FX comes as VST3, AU and Standalone. There's no AAX version for Pro Tools at the moment.",
+        "Todavía no: VELTARA FX viene en VST3, AU y Standalone. Por ahora no hay versión AAX para Pro Tools."] },
+  { id: "system", k: ["mac", "macos", "windows", "apple silicon", "m1", "m2", "m3", "m4", "intel", "requirements", "requisitos", "system", "sistema", "linux", "sonoma", "sequoia", "ventura", "64 bit", "32 bit", "vst3", "au", "formats", "formatos"],
+    q: ["What are the system requirements?", "¿Cuáles son los requisitos?"],
+    a: ["macOS 10.15 or later on Apple Silicon (M1–M4) or Intel: VST3, AU and Standalone. Windows 10 or 11, 64-bit: VST3 and Standalone. Sample rates 44.1 to 192 kHz. There's no Linux version.",
+        "macOS 10.15 o posterior en Apple Silicon (M1–M4) o Intel: VST3, AU y Standalone. Windows 10 u 11 de 64 bits: VST3 y Standalone. Frecuencias de 44.1 a 192 kHz. No hay versión para Linux."] },
+  { id: "cpu", k: ["cpu", "performance", "rendimiento", "heavy", "pesado", "latency", "latencia", "slow", "lento", "lag"],
+    q: ["Is it heavy on the CPU? Any latency?", "¿Gasta mucha CPU? ¿Tiene latencia?"],
+    a: ["About 3% of one core at 48 kHz, a few percent more with every effect on, and 0 ms of added latency.",
+        "Cerca del 3 % de un núcleo a 48 kHz, unos pocos puntos más con todos los efectos encendidos, y 0 ms de latencia añadida."] },
+  { id: "demo", k: ["demo", "trial", "prueba", "probar", "try", "free", "gratis", "silence", "silencio", "gap", "corte", "mute"],
+    q: ["Can I try it before buying?", "¿Lo puedo probar antes de comprar?"],
+    a: ["Until it's activated, VELTARA FX runs in demo mode: every feature works, with a 1.5-second gap of silence at the end of every minute. Activating removes it.",
+        "Mientras no está activado, VELTARA FX funciona en modo demo: todo funciona, con un silencio de 1.5 segundos al final de cada minuto. Al activarlo desaparece."] },
+  { id: "tempo", k: ["tempo", "bpm", "sync", "sincroniza", "grid", "rejilla", "triplet", "tresillo", "glitch", "stutter"],
+    q: ["Does the glitch follow my project tempo?", "¿El glitch sigue el tempo de mi proyecto?"],
+    a: ["Yes. Slices lock to your DAW's tempo and bar position, from half notes down to 1/32 and triplets. Press play in your DAW and the edits land on the grid.",
+        "Sí. Los cortes se sincronizan con el tempo y la posición de compás de tu DAW, desde blancas hasta 1/32 y tresillos. Dale play en tu DAW y los cortes caen en la rejilla."] },
+  { id: "sources", k: ["vocals", "voces", "voz", "drums", "bateria", "drum", "guitar", "guitarra", "piano", "keys", "synth", "bass", "bajo", "use it on vocals", "instrument", "instrumento"],
+    q: ["What can I put it on?", "¿En qué lo puedo usar?"],
+    a: ["It's designed for melodic parts: keys, synths, guitars, arps, vocal chops. Stutters and tape stops also work well on drum loops and vocals.",
+        "Está pensado para partes melódicas: teclados, synths, guitarras, arpegios, chops vocales. Los stutters y tape stops también funcionan muy bien en loops de batería y voces."] },
+  { id: "royalty", k: ["royalty", "regalias", "release", "publicar", "commercial", "comercial", "copyright", "derechos", "spotify", "sell", "vender"],
+    q: ["Can I release music made with it?", "¿Puedo publicar música hecha con él?"],
+    a: ["Yes. Everything you make with VELTARA FX is yours to release, royalty-free.",
+        "Sí. Todo lo que hagas con VELTARA FX es tuyo para publicar, libre de regalías."] },
+  { id: "presets", k: ["presets", "preset", "banks", "bancos", "genres", "generos", "reggaeton", "trap", "save", "guardar", "my presets", "mis presets", "library", "libreria"],
+    q: ["What presets come with it?", "¿Qué presets trae?"],
+    a: ["150 factory presets in 15 banks: Signature, Spectral, Ambient Melodies, Dark Textures, R&B, Trap, Reggaeton, Afrobeat, Cinematic, Electronic, Vintage, Glitch, Experimental, Dreamy and Atmospheric. You can save your own next to them. <a href=\"#listen\">Hear one from each bank</a>.",
+        "150 presets de fábrica en 15 bancos: Signature, Spectral, Ambient Melodies, Dark Textures, R&B, Trap, Reggaeton, Afrobeat, Cinematic, Electronic, Vintage, Glitch, Experimental, Dreamy y Atmospheric. Puedes guardar los tuyos al lado. <a href=\"#listen\">Escucha uno de cada banco</a>."] },
+  { id: "updates", k: ["update", "updates", "actualizacion", "actualizaciones", "actualizar", "new version", "nueva version", "upgrade", "2.0"],
+    q: ["Are updates free?", "¿Las actualizaciones son gratis?"],
+    a: ["Every 1.x update is free, and the plugin tells you when a new version is out.",
+        "Todas las actualizaciones 1.x son gratis, y el plugin te avisa cuando sale una versión nueva."] },
+  { id: "controls", k: ["xy", "pad", "macro", "macros", "texture", "movement", "space", "character", "advanced", "randomize", "exciter", "how to use", "como se usa", "como usar", "tutorial", "manual"],
+    q: ["How do I use it?", "¿Cómo se usa?"],
+    a: ["Pick a preset, then shape it with the four macros (Texture, Movement, Space, Character). Send the XY pad to one effect and drag to play it; double-click to return to the preset. Hold the eight performance pads (or keys 1–8, or MIDI) for stutters, reverses, freezes and risers. ADVANCED opens four effect knobs: Grit, Mod FX, Echoes, Spectrum.",
+        "Elige un preset y dale forma con los cuatro macros (Texture, Movement, Space, Character). Manda el pad XY a un efecto y arrastra para tocarlo; doble clic vuelve al preset. Mantén los ocho pads de performance (o las teclas 1–8, o MIDI) para stutters, reverses, freezes y risers. ADVANCED abre cuatro knobs de efectos: Grit, Mod FX, Echoes y Spectrum."] },
+  { id: "refund", k: ["refund", "reembolso", "devolucion", "devolver", "money back", "dinero", "return"],
+    q: ["What about refunds?", "¿Y las devoluciones?"],
+    a: ["Write to <a href=\"mailto:veltaravst@gmail.com\">veltaravst@gmail.com</a> with your order and we'll look at your case.",
+        "Escribe a <a href=\"mailto:veltaravst@gmail.com\">veltaravst@gmail.com</a> con tu pedido y revisamos tu caso."] },
+  { id: "contact", k: ["contact", "contacto", "support", "soporte", "email", "correo", "help", "ayuda", "problem", "problema", "bug", "error", "crash", "not working", "no funciona", "no carga", "not loading", "not showing", "no aparece", "no me aparece", "aparece", "scan", "escanear", "rescan"],
+    q: ["The plugin doesn't show up or I have a problem", "No me aparece el plugin o tengo un problema"],
+    a: ["First rescan plug-ins in your DAW (in Logic: restart it so it rescans Audio Units). If it still doesn't show up or something fails, write to <a href=\"mailto:veltaravst@gmail.com\">veltaravst@gmail.com</a> with your DAW, your system and what happens.",
+        "Primero reescanea los plugins en tu DAW (en Logic: reinícialo para que vuelva a escanear los Audio Units). Si sigue sin aparecer o algo falla, escribe a <a href=\"mailto:veltaravst@gmail.com\">veltaravst@gmail.com</a> con tu DAW, tu sistema y lo que pasa."] },
+];
+KB.push({ id: "hello", k: ["hola", "hi", "hello", "hey", "buenas", "buenos dias", "good morning", "thanks", "gracias", "thank you"],
+  q: ["Hello", "Hola"],
+  a: ["Hi! Ask me anything quick about VELTARA FX: activation, computers, DAWs, prices, plans or packs.", "¡Hola! Pregúntame lo que quieras sobre VELTARA FX: activación, computadoras, DAWs, precios, planes o packs."] });
+const HELP_POPULAR = ["price", "activate", "plans", "daw", "demo", "computers"];
+const HELP_TXT = {
+  en: { hi: "Hi! I answer quick questions about VELTARA FX: licenses, DAWs, prices, installation. Pick one or type yours.", none: "I don't have an answer for that one yet. Write to <a href=\"mailto:veltaravst@gmail.com?subject=VELTARA%20FX%20question\">veltaravst@gmail.com</a> and we'll get back to you.", also: "Related:" },
+  es: { hi: "¡Hola! Respondo preguntas rápidas sobre VELTARA FX: licencias, DAWs, precios, instalación. Elige una o escribe la tuya.", none: "Todavía no tengo respuesta para eso. Escribe a <a href=\"mailto:veltaravst@gmail.com?subject=Pregunta%20VELTARA%20FX\">veltaravst@gmail.com</a> y te respondemos.", also: "Relacionado:" },
+};
+const norm = s => s.toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "").replace(/[^a-z0-9.\- ]+/g, " ").replace(/\s+/g, " ").trim();
+function helpLang(q) {
+  const w = " " + norm(q) + " ";
+  const es = [" como ", " que ", " cuanto", " puedo ", " donde ", " necesita", " funciona", " tiene ", " para ", " licencia", " precio", " cuando ", " es ", " el ", " la ", " mi ", " lo ", " una ", " no ", " en ", " se ", " cuantas", " trae", " gratis", " puede", " hay ", " tengo ", " hola ", " gracias ", " buenas "].filter(x => w.includes(x)).length;
+  const en = [" how ", " what ", " can ", " does ", " do ", " where ", " the ", " is ", " my ", " it ", " when ", " which ", " need "].filter(x => w.includes(x)).length;
+  return es > en ? "es" : en > es ? "en" : lang;
+}
+function helpSearch(q) {
+  const w = " " + norm(q) + " ";
+  return KB.map(e => {
+    let s = 0;
+    for (const k of e.k) { const nk = norm(k); if (w.includes(" " + nk + " ")) s += nk.includes(" ") ? 3 : 2; else if (nk.length > 4 && w.includes(nk)) s += 1; }
+    return { e, s };
+  }).filter(x => x.s > 0).sort((a, b) => b.s - a.s);
+}
+(function quickHelp() {
+  const fab = document.getElementById("help-fab"), box = document.getElementById("help"), log = document.getElementById("help-log");
+  const form = document.getElementById("help-form"), input = document.getElementById("help-q");
+  let started = false;
+  const L = () => HELP_TXT[lang] ? lang : "en";
+  const add = (html, cls) => { const d = document.createElement("div"); d.className = "msg " + cls; d.innerHTML = html; log.appendChild(d); log.scrollTop = log.scrollHeight; return d; };
+  const chips = (ids, li) => { const d = document.createElement("div"); d.className = "help-sugg";
+    d.innerHTML = ids.map(id => { const e = KB.find(x => x.id === id); return `<button type="button" data-k="${id}">${e.q[li === "es" ? 1 : 0]}</button>`; }).join("");
+    log.appendChild(d); log.scrollTop = log.scrollHeight; };
+  function answer(e, li, related) {
+    const i = li === "es" ? 1 : 0;
+    const typing = add('<span class="typing" aria-label="…"><i></i><i></i><i></i></span>', "bot");
+    setTimeout(() => {
+      typing.innerHTML = `<span class="q">${e.q[i]}</span><p>${e.a[i]}</p>`;
+      if (related && related.length) { const r = document.createElement("div"); r.className = "msg bot"; r.style.background = "none"; r.style.border = "0"; r.style.padding = "0"; r.innerHTML = `<span class="q" style="color:var(--dim)">${HELP_TXT[li].also}</span>`; log.appendChild(r); chips(related, li); }
+      log.scrollTop = log.scrollHeight;
+    }, calm ? 0 : 420);
+  }
+  function ask(text) {
+    const q = text.trim(); if (!q) return;
+    add(q.replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c])), "me");
+    const li = helpLang(q), hits = helpSearch(q);
+    if (!hits.length) { const t2 = add('<span class="typing"><i></i><i></i><i></i></span>', "bot"); setTimeout(() => { t2.innerHTML = `<p>${HELP_TXT[li].none}</p>`; chips(HELP_POPULAR.slice(0, 4), li); }, calm ? 0 : 420); return; }
+    answer(hits[0].e, li, hits.slice(1, 3).filter(h => h.s >= 2).map(h => h.e.id));
+  }
+  function open() {
+    box.classList.add("open"); fab.setAttribute("aria-expanded", "true");
+    if (!started) { started = true; add(`<p>${HELP_TXT[L()].hi}</p>`, "bot"); chips(HELP_POPULAR, L()); }
+    setTimeout(() => input.focus({ preventScroll: true }), 50);
+  }
+  function close() { box.classList.remove("open"); fab.setAttribute("aria-expanded", "false"); fab.focus({ preventScroll: true }); }
+  fab.addEventListener("click", open);
+  document.getElementById("help-close").addEventListener("click", close);
+  document.addEventListener("keydown", e => { if (e.key === "Escape" && box.classList.contains("open")) close(); });
+  form.addEventListener("submit", e => { e.preventDefault(); ask(input.value); input.value = ""; });
+  log.addEventListener("click", e => {
+    const b = e.target.closest("[data-k]"); if (b) { const en = KB.find(x => x.id === b.dataset.k); add(b.textContent, "me"); answer(en, L(), []); return; }
+    const a = e.target.closest('a[href^="#"]'); if (a && innerWidth < 560) close();
+  });
 })();
 
 // ------------------------------------------------------------------ boot
