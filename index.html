@@ -614,17 +614,19 @@ header.top::after { content: ""; position: absolute; left: 0; bottom: -1px; heig
 
 .tour-bar { display: none; }
 @media (min-width: 941px) and (hover: hover) and (prefers-reduced-motion: no-preference) {
-  .tour-scroll.on { height: 290vh; position: relative; }
-  .tour-scroll.on .tour-sticky { position: sticky; top: 76px; display: grid; gap: 14px; }
-  .tour-scroll.on .tour-stage { width: min(100%, calc((100vh - 250px) * 1.42)); margin-inline: auto; transition: transform .7s cubic-bezier(.2,.7,.2,1); transform: perspective(1600px) rotateX(var(--tx, 0deg)) rotateY(var(--ty, 0deg)) scale(var(--ts, 1)); }
-  .tour-scroll.on .tour-stage.flip img { animation: flip .55s cubic-bezier(.2,.7,.2,1); }
-  .tour-scroll.on .tour-cap { text-align: center; min-height: 3em; max-width: 760px; margin-inline: auto; }
-  .tour-scroll.on .tabs { justify-content: center; }
-  .tour-scroll.on .tour-bar { display: flex; gap: 6px; justify-content: center; }
-  .tour-bar i { width: 34px; height: 3px; border-radius: 3px; background: var(--line-2); overflow: hidden; position: relative; }
+  .tour-scroll.on { height: 230vh; position: relative; }
+  .tour-scroll.on .tour-sticky { position: sticky; top: 92px; display: grid; grid-template-columns: 250px minmax(0, 1fr); grid-template-rows: auto auto 1fr; column-gap: 36px; row-gap: 14px; align-items: start; }
+  .tour-scroll.on .tour-bar { display: flex; grid-column: 1; grid-row: 1; gap: 6px; margin-top: 6px; }
+  .tour-scroll.on .tabs { grid-column: 1; grid-row: 2; flex-direction: column; align-items: stretch; gap: 8px; }
+  .tour-scroll.on .tabs .chip { text-align: left; padding: 12px 16px; }
+  .tour-scroll.on .tour-cap { grid-column: 1; grid-row: 3; font-size: 14px; line-height: 1.55; min-height: 0; }
+  .tour-scroll.on .tour-stage { grid-column: 2; grid-row: 1 / span 3; width: 100%; max-width: calc((100vh - 130px) * 1.41); justify-self: center; }
+  .tour-scroll.on .tour-stage .zoomhint { right: 16px; bottom: 16px; }
+  .tour-scroll.on .tour-stage.flip img { animation: flip .45s cubic-bezier(.2,.7,.2,1); }
+  .tour-bar i { flex: 1; height: 3px; border-radius: 3px; background: var(--line-2); overflow: hidden; position: relative; }
   .tour-bar i::after { content: ""; position: absolute; inset: 0; background: var(--accent); transform: scaleX(var(--f, 0)); transform-origin: left; box-shadow: 0 0 8px var(--accent); }
 }
-@keyframes flip { 0% { transform: rotateY(-14deg) scale(.96); opacity: .3; filter: blur(4px); } 100% { transform: none; opacity: 1; filter: none; } }
+@keyframes flip { 0% { transform: translateY(8px); opacity: .25; } 100% { transform: none; opacity: 1; } }
 
 .rain { position: relative; padding: 14px; margin-bottom: 22px; overflow: hidden; }
 .rain-top { display: flex; flex-wrap: wrap; gap: 10px 16px; align-items: center; position: relative; z-index: 1; }
@@ -2085,7 +2087,7 @@ drawWave();
 (function tourScroll() {
   const box = document.getElementById("tour-scroll"); if (!box) return;
   const mq = matchMedia("(min-width: 941px) and (hover: hover) and (prefers-reduced-motion: no-preference)");
-  const views = ["main", "advanced", "browser", "light"], tilt = [[3, -5, 1], [-2, 4, 1.01], [2, 5, .99], [-3, -4, 1]];
+  const views = ["main", "advanced", "browser", "light"];
   const stage = document.getElementById("tour-stage"), bars = box.querySelectorAll(".tour-bar i");
   let last = -1, raf = 0;
   function update() {
@@ -2096,11 +2098,10 @@ drawWave();
     bars.forEach((b, j) => b.style.setProperty("--f", j < i ? 1 : j > i ? 0 : (k * views.length - i).toFixed(3)));
     if (i !== last) {
       last = i; setTour(views[i]);
-      stage.style.setProperty("--tx", tilt[i][0] + "deg"); stage.style.setProperty("--ty", tilt[i][1] + "deg"); stage.style.setProperty("--ts", tilt[i][2]);
       stage.classList.remove("flip"); void stage.offsetWidth; stage.classList.add("flip");
     }
   }
-  function mode() { box.classList.toggle("on", mq.matches); last = -1; if (!mq.matches) { stage.style.removeProperty("--tx"); stage.style.removeProperty("--ty"); stage.style.removeProperty("--ts"); } update(); }
+  function mode() { box.classList.toggle("on", mq.matches); last = -1; update(); }
   mq.addEventListener?.("change", mode); mode();
   addEventListener("scroll", () => { if (!raf) raf = requestAnimationFrame(update); }, { passive: true });
   // A tab click while scrolling jumps to that part of the scroll.
