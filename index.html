@@ -628,21 +628,47 @@ header.top::after { content: ""; position: absolute; left: 0; bottom: -1px; heig
 }
 @keyframes flip { 0% { transform: translateY(8px); opacity: .25; } 100% { transform: none; opacity: 1; } }
 
-.rain { position: relative; padding: 18px; margin-bottom: 22px; overflow: hidden; }
+.rain { position: relative; padding: 20px; margin-bottom: 22px; overflow: hidden; }
 .rain-top { display: flex; flex-wrap: wrap; gap: 10px 16px; align-items: center; position: relative; z-index: 1; }
 .rain-search { flex: 1 1 260px; display: flex; align-items: center; gap: 10px; border: 1px solid var(--line-2); border-radius: 999px; padding: 0 16px; background: color-mix(in srgb, var(--bg) 70%, transparent); }
 .rain-search:focus-within { border-color: color-mix(in srgb, var(--accent) 60%, var(--line-2)); box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 18%, transparent); }
 .rain-search svg { width: 16px; height: 16px; fill: none; stroke: var(--muted); stroke-width: 2; flex: none; }
 .rain-search input { flex: 1; min-width: 0; height: 44px; border: 0; outline: 0; background: transparent; color: var(--text); font: 400 15px var(--font-body); }
 .rain-info { font: 500 11px var(--font-data); letter-spacing: .12em; text-transform: uppercase; color: var(--muted); }
-#rain-cv { display: block; width: 100%; height: 330px; margin-top: 12px; touch-action: pan-y; }
-.rain-banks { display: flex; gap: 6px; overflow-x: auto; scrollbar-width: none; margin-top: 12px; padding-bottom: 2px; -webkit-mask: linear-gradient(90deg, #000 92%, transparent); mask: linear-gradient(90deg, #000 92%, transparent); }
-.rain-banks::-webkit-scrollbar { display: none; }
-.rain-banks .chip { flex: none; white-space: nowrap; }
-.rain-banks .chip[aria-pressed="true"] { color: var(--accent-ink); background: var(--accent); border-color: var(--accent); }
-#rain-cv.grab { cursor: grabbing; }
-.rain-hint { font-size: 12.5px; color: var(--dim); margin-top: 6px; }
-@media (max-width: 640px) { #rain-cv { height: 300px; } }
+
+.spec-an { display: grid; grid-template-columns: repeat(15, minmax(0, 1fr)); gap: 6px; align-items: end; margin-top: 18px; padding: 14px 10px 0; border-radius: 14px;
+  background: linear-gradient(180deg, transparent, color-mix(in srgb, var(--accent) 5%, transparent)); border-bottom: 1px solid var(--line-2); }
+.spec-bar { display: grid; justify-items: center; gap: 8px; background: none; border: 0; padding: 0 0 10px; cursor: pointer; color: var(--dim); font: 500 9.5px/1.15 var(--font-data); letter-spacing: .06em; text-transform: uppercase; min-width: 0; }
+.spec-seg { display: flex; flex-direction: column-reverse; gap: 3px; width: 100%; max-width: 46px; }
+.spec-seg i { display: block; height: 7px; border-radius: 2px; background: #2a2f34; transition: background .25s, box-shadow .25s, opacity .25s; }
+.spec-an.ready .spec-seg i { animation: segIn .5s cubic-bezier(.2,.7,.2,1) both; animation-delay: calc(var(--k) * 18ms + var(--c) * 30ms); }
+@keyframes segIn { from { opacity: 0; transform: scaleX(.3); } }
+.spec-bar:hover .spec-seg i { background: color-mix(in srgb, var(--accent) 45%, #2a2f34); }
+.spec-bar[aria-selected="true"] { color: var(--accent); }
+.spec-bar[aria-selected="true"] .spec-seg i { background: var(--accent); box-shadow: 0 0 10px color-mix(in srgb, var(--accent) 60%, transparent); }
+.spec-seg i.hit { background: var(--accent) !important; box-shadow: 0 0 10px var(--accent); }
+.spec-an.searching .spec-seg i:not(.hit) { opacity: .35; }
+.spec-name { display: block; max-width: 100%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.spec-n { color: var(--muted); font-size: 10px; }
+.spec-out { margin-top: 16px; }
+.spec-head { display: flex; align-items: baseline; gap: 12px; margin-bottom: 12px; }
+.spec-head b { font: 400 20px var(--font-display); letter-spacing: -.01em; }
+.spec-head span { font: 500 11px var(--font-data); letter-spacing: .12em; text-transform: uppercase; color: var(--muted); }
+.spec-list { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(170px, 1fr)); gap: 8px; }
+.spec-list li { display: flex; align-items: center; gap: 10px; padding: 11px 14px; border-radius: 12px; border: 1px solid var(--line-2); background: color-mix(in srgb, var(--panel-2) 80%, transparent);
+  font-size: 14px; animation: rowIn .35s cubic-bezier(.2,.7,.2,1) both; animation-delay: calc(var(--i) * 22ms); transition: border-color .2s, transform .2s; }
+.spec-list li:hover { border-color: color-mix(in srgb, var(--accent) 55%, var(--line-2)); transform: translateY(-2px); }
+.spec-list li::before { content: ""; width: 6px; height: 6px; border-radius: 50%; background: var(--accent); box-shadow: 0 0 8px var(--accent); flex: none; }
+.spec-list li small { display: block; margin-top: 3px; font: 500 9.5px var(--font-data); letter-spacing: .08em; text-transform: uppercase; color: var(--dim); white-space: nowrap; }
+.spec-list .none { grid-column: 1 / -1; color: var(--muted); }
+.spec-list .none::before { display: none; }
+@keyframes rowIn { from { opacity: 0; transform: translateY(6px); } }
+@media (max-width: 640px) {
+  .spec-an { gap: 3px; padding-inline: 4px; }
+  .spec-seg i { height: 5px; } .spec-seg { gap: 2px; }
+  .spec-name { writing-mode: vertical-rl; transform: rotate(180deg); max-height: 92px; }
+  .spec-list { grid-template-columns: 1fr 1fr; } .spec-list li { font-size: 13px; padding: 10px 12px; }
+}
 
 .final { position: relative; isolation: isolate; }
 .final > *:not(.goo):not(.reach) { position: relative; z-index: 2; }
@@ -885,9 +911,11 @@ header.top::after { content: ""; position: absolute; left: 0; bottom: -1px; heig
             <input id="rain-q" type="search" autocomplete="off" spellcheck="false" placeholder="Search through 150 presets" data-i18n-ph="rain.ph" aria-label="Search presets"></label>
           <span class="rain-info" id="rain-info" aria-live="polite"></span>
         </div>
-        <div class="rain-banks" id="rain-banks" role="group" aria-label="Filter by bank"></div>
-        <canvas id="rain-cv" aria-label="The 150 factory presets" role="img"></canvas>
-        <p class="rain-hint" data-i18n="rain.hint">Type a name or a mood, or pick a bank. Point at a tile to see its bank.</p>
+        <div class="spec-an" id="spec-an" role="tablist" aria-label="Banks"></div>
+        <div class="spec-out">
+          <div class="spec-head"><b id="spec-title"></b><span id="spec-count"></span></div>
+          <ul class="spec-list" id="spec-list"></ul>
+        </div>
       </div>
       <div class="banks" id="banks"></div>
       <div class="lib-facts">
@@ -1190,7 +1218,7 @@ const TOUR_EN = {
 // ------------------------------------------------------------------ i18n
 const ES = {
   "rain.ph": "Busca entre 150 presets",
-  "rain.hint": "Escribe un nombre o un ambiente, o elige un banco. Señala una ficha para ver su banco.",
+  
   "a11y.skip": "Saltar al contenido",
   "foot.contact": "Soporte",
   "nav.account": "Mi cuenta",
@@ -2116,123 +2144,46 @@ drawWave();
     scrollTo({ top: scrollY + r.top + span * (i + .5) / views.length, behavior: "smooth" });
   });
 })();
-// Preset rain: the factory presets drop into tidy rows; search or pick a bank and the matches glide to the front.
-(function presetRain() {
+// Preset library as a spectrum analyzer: one LED bar per bank (one segment per preset); pick a bar or search.
+(function presetSpectrum() {
   const PRESETS = [["Afrobeat","Golden Groove"],["Afrobeat","Harmattan"],["Afrobeat","Highlife Air"],["Afrobeat","Kalimba Dust"],["Afrobeat","Lagos Sunset"],["Afrobeat","Palm Wine"],["Afrobeat","River Drum Air"],["Afrobeat","Savanna Haze"],["Ambient Melodies","Drift Letters"],["Ambient Melodies","First Light"],["Ambient Melodies","Glass Garden"],["Ambient Melodies","Haze Keys"],["Ambient Melodies","Morning Fog"],["Ambient Melodies","Slow Tide"],["Ambient Melodies","Soft Orbit"],["Ambient Melodies","Still Water"],["Atmospheric","Aurora Field"],["Atmospheric","Deep Space"],["Atmospheric","Distant City"],["Atmospheric","Horizon Line"],["Atmospheric","Ocean Floor"],["Atmospheric","Open Sky"],["Atmospheric","Weather System"],["Atmospheric","Wind Harp"],["Cinematic","Battle Mist"],["Cinematic","Cathedral Bloom"],["Cinematic","Empire Dust"],["Cinematic","Frozen Hall"],["Cinematic","Last Horizon"],["Cinematic","Northern Lights"],["Cinematic","Requiem Air"],["Cinematic","Starfield"],["Cinematic","Titan Rise"],["Dark Textures","Abyss Choir"],["Dark Textures","Black Velvet"],["Dark Textures","Coal Dust"],["Dark Textures","Grave Bloom"],["Dark Textures","Iron Lung"],["Dark Textures","Night Shift"],["Dark Textures","Smoke Signal"],["Dark Textures","Undertow"],["Dreamy","Cloud Nine"],["Dreamy","Cotton Echoes"],["Dreamy","Daydream Keys"],["Dreamy","Lucid Waves"],["Dreamy","Moon Swing"],["Dreamy","Silver Lining"],["Dreamy","Sleepwalker"],["Dreamy","Wish Upon"],["Electronic","Acid Fog"],["Electronic","Bitstream"],["Electronic","Circuit Bloom"],["Electronic","Deep Signal"],["Electronic","Laser Cloud"],["Electronic","Neon Grid"],["Electronic","Pulse Lattice"],["Electronic","Sidechain Air"],["Electronic","Synthwave Haze"],["Experimental","Alien Garden"],["Experimental","Echo Maze"],["Experimental","Fractal Rain"],["Experimental","Mutant Choir"],["Experimental","Particle Storm"],["Experimental","Quantum Moss"],["Experimental","Shattered Prism"],["Experimental","Static Bloom"],["Experimental","Time Fold"],["Glitch","Backspin City"],["Glitch","Broken Phone"],["Glitch","Cut-Up Dream"],["Glitch","Data Rain"],["Glitch","Glass Splinters"],["Glitch","Half-Time Melt"],["Glitch","Micro Edits"],["Glitch","Rewind Loop"],["Glitch","Shuffle Deck"],["Glitch","Stutter Gun"],["Glitch","Tape Stop Drama"],["Glitch","Triplet Chop"],["R&B","After Hours"],["R&B","Candle Smoke"],["R&B","Honey Glow"],["R&B","Late Call"],["R&B","Neo Soul Dust"],["R&B","Satin Pads"],["R&B","Silk Rhodes"],["R&B","Slow Jam Halo"],["R&B","Velvet Room"],["Reggaeton","Calle Luna"],["Reggaeton","Caribe Bells"],["Reggaeton","Dembow Glow"],["Reggaeton","Humo Dulce"],["Reggaeton","Isla Pluck"],["Reggaeton","Neon Malecon"],["Reggaeton","Perreo Haze"],["Reggaeton","Sunset Bounce"],["Signature","Bajo la Lluvia"],["Signature","Black Ice"],["Signature","Calle Fria"],["Signature","Dead Signal"],["Signature","Deep Current"],["Signature","Event Horizon"],["Signature","Ghost Harmony"],["Signature","Grave Choir"],["Signature","Hollow Crown"],["Signature","Humo Lento"],["Signature","Low Halo"],["Signature","Luz de Neon"],["Signature","Midnight Vox"],["Signature","Perreo Nocturno"],["Signature","Pulse Noir"],["Signature","Purple Smoke"],["Signature","Silk Noir"],["Signature","Siren Tape"],["Signature","Sombra"],["Signature","Strobe Shadow"],["Signature","Sub Cathedral"],["Signature","Tunnel Vision"],["Signature","Velvet Shadow"],["Signature","Warehouse Ghost"],["Spectral","Data Choir"],["Spectral","Doubler Wide"],["Spectral","Fifth Stack"],["Spectral","Freq Scatter"],["Spectral","Ice Hold"],["Spectral","Infinite Fifths"],["Spectral","Minor Halo"],["Spectral","Octave Ghost"],["Spectral","Octave Rain"],["Spectral","Prism Smear"],["Spectral","Robot Hymn"],["Spectral","Sub Bloom"],["Trap","Cold Mirage"],["Trap","Dark Arp Fog"],["Trap","Ghost Flute"],["Trap","Ice Chain"],["Trap","Midnight Bells"],["Trap","Reverse Omen"],["Trap","Rooftop Echo"],["Trap","Street Choir"],["Trap","Violet Drift"],["Vintage","Broken Reel"],["Vintage","Cassette Dream"],["Vintage","Dusty Vinyl"],["Vintage","Faded Polaroid"],["Vintage","Gramophone Air"],["Vintage","Old Cinema"],["Vintage","Radio Ghost"],["Vintage","Tape Memory"],["Vintage","Warm Wax"]];
-  const cv = document.getElementById("rain-cv"), q = document.getElementById("rain-q"), info = document.getElementById("rain-info"), chipsBox = document.getElementById("rain-banks");
-  if (!cv || !cv.getContext) return;
-  const g = cv.getContext("2d");
+  const an = document.getElementById("spec-an"), list = document.getElementById("spec-list"), q = document.getElementById("rain-q"),
+        info = document.getElementById("rain-info"), title = document.getElementById("spec-title"), count = document.getElementById("spec-count");
+  if (!an) return;
   const norm = s => s.toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "");
-  const BANK_ORDER = [...new Set(PRESETS.map(p => p[0]))];
-  const C = { accent: "#c6ff42", text: "#f4f6f8", dim: "#767d85", panel: "#1b1e21", hover: "#24282c", line: "#33393f", ink: "#101113" };
-  let W = 0, H = 0, dpr = 1, started = false, running = false, visible = false, drag = null, hover = null, query = "", bank = "", hidden = 0;
-  const tiles = PRESETS.map(([b, name], i) => ({ bank: b, name, key: norm(name + " " + b), order: i, w: 0, h: 0, x: 0, y: 0, vx: 0, vy: 0, tx: 0, ty: 0, a: 0, ta: 1, hit: false, delay: 0 }));
-  // Bank chips
-  chipsBox.innerHTML = ['<button type="button" class="chip" data-b="" aria-pressed="true">ALL</button>']
-    .concat(BANK_ORDER.map(b => `<button type="button" class="chip" data-b="${b}" aria-pressed="false">${b}</button>`)).join("");
-  chipsBox.addEventListener("click", e => { const c = e.target.closest(".chip"); if (!c) return;
-    bank = c.dataset.b; chipsBox.querySelectorAll(".chip").forEach(x => x.setAttribute("aria-pressed", String(x === c))); layout(true); });
-  function matches(t) { return (!bank || t.bank === bank) && (!query || t.key.includes(query)); }
-  function layout(animate) {
-    const small = innerWidth < 700, h = small ? 26 : 30, gap = small ? 6 : 8, pad = 4;
-    dpr = Math.min(2, devicePixelRatio || 1); W = cv.clientWidth;
-    g.font = `500 ${small ? 12 : 13}px 'Inter Tight', sans-serif`;
-    const filtering = !!(query || bank);
-    for (const t of tiles) { t.w = Math.ceil(g.measureText(t.name).width) + (small ? 22 : 28); t.h = h; t.hit = matches(t); }
-    const list = tiles.slice().sort((A, B) => filtering ? (B.hit - A.hit) || (A.order - B.order) : A.order - B.order);
-    const maxH = small ? 300 : 330;
-    let x = pad, y = pad, n = 0, shown = 0, row = []; hidden = 0;
-    const centre = () => { if (!row.length) return; const used = x - gap - pad, off = Math.max(0, (W - used) / 2 - pad); row.forEach(r => r.tx += off); row = []; };
-    // Each row is as wide as a lens-shaped envelope allows, so the block reads like a sound wave.
-    const rowW = yy => { const f = Math.min(1, (yy + h / 2) / (maxH - pad)); return (W - 2 * pad) * (0.42 + 0.58 * Math.sin(Math.PI * (0.06 + f * 0.88))); };
-    let lim = rowW(y);
-    for (const t of list) {
-      if (x - pad + t.w > lim) { centre(); x = pad; y += h + gap; lim = rowW(y); }
-      t.tx = x; t.ty = y; x += t.w + gap; row.push(t);
-      const fits = y + h <= maxH - pad, show = fits && (!filtering || t.hit || true);
-      t.ta = !fits ? 0 : filtering && !t.hit ? .22 : 1;
-      if (t.hit && filtering) shown++;
-      if (!fits) hidden++;
-      if (!started || (animate && t.a === 0 && t.ta > 0)) { t.x = t.tx; t.y = t.ty - 140 - Math.random() * 120; t.vy = 0; t.delay = (n++) * 0.012; }
+  const BANKS_ = [...new Set(PRESETS.map(p => p[0]))];
+  const byBank = Object.fromEntries(BANKS_.map(b => [b, PRESETS.filter(p => p[0] === b).map(p => p[1])]));
+  let bank = "Signature", query = "";
+  an.innerHTML = BANKS_.map((b, c) => `<button type="button" class="spec-bar" role="tab" data-b="${b}" aria-selected="false" title="${b}">
+      <span class="spec-seg" aria-hidden="true">${byBank[b].map((n, k) => `<i data-n="${n}" style="--k:${k};--c:${c}"></i>`).join("")}</span>
+      <span class="spec-name">${b}</span><span class="spec-n">${byBank[b].length}</span></button>`).join("");
+  const segs = [...an.querySelectorAll(".spec-seg i")].map(el => ({ el, key: norm(el.dataset.n + " " + el.closest(".spec-bar").dataset.b) }));
+  const esc = s => s.replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+  function render() {
+    an.querySelectorAll(".spec-bar").forEach(b => b.setAttribute("aria-selected", String(!query && b.dataset.b === bank)));
+    an.classList.toggle("searching", !!query);
+    segs.forEach(s => s.el.classList.toggle("hit", !!query && s.key.includes(query)));
+    let rows;
+    if (query) {
+      rows = PRESETS.filter(([b, n]) => norm(n + " " + b).includes(query));
+      title.textContent = `“${q.value.trim()}”`;
+      count.textContent = lang === "es" ? `${rows.length} ${rows.length === 1 ? "preset" : "presets"}` : `${rows.length} ${rows.length === 1 ? "preset" : "presets"}`;
+      list.innerHTML = rows.length ? rows.map(([b, n], i) => `<li style="--i:${Math.min(i, 20)}"><span>${esc(n)}<small>${esc(b)}</small></span></li>`).join("")
+        : `<li class="none">${lang === "es" ? "Ningún preset con ese nombre. Prueba un ambiente: dark, rain, vocal…" : "No preset by that name. Try a mood: dark, rain, vocal…"}</li>`;
+    } else {
+      title.textContent = bank;
+      count.textContent = lang === "es" ? `${byBank[bank].length} presets` : `${byBank[bank].length} presets`;
+      list.innerHTML = byBank[bank].map((n, i) => `<li style="--i:${i}">${esc(n)}</li>`).join("");
     }
-    centre();
-    // Centre the whole block vertically too, so a short result sits in the middle.
-    H = maxH; cv.style.height = H + "px";
-    cv.width = Math.round(W * dpr); cv.height = Math.round(H * dpr); g.setTransform(dpr, 0, 0, dpr, 0, 0);
-    g.font = `500 ${small ? 12 : 13}px 'Inter Tight', sans-serif`;
-    const total = tiles.filter(matches).length;
-    info.textContent = !filtering ? (lang === "es" ? `${PRESETS.length} presets · 15 bancos` : `${PRESETS.length} presets · 15 banks`)
-      : total ? (lang === "es" ? `${total} ${total === 1 ? "preset" : "presets"}` : `${total} ${total === 1 ? "preset" : "presets"}`)
-      : (lang === "es" ? "Nada con ese nombre" : "Nothing by that name");
-    if (calm) { for (const t of tiles) { t.x = t.tx; t.y = t.ty; t.a = t.ta; } draw(); } else go();
+    info.textContent = lang === "es" ? `${PRESETS.length} presets · ${BANKS_.length} bancos` : `${PRESETS.length} presets · ${BANKS_.length} banks`;
   }
-  // The rows ripple like a slow waveform, and tiles near the cursor rise toward it.
-  let clock = 0, mx = -1e4, my = -1e4;
-  function waveY(t) {
-    if (calm) return 0;
-    const cx = t.x + t.w / 2, cy = t.y + t.h / 2, d = Math.hypot(cx - mx, (cy - my) * 1.6);
-    return Math.sin(clock * 1.6 + cx * 0.011 + t.ty * 0.02) * 3.5 - Math.max(0, 1 - d / 150) * 10;
-  }
-  function rr(x, y, w, h, r) { g.beginPath(); g.moveTo(x + r, y); g.arcTo(x + w, y, x + w, y + h, r); g.arcTo(x + w, y + h, x, y + h, r); g.arcTo(x, y + h, x, y, r); g.arcTo(x, y, x + w, y, r); g.closePath(); }
-  function draw() {
-    g.clearRect(0, 0, W, H);
-    const filtering = !!(query || bank);
-    const ordered = tiles.slice().sort((A, B) => (A === drag) - (B === drag));
-    for (const t of ordered) {
-      if (t.a < 0.01) continue;
-      const on = filtering && t.hit, hov = t === hover || t === drag;
-      g.globalAlpha = t.a;
-      const lift = t === drag ? 0 : waveY(t);
-      t.dy = lift;
-      rr(t.x, t.y + lift, t.w, t.h, t.h / 2);
-      g.fillStyle = on ? C.accent : hov ? C.hover : C.panel; g.fill();
-      g.lineWidth = 1; g.strokeStyle = on ? C.accent : hov ? C.accent : C.line; g.stroke();
-      g.fillStyle = on ? C.ink : C.text; g.textBaseline = "middle"; g.textAlign = "center";
-      g.fillText(t.name, t.x + t.w / 2, t.y + lift + t.h / 2 + .5);
-    }
-    g.globalAlpha = 1; g.textAlign = "left";
-    const tip = drag || hover;
-    if (tip && tip.a > .5) { const s = tip.bank.toUpperCase(), f = g.font; g.font = "500 10px 'JetBrains Mono', monospace"; const tw = g.measureText(s).width + 16;
-      const tx = Math.min(W - tw - 2, Math.max(2, tip.x + tip.w / 2 - tw / 2)), ty = tip.y > 26 ? tip.y - 24 : tip.y + tip.h + 6;
-      rr(tx, ty, tw, 19, 9.5); g.fillStyle = "#0b0c0d"; g.fill(); g.strokeStyle = C.accent; g.stroke(); g.fillStyle = C.accent; g.textBaseline = "middle"; g.fillText(s, tx + 8, ty + 10); g.font = f; }
-  }
-  let lastT = 0;
-  function loop(now) {
-    const dt = Math.min(1 / 30, (now - (lastT || now)) / 1000); lastT = now; clock += dt;
-    let busy = !!drag || (!calm && visible);
-    for (const t of tiles) {
-      if (t === drag) { t.a += (t.ta - t.a) * .2; continue; }
-      if (t.delay > 0) { t.delay -= dt; busy = true; continue; }
-      const k = 170, d = 15;   // spring toward its place: quick, with a small bounce
-      t.vx += ((t.tx - t.x) * k - t.vx * d) * dt; t.vy += ((t.ty - t.y) * k - t.vy * d) * dt;
-      t.x += t.vx * dt; t.y += t.vy * dt; t.a += (t.ta - t.a) * Math.min(1, dt * 10);
-      if (Math.abs(t.tx - t.x) + Math.abs(t.ty - t.y) + Math.abs(t.vx) + Math.abs(t.vy) > .3 || Math.abs(t.ta - t.a) > .01) busy = true;
-      else { t.x = t.tx; t.y = t.ty; t.vx = t.vy = 0; t.a = t.ta; }
-    }
-    draw();
-    if (busy && (visible || drag)) requestAnimationFrame(loop); else running = false;
-  }
-  function go() { if (running) return; running = true; lastT = 0; requestAnimationFrame(loop); }
-  function start() { if (started) return; layout(false); started = true; if (!calm) { for (const t of tiles) {} go(); } }
-  if ("IntersectionObserver" in window) new IntersectionObserver(([en]) => { visible = en.isIntersecting; if (visible) { if (!started) { started = false; firstDrop(); } else go(); } }, { threshold: .2 }).observe(cv);
-  else { visible = true; firstDrop(); }
-  function firstDrop() { started = false; layout(false); started = true; if (calm) return;
-    let n = 0; for (const t of tiles) if (t.ta > 0) { t.y = t.ty - 160 - Math.random() * 140; t.delay = (n++) * 0.01; } go(); }
-  let rt; addEventListener("resize", () => { clearTimeout(rt); rt = setTimeout(() => { if (started) layout(false); }, 150); });
-  function at(e) { const r = cv.getBoundingClientRect(); return [e.clientX - r.left, e.clientY - r.top]; }
-  function pick(x, y) { for (let i = tiles.length - 1; i >= 0; i--) { const t = tiles[i], ty = t.y + (t.dy || 0); if (t.a > .5 && x >= t.x && x <= t.x + t.w && y >= ty && y <= ty + t.h) return t; } return null; }
-  cv.addEventListener("pointerdown", e => { if (e.pointerType === "touch") return; const [x, y] = at(e), t = pick(x, y); if (!t) return;
-    drag = t; t.ox = x - t.x; t.oy = y - t.y; cv.setPointerCapture(e.pointerId); cv.classList.add("grab"); go(); e.preventDefault(); });
-  cv.addEventListener("pointermove", e => { const [x, y] = at(e); mx = x; my = y;
-    if (drag) { drag.x = x - drag.ox; drag.y = y - drag.oy; drag.vx = drag.vy = 0; }
-    else { const h = pick(x, y); if (h !== hover) { hover = h; cv.style.cursor = h ? "grab" : "default"; if (!running) draw(); } } });
-  const drop = () => { if (!drag) return; drag = null; cv.classList.remove("grab"); go(); };   // it springs back to its place
-  cv.addEventListener("pointerup", drop); cv.addEventListener("pointercancel", drop);
-  cv.addEventListener("pointerleave", () => { mx = my = -1e4; if (hover) { hover = null; if (!running) draw(); } });
-  // Touch: a tap shows the bank of that preset.
-  cv.addEventListener("click", e => { const [x, y] = at(e), t = pick(x, y); hover = t; if (!running) draw(); });
-  q.addEventListener("input", () => { query = norm(q.value.trim()); layout(true); });
-  addEventListener("veltara-lang", () => started && layout(false));
+  an.addEventListener("click", e => { const b = e.target.closest(".spec-bar"); if (!b) return; bank = b.dataset.b; if (query) { q.value = ""; query = ""; } render(); });
+  q.addEventListener("input", () => { query = norm(q.value.trim()); render(); });
+  addEventListener("veltara-lang", render);
+  render();
+  // The bars rise when the section comes into view.
+  if (calm || !("IntersectionObserver" in window)) an.classList.add("ready");
+  else { an.style.visibility = "hidden"; const io = new IntersectionObserver(([en]) => { if (en.isIntersecting) { an.style.visibility = ""; an.classList.add("ready"); io.disconnect(); } }, { threshold: .3 }); io.observe(an); }
 })();
 // Final: a liquid green blob follows the cursor behind the big words.
 (function gooFollow() {
