@@ -659,7 +659,7 @@ header.top::after { content: ""; position: absolute; left: 0; bottom: -1px; heig
           <span class="screws" aria-hidden="true"><i></i><i></i><i></i><i></i></span>
           <span class="callout" style="left:7%; top:-13px; --d:.6s" data-i18n="call.xy">XY pad</span>
           <span class="callout" style="left:46%; top:-13px; --d:.9s" data-i18n="call.macros">4 macros</span>
-          <span class="callout" style="right:-14px; top:52%; --d:1.2s" data-i18n="call.exciter">Exciter</span>
+          <span class="callout" style="right:-14px; top:52%; --d:1.2s" data-i18n="call.output">Output</span>
           <span class="callout" style="left:34%; bottom:-13px; --d:1.5s" data-i18n="call.pads">8 performance pads</span>
         </div>
         <div class="hero-floor" aria-hidden="true"></div>
@@ -804,8 +804,8 @@ header.top::after { content: ""; position: absolute; left: 0; bottom: -1px; heig
           <h3 data-i18n="ui.d3t">Eight performance pads</h3><p data-i18n="ui.d3">Hold to stutter, reverse, half-speed, gate, freeze or build a riser. Playable from the keyboard or MIDI.</p>
         </article>
         <article class="detail panel" data-zoom="img/detail-output.webp">
-          <div class="ph"><img src="img/detail-output.webp" width="370" height="760" loading="lazy" alt="Output column with input and output meters, Input, Dry/Wet, Width, Output and Exciter knobs."></div>
-          <h3 data-i18n="ui.d4t">Output and Exciter</h3><p data-i18n="ui.d4">Meters, dry/wet, width, output level and an Exciter for air on top.</p>
+          <div class="ph"><img src="img/detail-output.webp" width="370" height="760" loading="lazy" alt="Output column with input and output meters, Input, Dry/Wet, Width and Output knobs."></div>
+          <h3 data-i18n="ui.d4t">Output</h3><p data-i18n="ui.d4">Input and output meters, input gain, dry/wet, stereo width and output level.</p>
         </article>
       </div>
     </div>
@@ -1108,7 +1108,7 @@ const TOUR = {
           alt: "VELTARA FX in light mode." },
 };
 const TOUR_EN = {
-  "ui.cMain": "The main view: XY pad, the four macros, RANDOMIZE and ADVANCED, the output column with the Exciter, and eight performance pads.",
+  "ui.cMain": "The main view: XY pad, the four macros, RANDOMIZE and ADVANCED, the output column, and eight performance pads.",
   "ui.cAdv": "ADVANCED adds four effect-family knobs under the macros: Grit (drive, lo-fi), Mod FX (chorus, glitch), Echoes (delay, reverb), Spectrum (spectral, harmony). The centre is your preset.",
   "ui.cBrowser": "The preset browser: 15 banks, search, favourites, and bars that show how much texture, movement and space each preset brings.",
   "ui.cLight": "The same interface in light mode, one click away in the top bar.",
@@ -1126,7 +1126,7 @@ const ES = {
   "hero.lede": "VELTARA FX es un multiefecto creativo para partes melódicas. Ponlo en teclados, synths, guitarras o arpegios, elige uno de 150 presets, y la parte empieza a cortarse, difuminarse, ir al revés y respirar, sincronizada con tu tempo y con la melodía siempre arriba.",
   "hero.fine": "Cómpralo una vez, o recibe cada pack nuevo con VELTARA Plus. Precio de lanzamiento por tiempo limitado.",
   "hero.daws": "Funciona en",
-  "call.xy": "Pad XY", "call.macros": "4 macros", "call.exciter": "Exciter", "call.pads": "8 pads de performance",
+  "call.xy": "Pad XY", "call.macros": "4 macros", "call.output": "Salida", "call.pads": "8 pads de performance",
   "spec.presets": "presets de fábrica en 15 bancos", "spec.slices": "cortes de glitch sincronizados", "spec.fx": "motores de efectos, cada uno con su algoritmo",
   "spec.latency": "de latencia añadida", "spec.cpu": "de un núcleo de CPU a 48 kHz",
   "listen.eyebrow": "Escuchar",
@@ -1159,14 +1159,14 @@ const ES = {
   "ui.eyebrow": "La interfaz", "ui.title": "<span class=\"metal\">Todo en una pantalla.</span> Nada escondido en menús.",
   "ui.lede": "Capturas reales de VELTARA FX. Haz clic en cualquier imagen para ver los controles de cerca.",
   "ui.tMain": "Vista principal", "ui.tAdv": "ADVANCED", "ui.tBrowser": "Navegador de presets", "ui.tLight": "Modo claro", "ui.zoom": "Clic para ampliar",
-  "ui.cMain": "La vista principal: pad XY, los cuatro macros, RANDOMIZE y ADVANCED, la columna de salida con el Exciter, y ocho pads de performance.",
+  "ui.cMain": "La vista principal: pad XY, los cuatro macros, RANDOMIZE y ADVANCED, la columna de salida, y ocho pads de performance.",
   "ui.cAdv": "ADVANCED añade cuatro knobs de familias de efectos debajo de los macros: Grit (drive, lo-fi), Mod FX (chorus, glitch), Echoes (delay, reverb) y Spectrum (spectral, harmony). En el centro está tu preset.",
   "ui.cBrowser": "El navegador de presets: 15 bancos, búsqueda, favoritos y barras que muestran cuánta textura, movimiento y espacio trae cada preset.",
   "ui.cLight": "La misma interfaz en modo claro, a un clic en la barra de arriba.",
   "ui.d1t": "Cuatro macros", "ui.d1": "Texture, Movement, Space y Character. Cada uno tiene su propia etapa de sonido, así que cada giro se oye.",
   "ui.d2t": "Pad XY", "ui.d2": "Mándalo a uno de diez efectos y arrastra. Glitch, grain, filtro, delay: cada uno se dibuja en el pad.",
   "ui.d3t": "Ocho pads de performance", "ui.d3": "Mantén para stutter, reverse, half-speed, gate, freeze o un riser. Se tocan con el teclado o por MIDI.",
-  "ui.d4t": "Salida y Exciter", "ui.d4": "Medidores, dry/wet, anchura, nivel de salida y un Exciter para dar aire arriba.",
+  "ui.d4t": "Salida", "ui.d4": "Medidores de entrada y salida, ganancia de entrada, dry/wet, anchura estéreo y nivel de salida.",
   "banks.eyebrow": "Librería de fábrica", "banks.title": "<span class=\"metal\">150 presets</span> para diseñar texturas, en 15 bancos por género.",
   "banks.lede": "Del reggaetón y el trap a lo cinemático y ambiental. Cada preset está igualado en volumen contra la señal seca, así que cambiar nunca da saltos, y comparado con el resto para que no haya dos iguales. Dale play para oír uno de cada banco.",
   "lib.f1t": "Volumen igualado", "lib.f1": "Cambia de preset en plena sesión sin saltos de volumen.",
@@ -1899,7 +1899,7 @@ const KB = [
     q: ["Are updates free?", "¿Las actualizaciones son gratis?"],
     a: ["Every 1.x update is free, and the plugin tells you when a new version is out.",
         "Todas las actualizaciones 1.x son gratis, y el plugin te avisa cuando sale una versión nueva."] },
-  { id: "controls", k: ["xy", "pad", "macro", "macros", "texture", "movement", "space", "character", "advanced", "randomize", "exciter", "how to use", "como se usa", "como usar", "tutorial", "manual"],
+  { id: "controls", k: ["xy", "pad", "macro", "macros", "texture", "movement", "space", "character", "advanced", "randomize", "how to use", "como se usa", "como usar", "tutorial", "manual"],
     q: ["How do I use it?", "¿Cómo se usa?"],
     a: ["Pick a preset, then shape it with the four macros (Texture, Movement, Space, Character). Send the XY pad to one effect and drag to play it; double-click to return to the preset. Hold the eight performance pads (or keys 1–8, or MIDI) for stutters, reverses, freezes and risers. ADVANCED opens four effect knobs: Grit, Mod FX, Echoes, Spectrum.",
         "Elige un preset y dale forma con los cuatro macros (Texture, Movement, Space, Character). Manda el pad XY a un efecto y arrastra para tocarlo; doble clic vuelve al preset. Mantén los ocho pads de performance (o las teclas 1–8, o MIDI) para stutters, reverses, freezes y risers. ADVANCED abre cuatro knobs de efectos: Grit, Mod FX, Echoes y Spectrum."] },
